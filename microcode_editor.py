@@ -206,14 +206,69 @@ def main():
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 042 - implied      ; 
         
         # CMP # Compare Memory with Accumulator                                  # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ;
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ;  
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 043 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 044 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 045 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 046 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 047 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 048 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 049 - absolute,Y   ; oper,Y 
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 048 - (indirect,X) ; (oper,X)
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 049 - (indirect,Y) ; (oper,Y)
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 050 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 051 - (indirect),Y ; (oper),Y
         
+        # CPX # Compare Memory with Index X                                      # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 052 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 053 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 054 - absolute     ; oper
+        
+        # CPY # Compare Memory with Index X                                      # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 055 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 056 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 057 - absolute     ; oper
+        
+        # DEC # Decrement Memory by One                                          # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 058 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 059 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 060 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 061 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 062 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 063 - absolute,Y   ; oper,Y
+        
+        # DEX # Decrement Index X by One                                         # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 064 - implied     ; 
+        
+        # DEC # Decrement Index Y by One                                         # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 065 - implied      ; 
+        
+        # EOR # Exclusive-OR Memory with Accumulator                             # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 066 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 067 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 068 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 069 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 070 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 071 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 072 - absolute,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 073 - (indirect,X) ; (oper,X)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 074 - (indirect,Y) ; (oper,Y)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 075 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 076 - (indirect),Y ; (oper),Y
+        
+        # INC # Increment Memory by One                                          # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 077 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 078 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 079 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 080 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 081 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 082 - absolute,Y   ; oper,Y
+        
+        # INX # Increment Index X by One                                         # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 083 - implied     ; 
+        
+        # INY # Increment Index Y by One                                         # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 084 - implied      ; 
+          
     ]
     
     rom_data = createMicroCode(instructions_data)
