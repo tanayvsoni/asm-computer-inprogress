@@ -130,37 +130,59 @@ def export(rom_data):
 def main():    
     # Instruction Data
     instructions_data = [
-        [ MI|COA|FEC, CE|II|EP,     0,           0,         0, 0, 0, 0, 0 ],     # 0000 - NOP
+        [ MI|COA|FEC, CE|II|EP,     0,           0,         0, 0, 0, 0, 0 ],     # 000 - NOP
         
-        # ADC #                                                                  # OPC       - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|RO, CE|, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],        # 0000 0001 - immediate    ; #oper
+        # ADC #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 001 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 002 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 003 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 004 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 005 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 006 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 007 - absolute,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 008 - (indirect,X) ; (oper,X)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 009 - (indirect,Y) ; (oper,Y)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 010 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 011 - (indirect),Y ; (oper),Y
         
+        # AND #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 012 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|AI,           0,           0, 0, 0, 0, 0 ],        # 013 - zeropage     ; oper
+        [ MI|CO, RO|II|CE,  IO|J,           0,           0, 0, 0, 0, 0 ],        # 014 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 015 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 016 - absolute     ; oper
+        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 017 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 018 - absolute,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|BI,    EO|AI|FI,           0, 0, 0, 0, 0 ],        # 019 - (indirect,X) ; (oper,X)
+        [ MI|CO, RO|II|CE, IO|BI, EO|AI|SU|FI,           0, 0, 0, 0, 0 ],        # 020 - (indirect,Y) ; (oper,Y)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|OI,           0, 0, 0, 0, 0 ],        # 021 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, AO|OI,           0,           0, 0, 0, 0, 0 ],        # 022 - (indirect),Y ; (oper),Y
         
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 0000 0010 - zeropage     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 0011 - zeropage     ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 0100 - zeropage     ; oper,Y
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 0101 - absolute     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 0110 - absolute     ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 0111 - absolute     ; oper,Y
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1000 - (indirect,X) ; (oper,X)
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1001 - (indirect,Y) ; (oper,Y)
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1010 - (indirect),X ; (oper),X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1011 - (indirect),Y ; (oper),Y
+        # ASL #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 023 - accumulator  ; A
+        [ MI|CO, RO|II|CE, IO|AI,           0,           0, 0, 0, 0, 0 ],        # 024 - zeropage     ; oper
+        [ MI|CO, RO|II|CE,  IO|J,           0,           0, 0, 0, 0, 0 ],        # 025 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 026 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 027 - absolute     ; oper
+        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 028 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 029 - absolute,Y   ; oper,Y
         
+        # BCC #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 030 - relative     ; oper
         
+        # BCS #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 031 - relative     ; oper
         
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 0100 - STA
-        [ MI|CO, RO|II|CE, IO|AI,           0,           0, 0, 0, 0, 0 ],        # 0101 - LDI
-        [ MI|CO, RO|II|CE,  IO|J,           0,           0, 0, 0, 0, 0 ],        # 0110 - JMP
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 0111 - JC
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 1000 - JZ
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 1001 - JNC
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 1010 - JNZ
-        [ MI|CO, RO|II|CE, IO|BI,    EO|AI|FI,           0, 0, 0, 0, 0 ],        # 1011 - INC
-        [ MI|CO, RO|II|CE, IO|BI, EO|AI|SU|FI,           0, 0, 0, 0, 0 ],        # 1100 - DEC
-        [ MI|CO, RO|II|CE, IO|MI,       RO|OI,           0, 0, 0, 0, 0 ],        # 1101 - DSP
-        [ MI|CO, RO|II|CE, AO|OI,           0,           0, 0, 0, 0, 0 ],        # 1110 - OUT
-        [ MI|CO, RO|II|CE,   HLT,           0,           0, 0, 0, 0, 0 ],        # 1111 - HLT
+        # BEQ #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 032 - relative     ; oper
+        
+        # BIT #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 033 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 034 - absolute     ; oper
+        
+        # BMI #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 035 - relative     ; oper
+        
     ]
     
     rom_data = createMicroCode(instructions_data)
