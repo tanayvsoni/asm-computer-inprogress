@@ -130,9 +130,10 @@ def export(rom_data):
 def main():    
     # Instruction Data
     instructions_data = [
-        [ MI|COA|FEC, CE|II|EP,     0,           0,         0, 0, 0, 0, 0 ],     # 000 - NOP
+        # NOP # No Operation                                                     # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|FEC, CE|II|EP,     0,           0,         0, 0, 0, 0, 0 ],     # 000 - implied      ; 
         
-        # ADC #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # ADC # Add with Carry                                                   # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 001 - immediate    ; #oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 002 - zeropage     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 003 - zeropage,X   ; oper,X
@@ -158,7 +159,7 @@ def main():
         [ MI|CO, RO|II|CE, IO|MI,       RO|OI,           0, 0, 0, 0, 0 ],        # 021 - (indirect),X ; (oper),X
         [ MI|CO, RO|II|CE, AO|OI,           0,           0, 0, 0, 0, 0 ],        # 022 - (indirect),Y ; (oper),Y
         
-        # ASL #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # ASL # Arithemic Shift Left                                             # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 023 - accumulator  ; A
         [ MI|CO, RO|II|CE, IO|AI,           0,           0, 0, 0, 0, 0 ],        # 024 - zeropage     ; oper
         [ MI|CO, RO|II|CE,  IO|J,           0,           0, 0, 0, 0, 0 ],        # 025 - zeropage,X   ; oper,X
@@ -167,21 +168,51 @@ def main():
         [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 028 - absolute,X   ; oper,X
         [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 029 - absolute,Y   ; oper,Y
         
-        # BCC #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # BCC # Branch on Carry Clear                                            # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 030 - relative     ; oper
         
-        # BCS #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # BCS # Breanch on Carry Set                                             # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 031 - relative     ; oper
         
-        # BEQ #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # BEQ # Branch on Zero                                                   # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 032 - relative     ; oper
         
-        # BIT #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # BIT # Test Bits in Memory with Accumulator                             # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 033 - zeropage     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 034 - absolute     ; oper
         
-        # BMI #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # BMI # Branch on Minus                                                  # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 035 - relative     ; oper
+        
+        # BNE # Branch on not Zero                                               # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 036 - relative     ; oper
+        
+        # BPL # Branch on Plus                                                   # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 037 - relative     ; oper
+        
+        # BRK # Forced Break                                                     # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 038 - implied      ;
+        
+        # BVC # Branch on Overflow Clear                                         # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 039 - relative     ; oper 
+        
+        # BVS # Branch on Overflow Set                                           # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 040 - relative     ; oper
+        
+        # CLC # Clear Carry Flag                                                 # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
+        
+        # CLV # Clear Overflow Flag                                              # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 042 - implied      ; 
+        
+        # CMP # Compare Memory with Accumulator                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ;
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ;  
         
     ]
     
