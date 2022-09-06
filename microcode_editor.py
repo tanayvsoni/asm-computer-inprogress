@@ -142,8 +142,8 @@ def main():
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 0111 - absolute     ; oper,Y
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1000 - (indirect,X) ; (oper,X)
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1001 - (indirect,Y) ; (oper,Y)
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1001 - (indirect),X ; (oper),X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1001 - (indirect),Y ; (oper),Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1010 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 1011 - (indirect),Y ; (oper),Y
         
         
         
