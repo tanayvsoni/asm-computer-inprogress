@@ -133,7 +133,9 @@ def main():
         [ MI|COA|FEC, CE|II|EP,     0,           0,         0, 0, 0, 0, 0 ],     # 0000 - NOP
         
         # ADC #                                                                  # OPC       - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],        # 0000 0001 - immediate    ; #oper
+        [ MI|COA|RO, CE|, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],        # 0000 0001 - immediate    ; #oper
+        
+        
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 0000 0010 - zeropage     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 0011 - zeropage     ; oper,X
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 0000 0100 - zeropage     ; oper,Y
