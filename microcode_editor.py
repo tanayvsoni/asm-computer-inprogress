@@ -41,6 +41,8 @@ ASHFL = 0b0000000001100000000000  # Arithemetic shift left
 ROR   = 0b0000000001110000000000  # Rotate right
 ROL   = 0b0000000010000000000000  # Rotate left
 NOT   = 0b0000000010010000000000  # NOT
+INC   = 0b0000000011010000000000  # Increment 
+DEC   = 0b0000000011100000000000  # Deccrement 
 
 # GENERAL #
 DSP   = 0b0000000010100000000000  # Decrement stack pointer
@@ -270,7 +272,42 @@ def main():
         
         # INY # Increment Index Y by One                                         # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 084 - implied      ; 
-          
+        
+        # JMP # Jump to new location                                             # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 085 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 086 - indirect     ; (oper)
+        
+        # JSR # Jump to new location Saving Return Address                       # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 087 - absolute     ; oper
+        
+        # LDA # Load Accumulator with Memory                                     # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 088 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 089 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 090 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 091 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 092 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 093 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 094 - absolute,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 095 - (indirect,X) ; (oper,X)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 096 - (indirect,Y) ; (oper,Y)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 097 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 098 - (indirect),Y ; (oper),Y
+        
+        # LDX # Load Index X with Memory                                         # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 099 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 100 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 101 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 102 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 103 - absolute,Y   ; oper,Y  
+        
+        # LDY # Load Index Y with Memory                                         # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 104 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 105 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 106 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 107 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 108 - absolute,X   ; oper,X
+        
+        
     ]
     
     rom_data = createMicroCode(instructions_data)
