@@ -30,6 +30,7 @@ RO    = 0b0000101100000000000000  # RAM data out
 TRO   = 0b0000110000000000000000  # Transfer register out
 XOX   = 0b0000110100000000000000  # X register aux bus out
 YOX   = 0b0000111000000000000000  # Y register aux bus out
+TRLOX = 0b0000111100000000000000  # Transfer register LSB aux bus out
 
 # ARITHEMETIC #
 AND   = 0b0000000000010000000000  # AND
@@ -138,7 +139,7 @@ def main():
         [ MI|COA|FEC, CE|II|EP,     0,           0,         0, 0, 0, 0, 0 ],     # 000 - implied      ; 
         
         # ADC # Add with Carry                                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 001 - immediate    ; #oper
+        [ MI|COA, RO|CE|TRLI, MI|COA|FEC|EO|AI,    ,           0, 0, 0, 0, 0 ],       # 001 - immediate    ; #oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 002 - zeropage     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 003 - zeropage,X   ; oper,X
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 004 - zeropage,Y   ; oper,Y
