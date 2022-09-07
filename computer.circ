@@ -419,6 +419,10 @@
       <a name="label" val="CLK"/>
     </comp>
     <comp lib="0" loc="(1750,700)" name="Constant"/>
+    <comp lib="0" loc="(1760,1100)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="TRLO_X"/>
+    </comp>
     <comp lib="0" loc="(1770,350)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="CLK"/>
@@ -440,6 +444,10 @@
     <comp lib="0" loc="(1790,200)" name="Tunnel">
       <a name="facing" val="south"/>
       <a name="label" val="J"/>
+    </comp>
+    <comp lib="0" loc="(1810,1090)" name="Tunnel">
+      <a name="label" val="Aux_Bus"/>
+      <a name="width" val="8"/>
     </comp>
     <comp lib="0" loc="(1820,350)" name="Tunnel">
       <a name="facing" val="north"/>
@@ -663,6 +671,10 @@
     <comp lib="0" loc="(2210,2650)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="SRDI"/>
+    </comp>
+    <comp lib="0" loc="(2210,3000)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="TRLO_X"/>
     </comp>
     <comp lib="0" loc="(2220,3190)" name="Pin">
       <a name="appearance" val="classic"/>
@@ -1225,6 +1237,9 @@
       <a name="width" val="8"/>
     </comp>
     <comp lib="1" loc="(1700,2050)" name="Controlled Buffer">
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="1" loc="(1770,1090)" name="Controlled Buffer">
       <a name="width" val="8"/>
     </comp>
     <comp lib="1" loc="(1870,940)" name="Controlled Buffer">
@@ -5762,6 +5777,8 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(1700,2050)" to="(1720,2050)"/>
     <wire from="(1700,210)" to="(1700,230)"/>
     <wire from="(1700,680)" to="(1750,680)"/>
+    <wire from="(1710,1040)" to="(1710,1090)"/>
+    <wire from="(1710,1090)" to="(1750,1090)"/>
     <wire from="(1710,890)" to="(1710,900)"/>
     <wire from="(1710,900)" to="(1780,900)"/>
     <wire from="(1710,980)" to="(1710,1040)"/>
@@ -5774,6 +5791,7 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(1730,720)" to="(1750,720)"/>
     <wire from="(1750,730)" to="(1750,740)"/>
     <wire from="(1750,740)" to="(1780,740)"/>
+    <wire from="(1770,1090)" to="(1810,1090)"/>
     <wire from="(1770,290)" to="(1770,350)"/>
     <wire from="(1770,290)" to="(1820,290)"/>
     <wire from="(1790,200)" to="(1790,230)"/>

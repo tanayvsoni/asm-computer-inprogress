@@ -307,7 +307,112 @@ def main():
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 107 - absolute     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 108 - absolute,X   ; oper,X
         
+        # LSR # Shift One Bit Right (Memory or Accumulator)                      # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 109 - accumulator  ; A
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 110 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 111 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 112 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 113 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 114 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 115 - zeropage,Y   ; oper,Y
         
+        # ORA # OR Memory with Accumulator                                       # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 116 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 117 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 118 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 119 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 120 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 121 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 122 - absolute,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 123 - (indirect,X) ; (oper,X)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 124 - (indirect,Y) ; (oper,Y)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 125 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 126 - (indirect),Y ; (oper),Y
+        
+        # PHA # Push Accumulator on Stack                                        # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 127 - implied      ;
+        
+        # PHP # Push Processor Status on Stack                                   # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 128 - implied      ;
+        
+        # PLA # Pull Accumulator from Stack                                      # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 129 - implied      ;
+        
+        # PLP # Pull Processor Status from Stack                                 # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 130 - implied      ;
+        
+        # ROR # Rotate One Bit Right (Memory or Accumulator)                     # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 131 - accumulator  ; A
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 132 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 133 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 134 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 135 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 136 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 137 - zeropage,Y   ; oper,Y
+        
+        # RTI # Return from Interrupt                                            # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 138 - implied      ;
+        
+        # RTI # Return from Subroutine                                           # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 139 - implied      ;
+        
+        # SUB # Subtract Memory from Accumulator with Borrow                     # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 140 - immediate    ; #oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 141 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 142 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 143 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 144 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 145 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 146 - absolute,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 147 - (indirect,X) ; (oper,X)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 148 - (indirect,Y) ; (oper,Y)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 149 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 150 - (indirect),Y ; (oper),Y
+        
+        # SEI # Set Interrupt Disable Status                                     # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 151 - implied      ;
+        
+        # STA # Store Accumulator in Memory                                      # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 152 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 153 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 154 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 155 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 156 - absolute,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 157 - absolute,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 158 - (indirect,X) ; (oper,X)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 159 - (indirect,Y) ; (oper,Y)
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 160 - (indirect),X ; (oper),X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 161 - (indirect),Y ; (oper),Y
+        
+        # STX # Store Index X in Memory                                          # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 162 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 163 - zeropage,Y   ; oper,Y
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 164 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 165 - absolute,Y   ; oper,Y
+        
+        # STY # Store Index Y in Memory                                          # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 166 - zeropage     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 167 - zeropage,X   ; oper,X
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 168 - absolute     ; oper
+        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 169 - absolute,X   ; oper,X
+        
+        # TAX # Transfer Accumulator to Index X                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 170 - implied      ;
+        
+        # TAY # Transfer Accumulator to Index Y                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 171 - implied      ;
+        
+        # TSX # Transfer Stack Pointer to Index X                                # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 172 - implied      ;
+        
+        # TSA # Transfer Index X to Accumulator                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 173 - implied      ;
+        
+        # TXS # Transfer Index X to Stack Register                               # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 174 - implied      ;
+        
+        # TYA # Transfer Index Y to Accumulator                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 175 - implied      ;
     ]
     
     rom_data = createMicroCode(instructions_data)
