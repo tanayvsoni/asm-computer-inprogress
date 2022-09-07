@@ -140,7 +140,7 @@ def main():
         [ MI|COA|FEC, CE|II|EP|MI|COA,                0, 0, 0, 0, 0, 0, 0 ],     # 000 - implied      ; 
         
         # ADC # Add with Carry                                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [ CE|RO|COA|FEC|MI, TRLI|EO|AI|II|CE|EP|MI|COA, 0, 0, 0, 0, 0, 0 ],       # 001 - immediate    ; #oper
+        [ CE|RO|COA|MI|TRLI, TRLOX|EO|AI|II|CE|EP|MI|COA|FEC, 0, 0, 0, 0, 0, 0 ],       # 001 - immediate    ; #oper
         
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 002 - zeropage     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 003 - zeropage,X   ; oper,X
