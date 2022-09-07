@@ -1,62 +1,63 @@
 
 # INS #
-CIDL  = 0b0001000000000000000000  # Program counter LSB in
-CIDH  = 0b0010000000000000000000  # Program counter MSB in
-RI    = 0b0011000000000000000000  # RAM data in
-MI    = 0b0100000000000000000000  # Memory address register in
-AI    = 0b0101000000000000000000  # A register in
-XI    = 0b0110000000000000000000  # X register in
-YI    = 0b0111000000000000000000  # Y register in
-SRDI  = 0b1000000000000000000000  # Status Register in
-SPI   = 0b1001000000000000000000  # Stack pointer in
-TRLI  = 0b1010000000000000000000  # Transfer register LSB in
-TRHI  = 0b1011000000000000000000  # Transfer register MSB in
-OI    = 0b1100000000000000000000  # Output register in
-SRI   = 0b0000000000000000010000  # Status register in
-II    = 0b0000000000000000000100  # Instruction register in
+CIDL  = 0b000010000000000000000000  # Program counter LSB in
+CIDH  = 0b000100000000000000000000  # Program counter MSB in
+RI    = 0b000110000000000000000000  # RAM data in
+MI    = 0b001000000000000000000000  # Memory address register in
+AI    = 0b001010000000000000000000  # A register in
+XI    = 0b001100000000000000000000  # X register in
+YI    = 0b001110000000000000000000  # Y register in
+SRDI  = 0b010000000000000000000000  # Status Register in
+SPI   = 0b010010000000000000000000  # Stack pointer in
+TRLI  = 0b010100000000000000000000  # Transfer register LSB in
+TRHI  = 0b010110000000000000000000  # Transfer register MSB in
+OI    = 0b011000000000000000000000  # Output register in
+SRI   = 0b000000000000000000100000  # Status register in
+II    = 0b000000000000000000001000  # Instruction register in
 
 # OUTS #
-COA   = 0b0000000100000000000000  # Program counter address bus out
-CODL  = 0b0000001000000000000000  # Program counter LSB data bus out
-CODH  = 0b0000001100000000000000  # Program counter MSB data bus out
-AO    = 0b0000010000000000000000  # A register data bus out
-XO    = 0b0000010100000000000000  # X register data bus out
-YO    = 0b0000011000000000000000  # Y register data bus out
-EO    = 0b0000011100000000000000  # ALU out
-SPAO  = 0b0000100000000000000000  # Stack pointer address bus out
-SPDO  = 0b0000100100000000000000  # Stack pointer data bus out
-SRO   = 0b0000101000000000000000  # Status register out
-RO    = 0b0000101100000000000000  # RAM data out
-TRO   = 0b0000110000000000000000  # Transfer register out
-XOX   = 0b0000110100000000000000  # X register aux bus out
-YOX   = 0b0000111000000000000000  # Y register aux bus out
-TRLOX = 0b0000111100000000000000  # Transfer register LSB aux bus out
+COA   = 0b100000000000000000000000  # Program counter address bus out
+CODL  = 0b000000010000000000000000  # Program counter LSB data bus out
+CODH  = 0b000000011000000000000000  # Program counter MSB data bus out
+AO    = 0b000000100000000000000000  # A register data bus out
+XO    = 0b000000101000000000000000  # X register data bus out
+YO    = 0b000000110000000000000000  # Y register data bus out
+EO    = 0b000000111000000000000000  # ALU out
+SPAO  = 0b000001000000000000000000  # Stack pointer address bus out
+SPDO  = 0b000001001000000000000000  # Stack pointer data bus out
+SRO   = 0b000001010000000000000000  # Status register out
+RO    = 0b000001011000000000000000  # RAM data out
+TRO   = 0b000001100000000000000000  # Transfer register out
+XOX   = 0b000001101000000000000000  # X register aux bus out
+YOX   = 0b000001110000000000000000  # Y register aux bus out
+TRLOX = 0b000001111000000000000000  # Transfer register LSB aux bus out
 
 # ARITHEMETIC #
-AND   = 0b0000000000010000000000  # AND
-OR    = 0b0000000000100000000000  # OR
-XOR   = 0b0000000000110000000000  # XOR
-SU    = 0b0000000001000000000000  # Subtract
-LSHFR = 0b0000000001010000000000  # Logical shift right
-ASHFL = 0b0000000001100000000000  # Arithemetic shift left
-ROR   = 0b0000000001110000000000  # Rotate right
-ROL   = 0b0000000010000000000000  # Rotate left
-NOT   = 0b0000000010010000000000  # NOT
-INC   = 0b0000000011010000000000  # Increment 
-DEC   = 0b0000000011100000000000  # Deccrement 
+AND   = 0b000000000000100000000000  # AND
+OR    = 0b000000000001000000000000  # OR
+XOR   = 0b000000000001100000000000  # XOR
+SU    = 0b000000000010000000000000  # Subtract
+LSHFR = 0b000000000010100000000000  # Logical shift right
+ASHFL = 0b000000000011000000000000  # Arithemetic shift left
+ROR   = 0b000000000011100000000000  # Rotate right
+ROL   = 0b000000000100000000000000  # Rotate left
+NOT   = 0b000000000100100000000000  # NOT
+INC   = 0b000000000110100000000000  # Increment 
+DEC   = 0b000000000111000000000000  # Deccrement 
 
 # GENERAL #
-DSP   = 0b0000000010100000000000  # Decrement stack pointer
-CLC   = 0b0000000010110000000000  # Clear carry flag
-CLV   = 0b0000000011000000000000  # Clear overflow flag
-CE    = 0b0000000000001000000000  # Increment program counter
-J     = 0b0000000000000100000000  # Load program counter
-SPE   = 0b0000000000000010000000  # Stack pointer enable
-I     = 0b0000000000000001000000  # Interupt clear/disable
-IJ    = 0b0000000000000000100000  # Jump to interupt subroutine ($BFFA)
-EP    = 0b0000000000000000001000  # End program
-NOP   = 0b0000000000000000000010  # No operation
-FEC   = 0b0000000000000000000001  # Fetch into pipeline
+DSP   = 0b000000000101000000000000  # Decrement stack pointer
+CLC   = 0b000000000101100000000000  # Clear carry flag
+CLV   = 0b000000000110000000000000  # Clear overflow flag
+CE    = 0b000000000000010000000000  # Increment program counter
+J     = 0b000000000000001000000000  # Load program counter
+SPE   = 0b000000000000000100000000  # Stack pointer enable
+I     = 0b000000000000000010000000  # Interupt clear/disable
+IJ    = 0b000000000000000001000000  # Jump to interupt subroutine ($BFFA)
+EP    = 0b000000000000000000010000  # End program
+NOP   = 0b000000000000000000000100  # No operation
+FEC   = 0b000000000000000000000010  # Fetch into pipeline
+RTS   = 0b000000000000000000000001  # Reset Transfer register MSB
 
 FLAGS_C0Z0 = 0
 FLAGS_C0Z1 = 1
@@ -136,10 +137,11 @@ def main():
     # Instruction Data
     instructions_data = [
         # NOP # No Operation                                                     # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|FEC, CE|II|EP,     0,           0,         0, 0, 0, 0, 0 ],     # 000 - implied      ; 
+        [ MI|COA|FEC, CE|II|EP|MI|COA,                0, 0, 0, 0, 0, 0, 0 ],     # 000 - implied      ; 
         
         # ADC # Add with Carry                                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA, RO|CE|TRLI, MI|COA|FEC|EO|AI,    ,           0, 0, 0, 0, 0 ],       # 001 - immediate    ; #oper
+        [ CE|RO|COA|FEC|MI, TRLI|EO|AI|II|CE|EP|MI|COA, 0, 0, 0, 0, 0, 0 ],       # 001 - immediate    ; #oper
+        
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 002 - zeropage     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 003 - zeropage,X   ; oper,X
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 004 - zeropage,Y   ; oper,Y
