@@ -19,15 +19,17 @@ II    = 0b0000000000000000000100  # Instruction register in
 COA   = 0b0000000100000000000000  # Program counter address bus out
 CODL  = 0b0000001000000000000000  # Program counter LSB data bus out
 CODH  = 0b0000001100000000000000  # Program counter MSB data bus out
-AO    = 0b0000010000000000000000  # A register out
-XO    = 0b0000010100000000000000  # X register out
-YO    = 0b0000011000000000000000  # Y register out
+AO    = 0b0000010000000000000000  # A register data bus out
+XO    = 0b0000010100000000000000  # X register data bus out
+YO    = 0b0000011000000000000000  # Y register data bus out
 EO    = 0b0000011100000000000000  # ALU out
 SPAO  = 0b0000100000000000000000  # Stack pointer address bus out
 SPDO  = 0b0000100100000000000000  # Stack pointer data bus out
 SRO   = 0b0000101000000000000000  # Status register out
 RO    = 0b0000101100000000000000  # RAM data out
 TRO   = 0b0000110000000000000000  # Transfer register out
+XOX   = 0b0000110100000000000000  # X register aux bus out
+YOX   = 0b0000111000000000000000  # Y register aux bus out
 
 # ARITHEMETIC #
 AND   = 0b0000000000010000000000  # AND
