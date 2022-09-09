@@ -33,7 +33,7 @@ XOX1  = 0b0000001100000000000000000000  # X register aux bus 1 out #
 YOX1  = 0b0000001101000000000000000000  # Y register aux bus 1 out #
 XOX2  = 0b0000001110000000000000000000  # X register aux bus 2 out #
 YOX2  = 0b0000001111000000000000000000  # Y register aux bus 2 out #
-EOX1 = 0b00000000000000000000000000010  # ALU input aux bus 1 out #
+ES    = 0b00000000000000000000000000010  # ALU input data bus out #
 
 # ARITHEMETIC #
 AND   = 0b0000000000000100000000000000  # AND
@@ -143,9 +143,9 @@ def main():
         [ MI|COA|CE|FEC, MI|COA|CE|II|EP,                0, 0, 0, 0, 0, 0, 0 ],                                       # 000 - implied      ; 
         
         # ADC # Add with Carry                                                                                        # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC|RO|EI, MI|COA|CE|II|EO|AI|FI|EOX2|EP, 0, 0, 0, 0, 0, 0 ],                                  # 001 - immediate    ; #oper
+        [ MI|COA|CE|FEC|RO|EI|ES, MI|COA|CE|II|EO|AI|FI|EP, 0, 0, 0, 0, 0, 0 ],                                       # 001 - immediate    ; #oper
         
-        [ MI|COA|CE|FEC|RO|TRLI, MI|TRO|RO|EI, MI|COA|CE|II|EO|AI|FI|EOX2|EP, 0, 0, 0, 0, 0, 0 ],                  # 002 - zeropage     ; oper
+        [ MI|COA|CE|FEC|RO|TRLI, MI|TRO, MI|COA|CE|RO|II|EO|AI|EI|FI|EP, 0, 0, 0, 0, 0, 0 ],                  # 002 - zeropage     ; oper
 
         [ MI|COA|CE|FEC|RO|TRLI, XOX|EO|TRLOX|TRLI, MI|TRO|RO|TRLI, MI|COA|CE|II|EO|AI|TRLOX|EP, 0, 0, 0, 0 ],        # 003 - zeropage,X   ; oper,X
         [ MI|COA|CE|FEC|RO|TRLI, YOX|EO|TRLOX|TRLI, MI|TRO|RO|TRLI, MI|COA|CE|II|EO|AI|TRLOX|EP, 0, 0, 0, 0, 0 ],     # 004 - zeropage,Y   ; oper,Y
