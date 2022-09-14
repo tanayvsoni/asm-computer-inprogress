@@ -141,14 +141,17 @@ def export(rom_data):
 def main():    
     # Instruction Data
     instructions_data = [
-        # NOP # No Operation                                                                                        # OPC - ADDRESSING   ; ASSEMBLER
+        # START # Initalize Computer                                                                                # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|COA|CE|FEC, MI|COA|CE|II|EP,                0, 0, 0, 0, 0, 0, 0 ],                                     # 000 - implied      ; 
+        
+        # NOP # No operation                                                                                        # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC, II|EP, 0, 0, 0, 0, 0, 0, 0 ],                                                              # 254 - implied      ;
         
         # ADC # Add with Carry                                                                                      # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|COA|CE|FEC|RO|EI|ES2, MI|COA|CE|II|EO|AI|FI|EP, 0, 0, 0, 0, 0, 0 ],                                    # 001 - immediate    ; #oper
         [ MI|COA|CE|FEC|RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|FI|EP, 0, 0, 0, 0, 0, 0 ],          # 002 - zeropage     ; oper
-        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI, MI|TRO, MI|COA|CE|II|RO|AI|EP, 0, 0, 0 ],                      # 003 - zeropage,X   ; oper,X
-        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2, EO|TRLI, MI|TRO, MI|COA|CE|II|RO|AI|EP, 0, 0, 0 ],                      # 004 - zeropage,Y   ; oper,Y
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|FI, EO|TRLI, MI|TRO, MI|COA|CE|II|RO|AI|EP, 0, 0, 0 ],                   # 003 - zeropage,X   ; oper,X
+        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|FI, EO|TRLI, MI|TRO, MI|COA|CE|II|RO|AI|EP, 0, 0, 0 ],                   # 004 - zeropage,Y   ; oper,Y
         
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 005 - absolute     ; oper
         
