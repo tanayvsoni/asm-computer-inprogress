@@ -61,7 +61,7 @@ IJ    = 0b0000000000000000001000000000000000  # Jump to interupt subroutine ($BF
 EP    = 0b0000000000000000000010000000000000  # End program #
 NOP   = 0b0000000000000000000000100000000000  # No operation #
 FEC   = 0b0000000000000000000000010000000000  # Fetch into pipeline
-RTS   = 0b0000000000000000000000001000000000  # Reset Transfer register MSB
+RTR   = 0b0000000000000000000000001000000000  # Reset Transfer register MSB
 ECLK  = 0b0000000000000000000000000000100000  # CLK invert for ALU
 
 FLAGS_C0Z0 = 0
@@ -141,25 +141,24 @@ def export(rom_data):
 def main():    
     # Instruction Data
     instructions_data = [
-        # START # Initalize Computer                                                                                              # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC, MI|COA|CE|II|EP, 0, 0, 0, 0, 0, 0 ],                                                                     # 000 - implied      ; 
+        # START # Initalize Computer                                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC, MI|COA|CE|II|EP, 0, 0, 0, 0, 0, 0 ],                                                                                            # 000 - implied      ; 
         
-        # NOP # No operation                                                                                                      # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC, II|EP, 0, 0, 0, 0, 0, 0 ],                                                                               # 254 - implied      ;
+        # NOP # No operation                                                                                                                             # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC, II|EP, 0, 0, 0, 0, 0, 0 ],                                                                                                      # 254 - implied      ;
         
-        # ADC # Add with Carry                                                                                                    # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0, 0, 0 ],                                                  # 001 - immediate    ; #oper
-        [ MI|COA|CE|FEC|RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|FI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0, 0 ],                        # 002 - zeropage     ; oper
-        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|FI, EO|TRLI, MI|TRO, MI|COA|CE|II|RO|AI|EP, 0, 0, 0, 0, 0],                            # 003 - zeropage,X   ; oper,X
-        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|FI, EO|TRLI, MI|TRO, MI|COA|CE|II|RO|AI|EP, 0, 0, 0 ],                                 # 004 - zeropage,Y   ; oper,Y
+        # ADC # Add with Carry                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0, 0, 0 ],                                                                         # 001 - immediate    ; #oper
+        [ MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0, 0 ],                                              # 002 - zeropage     ; oper
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0, 0],                           # 003 - zeropage,X   ; oper,X
+        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],                             # 004 - zeropage,Y   ; oper,Y
+        [ MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],                                  # 005 - absolute     ; oper
+        [ MI|COA|CE|RO|EI|ES1|ES2|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],               # 006 - absolute,X  *; oper,X
+        [ MI|COA|CE|RO|EI|ES1|ES2|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],               # 007 - absolute,Y  *; oper,Y
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0],                # 008 - (indirect,X) ; (oper,X)
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0],                # 009 - (indirect,Y) ; (oper,Y)
         
-        [ MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|FI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],        # 005 - absolute     ; oper
-        
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 006 - absolute,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 007 - absolute,Y   ; oper,Y
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 008 - (indirect,X) ; (oper,X)
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 009 - (indirect,Y) ; (oper,Y)
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 010 - (indirect),X ; (oper),X
+        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2, EO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0],        # 010 - (indirect),X ; (oper),X
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 011 - (indirect),Y ; (oper),Y
         
         # AND #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
