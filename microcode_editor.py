@@ -104,6 +104,12 @@ def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
     I   = bool((flag>>5)&1)
     IMG = bool((flag>>6)&1)
     
+    # BCC - Branch on Carry Clear
+    if (not CF) and (instr == 30) and (substep == 0): rom_data[address] = [RO|CIDL]
+    if (not CF) and (instr == 30) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
+    if (not CF) and (instr == 30) and (substep == 2): rom_data[address] = [J]
+    if (not CF) and (instr == 30) and (substep == 3): rom_data[address] = [MI|COA|CE|FEC]
+    
 
 def export(rom_data):            
     """
@@ -149,23 +155,23 @@ def main():
         [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],  # 021 - (indirect),X  ; (oper),X
         [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],  # 022 - (indirect),Y  ; (oper),Y
         
-        # ASL # Arithemic Shift Left                                             # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 023 - accumulator  ; A
-        [ MI|CO, RO|II|CE, IO|AI,           0,           0, 0, 0, 0, 0 ],        # 024 - zeropage     ; oper
-        [ MI|CO, RO|II|CE,  IO|J,           0,           0, 0, 0, 0, 0 ],        # 025 - zeropage,X   ; oper,X
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 026 - zeropage,Y   ; oper,Y
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 027 - absolute     ; oper
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 028 - absolute,X   ; oper,X
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 029 - absolute,Y   ; oper,Y
+        # ASL # Arithemic Shift Left                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC|ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                                                                                                    # 023 - accumulator  ; A
+        [ MI|COA|CE|FEC|RO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                                                                        # 024 - zeropage     ; oper
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                                                # 025 - zeropage,X   ; oper,X
+        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                                                # 026 - zeropage,Y   ; oper,Y
+        [ MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI, MI|TRO, RO|AI, ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                                                         # 027 - absolute     ; oper
+        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                     # 028 - absolute,X   ; oper,X
+        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                     # 029 - absolute,Y   ; oper,Y
         
-        # BCC # Branch on Carry Clear                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC|NOP, II|EP|NOP],                                                                                                                         # 030 - relative     ; oper
+        # BCC # Branch on Carry Clear                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],                                                                                                                        # 030 - relative     ; oper
         
-        # BCS # Breanch on Carry Set                                             # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 031 - relative     ; oper
+        # BCS # Breanch on Carry Set                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],                                                                                                                        # 031 - relative     ; oper
         
-        # BEQ # Branch on Zero                                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 032 - relative     ; oper
+        # BEQ # Branch on Zero                                                                                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],                                                                                                                        # 032 - relative     ; oper
         
         # BIT # Test Bits in Memory with Accumulator                             # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 033 - zeropage     ; oper
