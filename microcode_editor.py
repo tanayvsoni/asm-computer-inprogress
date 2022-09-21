@@ -1,5 +1,9 @@
 
 # INS #
+from audioop import add
+from tty import CFLAG
+
+
 CIDL  = 0b0000010000000000000000000000000000  # Program counter LSB in #
 CIDH  = 0b0000100000000000000000000000000000  # Program counter MSB in #
 RI    = 0b0000110000000000000000000000000000  # RAM data in #
@@ -48,92 +52,64 @@ ROL   = 0b0000000000100000000000000000000000  # Rotate left
 NOT   = 0b0000000000100100000000000000000000  # NOT
 INC   = 0b0000000000110100000000000000000000  # Increment 
 DEC   = 0b0000000000111000000000000000000000  # Deccrement 
+ADD   = 0b0000000000111100000000000000000000  # Add without Carry
 
 # GENERAL #
-DSP   = 0b0000000000101000000000000000000000  # Decrement stack pointer #
-CLC   = 0b0000000000101100000000000000000000  # Clear carry flag #
-CLV   = 0b0000000000110000000000000000000000  # Clear overflow flag #
-CE    = 0b0000000000000010000000000000000000  # Increment program counter #
-J     = 0b0000000000000001000000000000000000  # Load program counter #
-SPE   = 0b0000000000000000100000000000000000  # Stack pointer enable #
-I     = 0b0000000000000000010000000000000000  # Interupt clear/disable# #
-IJ    = 0b0000000000000000001000000000000000  # Jump to interupt subroutine ($BFFA) #
-EP    = 0b0000000000000000000010000000000000  # End program #
-NOP   = 0b0000000000000000000000100000000000  # No operation #
-FEC   = 0b0000000000000000000000010000000000  # Fetch into pipeline
-RTR   = 0b0000000000000000000000001000000000  # Reset Transfer register MSB
-ECLK  = 0b0000000000000000000000000000100000  # CLK invert for ALU
-
-FLAGS_C0Z0 = 0
-FLAGS_C0Z1 = 1
-FLAGS_C1Z0 = 2
-FLAGS_C1Z1 = 3
-
-BCC = 0b0111
-BCS = 0b1000
-BEQ = 0b1001
-BMI = 0b1010
-BNE = 0b01
-BPL = 0b01
-BVC = 0b01
-BVS = 0b01
-
+DSP   = 0b00000000001010000000000000000000000  # Decrement stack pointer #
+CLC   = 0b00000000001011000000000000000000000  # Clear carry flag #
+CLV   = 0b00000000001100000000000000000000000  # Clear overflow flag #
+CE    = 0b00000000000000100000000000000000000  # Increment program counter #
+J     = 0b00000000000000010000000000000000000  # Load program counter #
+SPE   = 0b00000000000000001000000000000000000  # Stack pointer enable #
+I     = 0b00000000000000000100000000000000000  # Interupt clear/disable# #
+IJ    = 0b00000000000000000010000000000000000  # Jump to interupt subroutine ($BFFA) #
+EP    = 0b00000000000000000000100000000000000  # End program #
+NOP   = 0b00000000000000000000001000000000000  # No operation #
+FEC   = 0b00000000000000000000000100000000000  # Fetch into pipeline
+RTR   = 0b00000000000000000000000010000000000  # Reset Transfer register MSB
+ECLK  = 0b00000000000000000000000000001000000  # CLK invert for ALU
+CTR   = 0b00000000000000000000000000000000001  # Carry into TRHI
 
 def createMicroCode(data):  
     """
     Creates the microcode for the computer
     """
-    rom_data = [0] * 512
+    rom_data = [0] * (1024 * 256)
     
-    for instr in range(0, 16):
-        for substep in range(0, 8):
-            for flag in range(0, 4):
+    for flag in range(0, 7):
+        for instr in range(0, 256):
+            for substep in range(0, 9):
 
                 # Address setup and storing data into rom_data
-                address = (flag << 7) | (instr << 3) | substep
+                address = (flag << 11) | (instr << 3) | substep
+                 
+                try: rom_data[address] = data[instr][substep]
+                except: rom_data[address] = data[instr][-1]
                     
-                rom_data[address] = data[instr][substep]
-                # Ensures FETCH instruction is the first run for all programs
-                string_address = str(format(address, '09'))
-
-                if string_address[7:] == '00':
-                    rom_data[address] = MI | CO
-                elif string_address[7:] == '01':
-                    rom_data[address] = RO | II | CE
-                    
-                conditionalJumps_Expections(instr,substep,flag,address,rom_data)
-
-                # Convert float array to integer array
-                rom_data = [int(rom_data[i]) for i in range(0, 512)]
+                conditionalJumps_Expections(flag,instr,substep,address,rom_data)
        
     return rom_data
         
-def conditionalJumps_Expections(instr, substep, flag, address, rom_data):
-        """
-        Adds in expections for conditional jumps
-        """
-        # JC Expection
-        if instr == JC and substep == 2 and (flag == FLAGS_C1Z0 or flag == FLAGS_C1Z1):
-            rom_data[address] = IO | J
 
-        # JZ Expection
-        elif instr == JZ and substep == 2 and (flag == FLAGS_C1Z1 or flag == FLAGS_C0Z1):
-            rom_data[address] = IO |J
-
-        # JNC Expection
-        elif instr == JNC and substep == 2 and (flag == FLAGS_C0Z0 or flag == FLAGS_C0Z1):
-            rom_data[address] = IO |J
-
-        # JNZ Expection
-        elif instr == JNZ and substep == 2 and (flag == FLAGS_C1Z0 or flag == FLAGS_C0Z0):
-            rom_data[address] = IO|J
+def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
+    """
+    Adds in expections for conditional jumps
+    """
+    
+    CF  = bool((flag>>0)&1)
+    VF  = bool((flag>>1)&1)
+    NF  = bool((flag>>2)&1)
+    ZF  = bool((flag>>3)&1)
+    BF  = bool((flag>>4)&1)
+    I   = bool((flag>>5)&1)
+    IMG = bool((flag>>6)&1)
+    
 
 def export(rom_data):            
     """
     Export Microcode into text file
     """     
-    
-                 
+     
     with open('microcode.txt','w') as microcode:
         for code in rom_data:
             microcode.write("%s\n" % hex(code)[2:])
@@ -141,25 +117,25 @@ def export(rom_data):
 def main():    
     # Instruction Data
     instructions_data = [
-        # START # Initalize Computer                                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC, MI|COA|CE|II|EP, 0, 0, 0, 0, 0, 0 ],                                                                                            # 000 - implied      ; 
+        # START # Initalize Computer                                                                                                        # OPC - ADDRESSING    ; ASSEMBLER
+        [ MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                  # 000 - implied       ; 
         
-        # NOP # No operation                                                                                                                             # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC, II|EP, 0, 0, 0, 0, 0, 0 ],                                                                                                      # 254 - implied      ;
+        # NOP # No operation                                                                                                                # OPC - ADDRESSING    ; ASSEMBLER
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],                                                                                                    # 254 - implied       ;
         
-        # ADC # Add with Carry                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0, 0, 0 ],                                                                         # 001 - immediate    ; #oper
-        [ MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0, 0 ],                                              # 002 - zeropage     ; oper
-        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0, 0],                           # 003 - zeropage,X   ; oper,X
-        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],                             # 004 - zeropage,Y   ; oper,Y
-        [ MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],                                  # 005 - absolute     ; oper
-        [ MI|COA|CE|RO|EI|ES1|ES2|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],               # 006 - absolute,X  *; oper,X
-        [ MI|COA|CE|RO|EI|ES1|ES2|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0, 0 ],               # 007 - absolute,Y  *; oper,Y
-        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0],                # 008 - (indirect,X) ; (oper,X)
-        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0],                # 009 - (indirect,Y) ; (oper,Y)
+        # ADC # Add with Carry                                                                                                              # OPC - ADDRESSING    ; ASSEMBLER
+        [ MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                                               # 001 - immediate     ; #oper
+        [ MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                 # 002 - zeropage      ; oper
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                         # 003 - zeropage,X    ; oper,X
+        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                         # 004 - zeropage,Y    ; oper,Y
+        [ MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                  # 005 - absolute      ; oper 
+        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],   # 006 - absolute,X    ; oper,X
+        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],   # 007 - absolute,Y    ; oper,Y
         
-        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2, EO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP, 0, 0, 0],        # 010 - (indirect),X ; (oper),X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 011 - (indirect),Y ; (oper),Y
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],            # 008 - (indirect,X)  ; (oper,X)
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],            # 009 - (indirect,Y)  ; (oper,Y)
+        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2, EO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],   # 010 - (indirect),X *; (oper),X
+        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2, EO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],   # 011 - (indirect),Y ; (oper),Y
         
         # AND #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 012 - immediate    ; #oper
