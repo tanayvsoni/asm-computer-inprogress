@@ -117,38 +117,37 @@ def export(rom_data):
 def main():    
     # Instruction Data
     instructions_data = [
-        # START # Initalize Computer                                                                                                        # OPC - ADDRESSING    ; ASSEMBLER
-        [ MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                  # 000 - implied       ; 
+        # START # Initalize Computer                                                                                                                            # OPC - ADDRESSING    ; ASSEMBLER
+        [ MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                                      # 000 - implied       ; 
         
-        # NOP # No operation                                                                                                                # OPC - ADDRESSING    ; ASSEMBLER
-        [ MI|COA|CE|FEC|NOP, II|EP|NOP],                                                                                                    # 254 - implied       ;
+        # NOP # No operation                                                                                                                                    # OPC - ADDRESSING    ; ASSEMBLER
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],                                                                                                                        # 254 - implied       ;
         
-        # ADC # Add with Carry                                                                                                              # OPC - ADDRESSING    ; ASSEMBLER
-        [ MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                                               # 001 - immediate     ; #oper
-        [ MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                 # 002 - zeropage      ; oper
-        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                         # 003 - zeropage,X    ; oper,X
-        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                         # 004 - zeropage,Y    ; oper,Y
-        [ MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                  # 005 - absolute      ; oper 
-        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],   # 006 - absolute,X    ; oper,X
-        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],   # 007 - absolute,Y    ; oper,Y
+        # ADC # Add with Carry                                                                                                                                  # OPC - ADDRESSING    ; ASSEMBLER
+        [ MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                                                                   # 001 - immediate     ; #oper
+        [ MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                                     # 002 - zeropage      ; oper
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                             # 003 - zeropage,X    ; oper,X
+        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                             # 004 - zeropage,Y    ; oper,Y
+        [ MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                      # 005 - absolute      ; oper 
+        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                       # 006 - absolute,X    ; oper,X
+        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                       # 007 - absolute,Y    ; oper,Y
+        [ MI|COA|CE|FEC|RO|EI|ES1|ADD|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                            # 008 - (indirect,X)  ; (oper,X)
+        [ MI|COA|CE|FEC|RO|EI|ES1|ADD|YOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                            # 009 - (indirect,Y)  ; (oper,Y)
+        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],      # 010 - (indirect),X  ; (oper),X
+        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],      # 011 - (indirect),Y  ; (oper),Y
         
-        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],            # 008 - (indirect,X)  ; (oper,X)
-        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],            # 009 - (indirect,Y)  ; (oper,Y)
-        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2, EO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],   # 010 - (indirect),X *; (oper),X
-        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2, EO|TRLI|ECLK, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],   # 011 - (indirect),Y ; (oper),Y
-        
-        # AND #                                                                  # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 012 - immediate    ; #oper
-        [ MI|CO, RO|II|CE, IO|AI,           0,           0, 0, 0, 0, 0 ],        # 013 - zeropage     ; oper
-        [ MI|CO, RO|II|CE,  IO|J,           0,           0, 0, 0, 0, 0 ],        # 014 - zeropage,X   ; oper,X
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 015 - zeropage,Y   ; oper,Y
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 016 - absolute     ; oper
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 017 - absolute,X   ; oper,X
-        [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 018 - absolute,Y   ; oper,Y
-        [ MI|CO, RO|II|CE, IO|BI,    EO|AI|FI,           0, 0, 0, 0, 0 ],        # 019 - (indirect,X) ; (oper,X)
-        [ MI|CO, RO|II|CE, IO|BI, EO|AI|SU|FI,           0, 0, 0, 0, 0 ],        # 020 - (indirect,Y) ; (oper,Y)
-        [ MI|CO, RO|II|CE, IO|MI,       RO|OI,           0, 0, 0, 0, 0 ],        # 021 - (indirect),X ; (oper),X
-        [ MI|CO, RO|II|CE, AO|OI,           0,           0, 0, 0, 0, 0 ],        # 022 - (indirect),Y ; (oper),Y
+        # AND #                                                                                                                                                 # OPC - ADDRESSING    ; ASSEMBLER
+        [ MI|COA|CE|FEC|RO|AND|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                                                               # 012 - immediate     ; #oper
+        [ MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                                 # 013 - zeropage      ; oper
+        [ MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                         # 014 - zeropage,X    ; oper,X
+        [ MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                         # 015 - zeropage,Y    ; oper,Y
+        [ MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                  # 016 - absolute      ; oper
+        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                   # 017 - absolute,X    ; oper,X
+        [ MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                   # 018 - absolute,Y    ; oper,Y
+        [ MI|COA|CE|FEC|RO|EI|ES1|ADD|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                        # 019 - (indirect,X)  ; (oper,X)
+        [ MI|COA|CE|FEC|RO|EI|ES1|ADD|YOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                        # 020 - (indirect,Y)  ; (oper,Y)
+        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],  # 021 - (indirect),X  ; (oper),X
+        [ MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],  # 022 - (indirect),Y  ; (oper),Y
         
         # ASL # Arithemic Shift Left                                             # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 023 - accumulator  ; A
@@ -159,36 +158,36 @@ def main():
         [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 028 - absolute,X   ; oper,X
         [ MI|CO, RO|II|CE,     0,           0,           0, 0, 0, 0, 0 ],        # 029 - absolute,Y   ; oper,Y
         
-        # BCC # Branch on Carry Clear                                            # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 030 - relative     ; oper
+        # BCC # Branch on Carry Clear                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],                                                                                                                         # 030 - relative     ; oper
         
         # BCS # Breanch on Carry Set                                             # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 031 - relative     ; oper
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 031 - relative     ; oper
         
         # BEQ # Branch on Zero                                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 032 - relative     ; oper
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 032 - relative     ; oper
         
         # BIT # Test Bits in Memory with Accumulator                             # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 033 - zeropage     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 034 - absolute     ; oper
         
         # BMI # Branch on Minus                                                  # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 035 - relative     ; oper
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 035 - relative     ; oper
         
         # BNE # Branch on not Zero                                               # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 036 - relative     ; oper
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 036 - relative     ; oper
         
         # BPL # Branch on Plus                                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 037 - relative     ; oper
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 037 - relative     ; oper
         
         # BRK # Forced Break                                                     # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 038 - implied      ;
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 038 - implied      ;
         
         # BVC # Branch on Overflow Clear                                         # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 039 - relative     ; oper 
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 039 - relative     ; oper 
         
         # BVS # Branch on Overflow Set                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 040 - relative     ; oper
+        [ MI|COA|CE|FEC|NOP, II|EP|NOP],        # 040 - relative     ; oper
         
         # CLC # Clear Carry Flag                                                 # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 041 - implied      ; 
