@@ -66,6 +66,7 @@ IJ    = 0b00000000000000000010000000000000000  # Jump to interupt subroutine ($B
 EP    = 0b00000000000000000000100000000000000  # End program #
 NOP   = 0b00000000000000000000001000000000000  # No operation #
 FEC   = 0b00000000000000000000000100000000000  # Fetch into pipeline
+DRF   = 0b00000000000000000000000100000000000  # Direct Fetch into Instruction
 RTR   = 0b00000000000000000000000010000000000  # Reset Transfer register MSB
 ECLK  = 0b00000000000000000000000000001000000  # CLK invert for ALU
 CTR   = 0b00000000000000000000000000000000001  # Carry into TRHI
@@ -108,7 +109,7 @@ def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
     if (not CF) and (instr == 30) and (substep == 0): rom_data[address] = [RO|CIDL]
     if (not CF) and (instr == 30) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
     if (not CF) and (instr == 30) and (substep == 2): rom_data[address] = [J]
-    if (not CF) and (instr == 30) and (substep == 3): rom_data[address] = [MI|COA|CE|FEC]
+    if (not CF) and (instr == 30) and (substep == 3): rom_data[address] = [MI|COA|CE|DRF]
     
 
 def export(rom_data):            

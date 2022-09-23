@@ -997,6 +997,10 @@
       <a name="appearance" val="classic"/>
       <a name="facing" val="south"/>
     </comp>
+    <comp lib="0" loc="(2480,3280)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="DRF"/>
+    </comp>
     <comp lib="0" loc="(2500,2390)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="IJ"/>
@@ -1380,6 +1384,10 @@
     <comp lib="0" loc="(770,1380)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="FETCH"/>
+    </comp>
+    <comp lib="0" loc="(770,1470)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="DRF"/>
     </comp>
     <comp lib="0" loc="(770,2420)" name="Splitter">
       <a name="appear" val="center"/>
@@ -1817,6 +1825,10 @@
     </comp>
     <comp lib="2" loc="(780,620)" name="Demultiplexer">
       <a name="width" val="16"/>
+    </comp>
+    <comp lib="2" loc="(800,1490)" name="Multiplexer">
+      <a name="facing" val="south"/>
+      <a name="width" val="8"/>
     </comp>
     <comp lib="2" loc="(820,1810)" name="Multiplexer">
       <a name="selloc" val="tr"/>
@@ -6541,6 +6553,7 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(2480,2140)" to="(2480,2290)"/>
     <wire from="(2480,2290)" to="(2640,2290)"/>
     <wire from="(2480,3190)" to="(2480,3230)"/>
+    <wire from="(2480,3250)" to="(2480,3280)"/>
     <wire from="(2490,2140)" to="(2490,2280)"/>
     <wire from="(2490,2280)" to="(2690,2280)"/>
     <wire from="(2500,2140)" to="(2500,2270)"/>
@@ -6726,6 +6739,9 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(710,660)" to="(730,660)"/>
     <wire from="(710,670)" to="(710,680)"/>
     <wire from="(710,680)" to="(730,680)"/>
+    <wire from="(730,1320)" to="(730,1440)"/>
+    <wire from="(730,1320)" to="(780,1320)"/>
+    <wire from="(730,1440)" to="(810,1440)"/>
     <wire from="(750,1820)" to="(790,1820)"/>
     <wire from="(750,840)" to="(750,870)"/>
     <wire from="(750,870)" to="(860,870)"/>
@@ -6735,17 +6751,23 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(760,670)" to="(790,670)"/>
     <wire from="(770,1340)" to="(770,1380)"/>
     <wire from="(770,1340)" to="(840,1340)"/>
+    <wire from="(770,1470)" to="(780,1470)"/>
     <wire from="(780,1090)" to="(1210,1090)"/>
     <wire from="(780,1090)" to="(780,1320)"/>
     <wire from="(780,1320)" to="(840,1320)"/>
+    <wire from="(790,1420)" to="(790,1460)"/>
+    <wire from="(790,1420)" to="(920,1420)"/>
     <wire from="(790,670)" to="(790,750)"/>
     <wire from="(790,670)" to="(800,670)"/>
     <wire from="(790,750)" to="(1180,750)"/>
+    <wire from="(800,1490)" to="(800,1520)"/>
+    <wire from="(800,1520)" to="(860,1520)"/>
     <wire from="(800,1780)" to="(800,1790)"/>
     <wire from="(800,640)" to="(800,670)"/>
     <wire from="(810,1360)" to="(810,1430)"/>
     <wire from="(810,1360)" to="(840,1360)"/>
     <wire from="(810,1430)" to="(1170,1430)"/>
+    <wire from="(810,1440)" to="(810,1460)"/>
     <wire from="(810,1730)" to="(850,1730)"/>
     <wire from="(810,1850)" to="(840,1850)"/>
     <wire from="(810,1880)" to="(860,1880)"/>
@@ -6754,9 +6776,6 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(810,1970)" to="(840,1970)"/>
     <wire from="(810,610)" to="(840,610)"/>
     <wire from="(810,630)" to="(840,630)"/>
-    <wire from="(820,1420)" to="(820,1520)"/>
-    <wire from="(820,1420)" to="(920,1420)"/>
-    <wire from="(820,1520)" to="(860,1520)"/>
     <wire from="(820,1810)" to="(850,1810)"/>
     <wire from="(820,1890)" to="(820,1910)"/>
     <wire from="(820,1890)" to="(860,1890)"/>
