@@ -82,8 +82,8 @@ def createMicroCode(data):
                 address = (flag << 11) | (instr << 3) | substep
                  
                 try: rom_data[address] = data[instr][substep]
-                except: rom_data[address] = data[instr][-1]
-                    
+                except: rom_data[address] = 0
+                
                 conditionalJumps_Expections(flag,instr,substep,address,rom_data)
        
     return rom_data
@@ -103,52 +103,52 @@ def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
     IMG = bool((flag>>6)&1)
     
     # BCC - Branch on Carry Clear
-    if (not CF) and (instr == 30) and (substep == 0): rom_data[address] = [RO|CIDL]
-    if (not CF) and (instr == 30) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
-    if (not CF) and (instr == 30) and (substep == 2): rom_data[address] = [MI|COA|BR|J]
-    if (not CF) and (instr == 30) and (substep == 3): rom_data[address] = [MI|COA|BR|CE|DRF]
+    if (not CF) and (instr == 30) and (substep == 0): rom_data[address] = RO|CIDL
+    if (not CF) and (instr == 30) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
+    if (not CF) and (instr == 30) and (substep == 2): rom_data[address] = MI|COA|BR|J
+    if (not CF) and (instr == 30) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
     
     # BCS - Branch on Carry Set
-    if CF and (instr == 31) and (substep == 0): rom_data[address] = [RO|CIDL]
-    if CF and (instr == 31) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
-    if CF and (instr == 31) and (substep == 2): rom_data[address] = [MI|COA|BR|J]
-    if CF and (instr == 31) and (substep == 3): rom_data[address] = [MI|COA|BR|CE|DRF]
+    if CF and (instr == 31) and (substep == 0): rom_data[address] = RO|CIDL
+    if CF and (instr == 31) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
+    if CF and (instr == 31) and (substep == 2): rom_data[address] = MI|COA|BR|J
+    if CF and (instr == 31) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
     
     # BEQ - Branch on Zero Set
-    if ZF and (instr == 32) and (substep == 0): rom_data[address] = [RO|CIDL]
-    if ZF and (instr == 32) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
-    if ZF and (instr == 32) and (substep == 2): rom_data[address] = [MI|COA|BR|J]
-    if ZF and (instr == 32) and (substep == 3): rom_data[address] = [MI|COA|BR|CE|DRF]
+    if ZF and (instr == 32) and (substep == 0): rom_data[address] = RO|CIDL
+    if ZF and (instr == 32) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH 
+    if ZF and (instr == 32) and (substep == 2): rom_data[address] = MI|COA|BR|J
+    if ZF and (instr == 32) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
     
     # BMI - Branch on Minus
-    if NF and (instr == 35) and (substep == 0): rom_data[address] = [RO|CIDL]
-    if NF and (instr == 35) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
-    if NF and (instr == 35) and (substep == 2): rom_data[address] = [MI|COA|BR|J]
-    if NF and (instr == 35) and (substep == 3): rom_data[address] = [MI|COA|BR|CE|DRF]
+    if NF and (instr == 35) and (substep == 0): rom_data[address] = RO|CIDL
+    if NF and (instr == 35) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
+    if NF and (instr == 35) and (substep == 2): rom_data[address] = MI|COA|BR|J
+    if NF and (instr == 35) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
     
     # BNE - Branch on not Zero
-    if (not ZF) and (instr == 36) and (substep == 0): rom_data[address] = [RO|CIDL]
-    if (not ZF) and (instr == 36) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
-    if (not ZF) and (instr == 36) and (substep == 2): rom_data[address] = [MI|COA|BR|J]
-    if (not ZF) and (instr == 36) and (substep == 3): rom_data[address] = [MI|COA|BR|CE|DRF]
+    if (not ZF) and (instr == 36) and (substep == 0): rom_data[address] = RO|CIDL
+    if (not ZF) and (instr == 36) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
+    if (not ZF) and (instr == 36) and (substep == 2): rom_data[address] = MI|COA|BR|J
+    if (not ZF) and (instr == 36) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
     
     # BPL - Branch on Plus
-    if (not NF) and (instr == 37) and (substep == 0): rom_data[address] = [RO|CIDL]
-    if (not NF) and (instr == 37) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
-    if (not NF) and (instr == 37) and (substep == 2): rom_data[address] = [MI|COA|BR|J]
-    if (not NF) and (instr == 37) and (substep == 3): rom_data[address] = [MI|COA|BR|CE|DRF]
+    if (not NF) and (instr == 37) and (substep == 0): rom_data[address] = RO|CIDL
+    if (not NF) and (instr == 37) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
+    if (not NF) and (instr == 37) and (substep == 2): rom_data[address] = MI|COA|BR|J
+    if (not NF) and (instr == 37) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
     
     # BVC - Branch on Overflow Clear
-    if (not VF) and (instr == 39) and (substep == 0): rom_data[address] = [RO|CIDL]
-    if (not VF) and (instr == 39) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
-    if (not VF) and (instr == 39) and (substep == 2): rom_data[address] = [MI|COA|BR|J]
-    if (not VF) and (instr == 39) and (substep == 3): rom_data[address] = [MI|COA|BR|CE|DRF]
+    if (not VF) and (instr == 39) and (substep == 0): rom_data[address] = RO|CIDL
+    if (not VF) and (instr == 39) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
+    if (not VF) and (instr == 39) and (substep == 2): rom_data[address] = MI|COA|BR|J
+    if (not VF) and (instr == 39) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
     
     # BVS - Branch on Overflow Set 
-    if VF and (instr == 40) and (substep == 0): rom_data[address] = [RO|CIDL]
-    if VF and (instr == 40) and (substep == 1): rom_data[address] = [MI|COA|RO|CIDH]  
-    if VF and (instr == 40) and (substep == 2): rom_data[address] = [MI|COA|BR|J]
-    if VF and (instr == 40) and (substep == 3): rom_data[address] = [MI|COA|BR|CE|DRF]
+    if VF and (instr == 40) and (substep == 0): rom_data[address] = RO|CIDL
+    if VF and (instr == 40) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
+    if VF and (instr == 40) and (substep == 2): rom_data[address] = MI|COA|BR|J
+    if VF and (instr == 40) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
     
     
     
@@ -207,42 +207,42 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                     # 028 - absolute,X   ; oper,X
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI|FI, MI|COA|CE|II|EO|AI|EP],                     # 029 - absolute,Y   ; oper,Y
         
-        # BCC # Branch on Carry Clear                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
+        # BCC # Branch on Carry Clear                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 030 - relative     ; oper
         
-        # BCS # Breanch on Carry Set                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
+        # BCS # Breanch on Carry Set                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 031 - relative     ; oper
         
-        # BEQ # Branch on Zero                                                                                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # BEQ # Branch on Zero                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 032 - relative     ; oper
         
-        # BIT # Test Bits in Memory with Accumulator                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
+        # BIT # Test Bits in Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EP],                                                                       # 033 - zeropage     ; oper
         [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EP],                                                        # 034 - absolute     ; oper
         
-        # BMI # Branch on Minus                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
+        # BMI # Branch on Minus                                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 035 - relative     ; oper
         
-        # BNE # Branch on not Zero                                                                                                                              # OPC - ADDRESSING   ; ASSEMBLER
+        # BNE # Branch on not Zero                                                                                                                             # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 036 - relative     ; oper
         
-        # BPL # Branch on Plus                                                                                                                                  # OPC - ADDRESSING   ; ASSEMBLER
+        # BPL # Branch on Plus                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 037 - relative     ; oper
         
-        # BRK # Forced Break                                                     # OPC - ADDRESSING   ; ASSEMBLER
+        # BRK # Forced Break               # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|COA|CE|DRF|II|EP|NOP],        # 038 - implied      ;
         
-        # BVC # Branch on Overflow Clear                                                                                                                        # OPC - ADDRESSING   ; ASSEMBLER
+        # BVC # Branch on Overflow Clear                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 039 - relative     ; oper 
         
-        # BVS # Branch on Overflow Set                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
+        # BVS # Branch on Overflow Set                                                                                                                         # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 040 - relative     ; oper
         
-        # CLC # Clear Carry Flag                                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|CLC|FI|NOP],                                                                                       # 041 - implied      ; 
+        # CLC # Clear Carry Flag                                                                                                                               # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|DRF|II|EP|CLC|FI|NOP],                                                                                                                      # 041 - implied      ; 
         
-        # CLV # Clear Overflow Flag                                              # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 042 - implied      ; 
+        # CLV # Clear Overflow Flag                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|DRF|II|EP|CLV|FI|NOP],                                                                                                                      # 042 - implied      ; 
         
         # CMP # Compare Memory with Accumulator                                  # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 043 - immediate    ; #oper
