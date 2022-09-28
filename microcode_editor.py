@@ -103,7 +103,7 @@ def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
     IMG = bool((flag>>6)&1)
     
     # BCC - Branch on Carry Clear
-    if (not CF) and (instr == 30) and (substep == 0): rom_data[address] = RO
+    if (not CF) and (instr == 30) and (substep == 0): rom_data[address] = RO|CIDL
     if (not CF) and (instr == 30) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
     if (not CF) and (instr == 30) and (substep == 2): rom_data[address] = MI|COA|BR|J
     if (not CF) and (instr == 30) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
