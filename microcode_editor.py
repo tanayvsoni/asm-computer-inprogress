@@ -49,7 +49,7 @@ NOT   = 0b0000000000100100000000000000000000  # NOT
 INC   = 0b0000000000110100000000000000000000  # Increment 
 DEC   = 0b0000000000111000000000000000000000  # Deccrement 
 ADD   = 0b0000000000111100000000000000000000  # Add without Carry
-
+BIT   = 0b0000000000111100000000000000000000  # Bitwise Accumulator with Memory
 # GENERAL #
 DSP   = 0b00000000001010000000000000000000000  # Decrement stack pointer #
 CLC   = 0b00000000001011000000000000000000000  # Clear carry flag #
@@ -217,7 +217,7 @@ def main():
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 032 - relative     ; oper
         
         # BIT # Test Bits in Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EP],                                                                       # 033 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|BIT|EI|ES2|ECLK, MI|COA|CE|II|EP],                                                                       # 033 - zeropage     ; oper
         [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EP],                                                        # 034 - absolute     ; oper
         
         # BMI # Branch on Minus                                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
