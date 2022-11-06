@@ -184,26 +184,26 @@ def main():
         [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|ECLK|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],      # 011 - (indirect),Y  ; (oper),Y
         
         # AND #                                                                                                                                                # OPC - ADDRESSING    ; ASSEMBLER
-        [MI|COA|CE|FEC|RO|AND|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                                                               # 012 - immediate     ; #oper
-        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                                 # 013 - zeropage      ; oper
-        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                         # 014 - zeropage,X    ; oper,X
-        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                         # 015 - zeropage,Y    ; oper,Y
-        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                  # 016 - absolute      ; oper
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                   # 017 - absolute,X    ; oper,X
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                   # 018 - absolute,Y    ; oper,Y
-        [MI|COA|CE|FEC|RO|EI|ES1|ADD|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                        # 019 - (indirect,X)  ; (oper,X)
-        [MI|COA|CE|FEC|RO|EI|ES1|ADD|YOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                        # 020 - (indirect,Y)  ; (oper,Y)
-        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],  # 021 - (indirect),X  ; (oper),X
-        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],  # 022 - (indirect),Y  ; (oper),Y
+        [MI|COA|CE|FEC|RO|AND|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                                                                  # 012 - immediate     ; #oper
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                                    # 013 - zeropage      ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                            # 014 - zeropage,X    ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                            # 015 - zeropage,Y    ; oper,Y
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                     # 016 - absolute      ; oper
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                      # 017 - absolute,X    ; oper,X
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                      # 018 - absolute,Y    ; oper,Y
+        [MI|COA|CE|FEC|RO|EI|ES1|ADD|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                           # 019 - (indirect,X)  ; (oper,X)
+        [MI|COA|CE|FEC|RO|EI|ES1|ADD|YOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                           # 020 - (indirect,Y)  ; (oper,Y)
+        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],     # 021 - (indirect),X  ; (oper),X
+        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],     # 022 - (indirect),Y  ; (oper),Y
         
         # ASL # Arithemic Shift Left                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                                                                    # 023 - accumulator  ; A
-        [MI|COA|CE|FEC|RO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                                        # 024 - zeropage     ; oper
-        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                # 025 - zeropage,X   ; oper,X
-        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                # 026 - zeropage,Y   ; oper,Y
-        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                         # 027 - absolute     ; oper
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                     # 028 - absolute,X   ; oper,X
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                     # 029 - absolute,Y   ; oper,Y
+        [MI|COA|CE|FEC|ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                                                                       # 023 - accumulator  ; A
+        [MI|COA|CE|FEC|RO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                                           # 024 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                   # 025 - zeropage,X   ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                   # 026 - zeropage,Y   ; oper,Y
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                            # 027 - absolute     ; oper
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                        # 028 - absolute,X   ; oper,X
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                        # 029 - absolute,Y   ; oper,Y
         
         # BCC # Branch on Carry Clear                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 030 - relative     ; oper
@@ -215,8 +215,8 @@ def main():
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 032 - relative     ; oper
         
         # BIT # Test Bits in Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|BIT|EI|ES2|ECLK, MI|COA|CE|II|EP],                                                                       # 033 - zeropage     ; oper
-        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|AND|ECLK|EI|ES2|FI, MI|COA|CE|II|EP],                                                        # 034 - absolute     ; oper
+        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|BIT|ES2|ECLK, MI|COA|CE|II|EP],                                                                             # 033 - zeropage     ; oper
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|BIT|ECLK|ES2, MI|COA|CE|II|EP],                                                              # 034 - absolute     ; oper
         
         # BMI # Branch on Minus                                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 035 - relative     ; oper
