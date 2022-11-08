@@ -94,8 +94,8 @@ def substeps_CJ(substep, rom_data, address):
         case 0: rom_data[address] = RO|CIDL
         case 1: rom_data[address] = MI|COA|RO|CIDH 
         case 2: rom_data[address] = MI|COA|BR|J
-        case 3: rom_data[address] = MI|COA|BR|CE|II|EP|NOP|DRF
-        case 4: rom_data[address] = CE
+        case 3: rom_data[address] = MI|COA|BR|CE|II|NOP|DRF
+        case 4: rom_data[address] = CE|EP
      
 
 def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
@@ -177,7 +177,7 @@ def main():
         [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|AND|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],     # 022 - (indirect),Y  ; (oper),Y
         
         # ASL # Arithemic Shift Left                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                                                                       # 023 - accumulator  ; A
+        [ASHFL|EI, MI|COA|CE|DRF|NOP|II|EO|AI|EP],                                                                                                             # 023 - accumulator  ; A
         [MI|COA|CE|FEC|RO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                                           # 024 - zeropage     ; oper
         [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                   # 025 - zeropage,X   ; oper,X
         [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                                                   # 026 - zeropage,Y   ; oper,Y
@@ -217,10 +217,10 @@ def main():
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 040 - relative     ; oper
         
         # CLC # Clear Carry Flag                                                                                                                               # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|CLC|FI|NOP],                                                                                                                      # 041 - implied      ; 
+        [MI|COA|CE|DRF|II|EP|CLC|NOP],                                                                                                                         # 041 - implied      ; 
         
         # CLV # Clear Overflow Flag                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|CLV|FI|NOP],                                                                                                                      # 042 - implied      ; 
+        [MI|COA|CE|DRF|II|EP|CLV|NOP],                                                                                                                         # 042 - implied      ; 
         
         # CMP # Compare Memory with Accumulator                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|CMP|ES2, MI|COA|CE|II|EP],                                                                                                           # 043 - immediate    ; #oper
@@ -254,10 +254,10 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                     # 063 - absolute,Y   ; oper,Y
         
         # DEX # Decrement Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|XOX2|EI|ES2|DEC, MI|COA|CE|II|EO|XI|EP],                                                                                                # 064 - implied     ; 
+        [XOX2|EI|ES2|DEC, MI|COA|CE|DRF|NOP|II|EO|XI|EP],                                                                                                      # 064 - implied     ; 
         
         # DEC # Decrement Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|YOX2|EI|ES2|DEC, MI|COA|CE|II|EO|YI|EP],                                                                                                # 065 - implied      ; 
+        [YOX2|EI|ES2|DEC, MI|COA|CE|DRF|NOP|II|EO|YI|EP],                                                                                                      # 065 - implied      ; 
         
         # EOR # Exclusive-OR Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|XOR|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                                                                  # 066 - immediate    ; #oper
@@ -281,17 +281,17 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                     # 082 - absolute,Y   ; oper,Y
         
         # INX # Increment Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|XOX2|EI|ES2|INC, MI|COA|CE|II|EO|XI|EP],                                                                                                # 083 - implied     ; 
+        [XOX2|EI|ES2|INC, MI|COA|CE|DRF|NOP|II|EO|XI|EP],                                                                                                      # 083 - implied     ; 
         
         # INY # Increment Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|YOX2|EI|ES2|INC, MI|COA|CE|II|EO|XI|EP],                                                                                                # 084 - implied      ; 
+        [YOX2|EI|ES2|INC, MI|COA|CE|DRF|NOP|II|EO|XI|EP],                                                                                                      # 084 - implied      ; 
         
         # JMP # Jump to new location                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, MI|COA|BR|CE|II|EP|NOP|DRF, CE],                                                                                # 085 - absolute     ; oper
-        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, CE|RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|CE|II|EP|NOP|DRF, CE],                                                    # 086 - indirect     ; (oper)
+        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, MI|COA|BR|CE|II|NOP|DRF, CE|EP],                                                                                # 085 - absolute     ; oper
+        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, CE|RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|CE|II|NOP|DRF, CE|EP],                                                    # 086 - indirect     ; (oper)
         
         # JSR # Jump to new location Saving Return Address                       # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 087 - absolute     ; oper
+        [RO|CIDL, MI|COA|CE|RO|CIDH, MI|SPAO|CODL|RI|SPE, MI|SPAO|CODH|RI|SPE, MI|COA|BR|J, MI|COA|BR|CE|II|NOP|DRF, CE|EP],        # 087 - absolute     ; oper
         
         # LDA # Load Accumulator with Memory                                     # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 088 - immediate    ; #oper

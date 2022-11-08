@@ -1048,6 +1048,10 @@
       <a name="facing" val="north"/>
       <a name="label" val="SPE"/>
     </comp>
+    <comp lib="0" loc="(2440,2650)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="BIT"/>
+    </comp>
     <comp lib="0" loc="(2450,2100)" name="Tunnel">
       <a name="facing" val="south"/>
       <a name="label" val="CONTROL"/>
@@ -1175,10 +1179,6 @@
     <comp lib="0" loc="(2700,2390)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="RTR"/>
-    </comp>
-    <comp lib="0" loc="(2720,2660)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="SPAO"/>
     </comp>
     <comp lib="0" loc="(2740,2390)" name="Tunnel">
       <a name="facing" val="north"/>
@@ -1325,10 +1325,6 @@
       <a name="label" val="GEN"/>
       <a name="width" val="3"/>
     </comp>
-    <comp lib="0" loc="(3150,2590)" name="Tunnel">
-      <a name="facing" val="north"/>
-      <a name="label" val="BIT"/>
-    </comp>
     <comp lib="0" loc="(3170,2830)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="YREG"/>
@@ -1349,6 +1345,10 @@
     <comp lib="0" loc="(3230,2590)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="LD"/>
+    </comp>
+    <comp lib="0" loc="(3270,2590)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="SPAO"/>
     </comp>
     <comp lib="0" loc="(3280,2910)" name="Tunnel">
       <a name="facing" val="north"/>
@@ -2044,6 +2044,7 @@
       <a name="appearance" val="logisim_evolution"/>
       <a name="asyncread" val="true"/>
       <a name="databus" val="bidir"/>
+      <a name="trigger" val="falling"/>
       <a name="type" val="nonvolatile"/>
     </comp>
     <comp lib="4" loc="(860,820)" name="ROM">
@@ -6668,6 +6669,8 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(2180,2520)" to="(2410,2520)"/>
     <wire from="(2180,2770)" to="(2180,2800)"/>
     <wire from="(2180,2800)" to="(2580,2800)"/>
+    <wire from="(2190,2490)" to="(2190,2510)"/>
+    <wire from="(2190,2510)" to="(2440,2510)"/>
     <wire from="(2190,2770)" to="(2190,2790)"/>
     <wire from="(2190,2790)" to="(2620,2790)"/>
     <wire from="(2200,2770)" to="(2200,2780)"/>
@@ -6747,6 +6750,7 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(2440,2140)" to="(2440,2330)"/>
     <wire from="(2440,2330)" to="(2500,2330)"/>
     <wire from="(2440,2350)" to="(2440,2390)"/>
+    <wire from="(2440,2510)" to="(2440,2650)"/>
     <wire from="(2450,2100)" to="(2450,2120)"/>
     <wire from="(2450,2140)" to="(2450,2320)"/>
     <wire from="(2450,2320)" to="(2530,2320)"/>
@@ -6836,7 +6840,6 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(2690,3190)" to="(2690,3230)"/>
     <wire from="(2690,3250)" to="(2690,3280)"/>
     <wire from="(2700,2280)" to="(2700,2390)"/>
-    <wire from="(2720,2640)" to="(2720,2660)"/>
     <wire from="(2730,3220)" to="(2730,3240)"/>
     <wire from="(2730,3220)" to="(2780,3220)"/>
     <wire from="(2740,2270)" to="(2740,2390)"/>
@@ -6894,9 +6897,10 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(3120,2540)" to="(3230,2540)"/>
     <wire from="(3120,2570)" to="(3120,2590)"/>
     <wire from="(3130,2170)" to="(3130,2370)"/>
+    <wire from="(3130,2520)" to="(3130,2530)"/>
+    <wire from="(3130,2530)" to="(3270,2530)"/>
     <wire from="(3140,2160)" to="(3140,2370)"/>
     <wire from="(3150,2150)" to="(3150,2370)"/>
-    <wire from="(3150,2560)" to="(3150,2590)"/>
     <wire from="(3170,2830)" to="(3200,2830)"/>
     <wire from="(3170,2910)" to="(3210,2910)"/>
     <wire from="(3190,2550)" to="(3190,2590)"/>
@@ -6905,6 +6909,7 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(3230,2540)" to="(3230,2590)"/>
     <wire from="(3230,2850)" to="(3230,2910)"/>
     <wire from="(3230,2910)" to="(3280,2910)"/>
+    <wire from="(3270,2530)" to="(3270,2590)"/>
     <wire from="(3390,2750)" to="(3420,2750)"/>
     <wire from="(480,1580)" to="(490,1580)"/>
     <wire from="(480,1690)" to="(480,1710)"/>
