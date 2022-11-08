@@ -45,7 +45,7 @@ LSHFR = 0b0000000000010100000000000000000000  # Logical shift right
 ASHFL = 0b0000000000011000000000000000000000  # Arithemetic shift left
 ROR   = 0b0000000000011100000000000000000000  # Rotate right
 ROL   = 0b0000000000100000000000000000000000  # Rotate left
-NOT   = 0b0000000000100100000000000000000000  # NOT
+CMP   = 0b0000000000100100000000000000000000  # Compare 
 INC   = 0b0000000000110100000000000000000000  # Increment x
 DEC   = 0b0000000000111000000000000000000000  # Deccrement 
 ADD   = 0b0000000000111100000000000000000000  # Add without Carry
@@ -88,7 +88,15 @@ def createMicroCode(data):
                 conditionalJumps_Expections(flag,instr,substep,address,rom_data)
        
     return rom_data
-        
+
+def substeps_CJ(substep, rom_data, address):
+    match substep:
+        case 0: rom_data[address] = RO|CIDL
+        case 1: rom_data[address] = MI|COA|RO|CIDH 
+        case 2: rom_data[address] = MI|COA|BR|J
+        case 3: rom_data[address] = MI|COA|BR|CE|II|EP|NOP|DRF
+        case 4: rom_data[address] = CE
+     
 
 def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
     """
@@ -104,54 +112,29 @@ def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
     IMG = bool((flag>>6)&1)
     
     # BCC - Branch on Carry Clear
-    if (not CF) and (instr == 30) and (substep == 0): rom_data[address] = RO|CIDL
-    if (not CF) and (instr == 30) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
-    if (not CF) and (instr == 30) and (substep == 2): rom_data[address] = MI|COA|BR|J
-    if (not CF) and (instr == 30) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
-    
+    if (not CF) and (instr == 30): substeps_CJ(substep, rom_data, address)
+
     # BCS - Branch on Carry Set
-    if CF and (instr == 31) and (substep == 0): rom_data[address] = RO|CIDL
-    if CF and (instr == 31) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
-    if CF and (instr == 31) and (substep == 2): rom_data[address] = MI|COA|BR|J
-    if CF and (instr == 31) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
+    elif CF and (instr == 31): substeps_CJ(substep, rom_data, address)
     
     # BEQ - Branch on Zero Set
-    if ZF and (instr == 32) and (substep == 0): rom_data[address] = RO|CIDL
-    if ZF and (instr == 32) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH 
-    if ZF and (instr == 32) and (substep == 2): rom_data[address] = MI|COA|BR|J
-    if ZF and (instr == 32) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
+    elif ZF and (instr == 32): substeps_CJ(substep, rom_data, address)
     
     # BMI - Branch on Minus
-    if NF and (instr == 35) and (substep == 0): rom_data[address] = RO|CIDL
-    if NF and (instr == 35) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
-    if NF and (instr == 35) and (substep == 2): rom_data[address] = MI|COA|BR|J
-    if NF and (instr == 35) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
+    elif NF and (instr == 35): substeps_CJ(substep, rom_data, address)
     
     # BNE - Branch on not Zero
-    if (not ZF) and (instr == 36) and (substep == 0): rom_data[address] = RO|CIDL
-    if (not ZF) and (instr == 36) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
-    if (not ZF) and (instr == 36) and (substep == 2): rom_data[address] = MI|COA|BR|J
-    if (not ZF) and (instr == 36) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
+    elif (not ZF) and (instr == 36): substeps_CJ(substep, rom_data, address)
     
     # BPL - Branch on Plus
-    if (not NF) and (instr == 37) and (substep == 0): rom_data[address] = RO|CIDL
-    if (not NF) and (instr == 37) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
-    if (not NF) and (instr == 37) and (substep == 2): rom_data[address] = MI|COA|BR|J
-    if (not NF) and (instr == 37) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
+    elif (not NF) and (instr == 37): substeps_CJ(substep, rom_data, address)
     
     # BVC - Branch on Overflow Clear
-    if (not VF) and (instr == 39) and (substep == 0): rom_data[address] = RO|CIDL
-    if (not VF) and (instr == 39) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
-    if (not VF) and (instr == 39) and (substep == 2): rom_data[address] = MI|COA|BR|J
-    if (not VF) and (instr == 39) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
+    elif (not VF) and (instr == 39): substeps_CJ(substep, rom_data, address)
     
     # BVS - Branch on Overflow Set 
-    if VF and (instr == 40) and (substep == 0): rom_data[address] = RO|CIDL
-    if VF and (instr == 40) and (substep == 1): rom_data[address] = MI|COA|RO|CIDH  
-    if VF and (instr == 40) and (substep == 2): rom_data[address] = MI|COA|BR|J
-    if VF and (instr == 40) and (substep == 3): rom_data[address] = MI|COA|BR|CE|DRF
+    elif VF and (instr == 40): substeps_CJ(substep, rom_data, address)
     
-
 def export(rom_data):            
     """
     Export Microcode into text file
@@ -164,11 +147,8 @@ def export(rom_data):
 def main():    
     # Instruction Data
     instructions_data = [
-        # START # Initalize Computer                                                                                                                           # OPC - ADDRESSING    ; ASSEMBLER
-        [MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                                      # 000 - implied       ; 
-        
         # NOP # No operation                                                                                                                                   # OPC - ADDRESSING    ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 254 - implied       ;
+        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 000 - implied       ; 
         
         # ADC # Add with Carry                                                                                                                                 # OPC - ADDRESSING    ; ASSEMBLER
         [MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                                                                   # 001 - immediate     ; #oper
@@ -242,73 +222,73 @@ def main():
         # CLV # Clear Overflow Flag                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|CLV|FI|NOP],                                                                                                                      # 042 - implied      ; 
         
-        # CMP # Compare Memory with Accumulator                                  # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 043 - immediate    ; #oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 044 - zeropage     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 045 - zeropage,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 046 - zeropage,Y   ; oper,Y
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 047 - absolute     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 048 - absolute,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 049 - absolute,Y   ; oper,Y 
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 048 - (indirect,X) ; (oper,X)
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 049 - (indirect,Y) ; (oper,Y)
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 050 - (indirect),X ; (oper),X
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 051 - (indirect),Y ; (oper),Y
+        # CMP # Compare Memory with Accumulator                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|RO|CMP|ES2, MI|COA|CE|II|EP],                                                                                                           # 043 - immediate    ; #oper
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],                                                                             # 044 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],                                                     # 045 - zeropage,X   ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],                                                     # 046 - zeropage,Y   ; oper,Y
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],                                                              # 047 - absolute     ; oper
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],                               # 048 - absolute,X   ; oper,X
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],                               # 049 - absolute,Y   ; oper,Y 
+        [MI|COA|CE|FEC|RO|EI|ES1|ADD|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],                                    # 048 - (indirect,X) ; (oper,X)
+        [MI|COA|CE|FEC|RO|EI|ES1|ADD|YOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],                                    # 049 - (indirect,Y) ; (oper,Y)
+        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],              # 050 - (indirect),X ; (oper),X
+        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|ECLK|CMP|ES2, MI|COA|CE|II|EP],              # 051 - (indirect),Y ; (oper),Y
         
-        # CPX # Compare Memory with Index X                                      # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 052 - immediate    ; #oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 053 - zeropage     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 054 - absolute     ; oper
+        # CPX # Compare Memory with Index X                                                                                                                    # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|RO|CMP|XOX1|ES1|ES2, MI|COA|CE|II|EP],                                                                                                  # 052 - immediate    ; #oper
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|CMP|XOX1|ES1|ES2, MI|COA|CE|II|EP],                                                                    # 053 - zeropage     ; oper
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|CMP|XOX1|ES1|ES2, MI|COA|CE|II|EP],                                                     # 054 - absolute     ; oper
         
-        # CPY # Compare Memory with Index X                                      # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 055 - immediate    ; #oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 056 - zeropage     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 057 - absolute     ; oper
+        # CPY # Compare Memory with Index X                                                                                                                    # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|RO|CMP|YOX1|ES1|ES2, MI|COA|CE|II|EP],                                                                                                  # 055 - immediate    ; #oper
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|CMP|YOX1|ES1|ES2, MI|COA|CE|II|EP],                                                                    # 056 - zeropage     ; oper
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|CMP|YOX1|ES1|ES2, MI|COA|CE|II|EP],                                                     # 057 - absolute     ; oper
         
-        # DEC # Decrement Memory by One                                          # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 058 - zeropage     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 059 - zeropage,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 060 - zeropage,Y   ; oper,Y
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 061 - absolute     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 062 - absolute,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 063 - absolute,Y   ; oper,Y
+        # DEC # Decrement Memory by One                                                                                                                        # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                                                                   # 058 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                                           # 059 - zeropage,X   ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                                           # 060 - zeropage,Y   ; oper,Y
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                                                    # 061 - absolute     ; oper
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                     # 062 - absolute,X   ; oper,X
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                     # 063 - absolute,Y   ; oper,Y
         
-        # DEX # Decrement Index X by One                                         # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 064 - implied     ; 
+        # DEX # Decrement Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|XOX2|EI|ES2|DEC, MI|COA|CE|II|EO|XI|EP],                                                                                                # 064 - implied     ; 
         
-        # DEC # Decrement Index Y by One                                         # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 065 - implied      ; 
+        # DEC # Decrement Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|YOX2|EI|ES2|DEC, MI|COA|CE|II|EO|YI|EP],                                                                                                # 065 - implied      ; 
         
-        # EOR # Exclusive-OR Memory with Accumulator                             # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 066 - immediate    ; #oper
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 067 - zeropage     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 068 - zeropage,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 069 - zeropage,Y   ; oper,Y
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 070 - absolute     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 071 - absolute,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 072 - absolute,Y   ; oper,Y
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 073 - (indirect,X) ; (oper,X)
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 074 - (indirect,Y) ; (oper,Y)
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 075 - (indirect),X ; (oper),X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 076 - (indirect),Y ; (oper),Y
+        # EOR # Exclusive-OR Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|RO|XOR|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                                                                  # 066 - immediate    ; #oper
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                                    # 067 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                            # 068 - zeropage,X   ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                            # 069 - zeropage,Y   ; oper,Y
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                                                     # 070 - absolute     ; oper
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                      # 071 - absolute,X   ; oper,X
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                      # 072 - absolute,Y   ; oper,Y
+        [MI|COA|CE|FEC|RO|EI|ES1|ADD|XOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                           # 073 - (indirect,X) ; (oper,X)
+        [MI|COA|CE|FEC|RO|EI|ES1|ADD|YOX1|ES2, EO|TRLI|RTR, MI|TRO, RO|TRLI|ECLK, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],                           # 074 - (indirect,Y) ; (oper,Y)
+        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|XOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],     # 075 - (indirect),X ; (oper),X
+        [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],     # 076 - (indirect),Y ; (oper),Y
         
-        # INC # Increment Memory by One                                          # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 077 - zeropage     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 078 - zeropage,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 079 - zeropage,Y   ; oper,Y
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 080 - absolute     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 081 - absolute,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 082 - absolute,Y   ; oper,Y
+        # INC # Increment Memory by One                                                                                                                        # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                                                                   # 077 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                                           # 078 - zeropage,X   ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                                           # 079 - zeropage,Y   ; oper,Y
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                                                    # 080 - absolute     ; oper
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                     # 081 - absolute,X   ; oper,X
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                     # 082 - absolute,Y   ; oper,Y
         
-        # INX # Increment Index X by One                                         # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 083 - implied     ; 
+        # INX # Increment Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|XOX2|EI|ES2|INC, MI|COA|CE|II|EO|XI|EP],                                                                                                # 083 - implied     ; 
         
-        # INY # Increment Index Y by One                                         # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 084 - implied      ; 
+        # INY # Increment Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|YOX2|EI|ES2|INC, MI|COA|CE|II|EO|XI|EP],                                                                                                # 084 - implied      ; 
         
-        # JMP # Jump to new location                                             # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 085 - absolute     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 086 - indirect     ; (oper)
+        # JMP # Jump to new location                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
+        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, MI|COA|BR|CE|II|EP|NOP|DRF, CE],                                                                                # 085 - absolute     ; oper
+        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, CE|RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|CE|II|EP|NOP|DRF, CE],                                                    # 086 - indirect     ; (oper)
         
         # JSR # Jump to new location Saving Return Address                       # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|CO, RO|II|CE, IO|MI,       RI|AO,           0, 0, 0, 0, 0 ],        # 087 - absolute     ; oper
