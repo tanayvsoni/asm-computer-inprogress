@@ -50,6 +50,7 @@ INC   = 0b0000000000110100000000000000000000  # Increment x
 DEC   = 0b0000000000111000000000000000000000  # Deccrement 
 ADD   = 0b0000000000111100000000000000000000  # Add without Carry
 BIT   = 0b0000000000111100000000000000000000  # Bitwise Accumulator with Memory
+LD    = 0b0000000000111100000000000000000000  # Load
 
 # GENERAL #
 DSP   = 0b00000000001010000000000000000000000  # Decrement stack pointer #
@@ -94,8 +95,8 @@ def substeps_CJ(substep, rom_data, address):
         case 0: rom_data[address] = RO|CIDL
         case 1: rom_data[address] = MI|COA|RO|CIDH 
         case 2: rom_data[address] = MI|COA|BR|J
-        case 3: rom_data[address] = MI|COA|BR|CE|II|NOP|DRF
-        case 4: rom_data[address] = CE|EP
+        case 3: rom_data[address] = MI|COA|CE|FEC|BR
+        case 4: rom_data[address] = CE|II|EP
      
 
 def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
@@ -287,17 +288,17 @@ def main():
         [YOX2|EI|ES2|INC, MI|COA|CE|DRF|NOP|II|EO|XI|EP],                                                                                                      # 084 - implied      ; 
         
         # JMP # Jump to new location                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, MI|COA|BR|CE|II|NOP|DRF, CE|EP],                                                                                # 085 - absolute     ; oper
-        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, CE|RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|CE|II|NOP|DRF, CE|EP],                                                    # 086 - indirect     ; (oper)
+        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, MI|COA|CE|FEC|BR, CE|II|EP],                                                                                    # 085 - absolute     ; oper
+        [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, CE|RO|CIDL, MI|COA|RO|CIDH, MI|COA|CE|FEC|BR, CE|II|EP],                                                        # 086 - indirect     ; (oper)
         
-        # JSR # Jump to new location Saving Return Address                       # OPC - ADDRESSING   ; ASSEMBLER
-        [RO|CIDL, MI|COA|CE|RO|CIDH, MI|SPAO|CODL|RI|SPE, MI|SPAO|CODH|RI|SPE, MI|COA|BR|J, MI|COA|BR|CE|II|NOP|DRF, CE|EP],        # 087 - absolute     ; oper
+        # JSR # Jump to new location Saving Return Address                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
+        [RO|CIDL, MI|COA|CE|RO|CIDH, MI|SPAO|CODL|RI|SPE, MI|SPAO|CODH|RI|SPE, MI|COA|BR|J, MI|COA|CE|FEC|BR, CE|II|EP],                                       # 087 - absolute     ; oper
         
-        # LDA # Load Accumulator with Memory                                     # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 088 - immediate    ; #oper
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI,    EO|AI|FI, 0, 0, 0, 0 ],        # 089 - zeropage     ; oper
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 090 - zeropage,X   ; oper,X
-        [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 091 - zeropage,Y   ; oper,Y
+        # LDA # Load Accumulator with Memory                                                                                                                   # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|COA|CE|FEC|RO|AI, MI|COA|CE|II|LD|EP],                                                                                                             # 088 - immediate    ; #oper
+        [MI|COA|CE|FEC|RO|TRLI|RTR, MI|TRO|ECLK, MI|COA|CE|II|RO|AI|LD|ECLK|EP],                                                                               # 089 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|ECLK, MI|COA|CE|II|RO|AI|LD|ECLK|EP],                                                  # 090 - zeropage,X   ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|ECLK, MI|COA|CE|II|RO|AI|LD|ECLK|EP],                                                  # 091 - zeropage,Y   ; oper,Y
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 092 - absolute     ; oper
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 093 - absolute,X   ; oper,X
         [ MI|CO, RO|II|CE, IO|MI,       RO|BI, EO|AI|SU|FI, 0, 0, 0, 0 ],        # 094 - absolute,Y   ; oper,Y
