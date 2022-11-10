@@ -344,10 +344,10 @@ def main():
         [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|OR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],      # 126 - (indirect),Y ; (oper),Y
         
         # PHA # Push Accumulator on Stack                                                                                                                      # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|SPAO|SPE|AO|RI, MI|COA|CE|DRF|II|EP],                                                                                                    # 127 - implied      ;
+        [FEC, MI|SPAO|SPE|AO|RI, MI|COA|CE|II|EP],                                                                                                             # 127 - implied      ;
         
-        # PHP # Push Processor Status on Stack                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 128 - implied      ;
+        # PHP # Push Processor Status on Stack                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
+        [FEC, MI|SPAO|SPE|SRO|RI, MI|COA|CE|II|EP],                                                                                                            # 128 - implied      ;
         
         # PLA # Pull Accumulator from Stack                                      # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 129 - implied      ;
