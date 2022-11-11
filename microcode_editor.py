@@ -292,7 +292,7 @@ def main():
         [RO|CIDL, MI|COA|RO|CIDH, MI|COA|BR|J, CE|RO|CIDL, MI|COA|RO|CIDH, MI|COA|CE|FEC|BR, CE|II|EP],                                                        # 086 - indirect     ; (oper)
         
         # JSR # Jump to new location Saving Return Address                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
-        [RO|CIDL, MI|COA|CE|RO|CIDH, MI|SPAO|CODL|RI|SPE, MI|SPAO|CODH|RI|SPE, MI|COA|BR|J, MI|COA|CE|FEC|BR, CE|II|EP],                                       # 087 - absolute     ; oper
+        [RO|CIDL, MI|COA|CE|RO|CIDH, MI|SPAO|CODH|RI|SPE, MI|SPAO|CODL|RI|SPE, MI|COA|BR|J, MI|COA|CE|FEC|BR, CE|II|EP],                                       # 087 - absolute     ; oper
         
         # LDA # Load Accumulator with Memory                                                                                                                   # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|AI, MI|COA|CE|II|LD|EP],                                                                                                             # 088 - immediate    ; #oper
@@ -377,7 +377,7 @@ def main():
         [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 145 - implied      ;
         
         # RTI # Return from Subroutine                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 146 - implied      ;
+        [MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH|DSP|SPE, MI|COA|J|BR, MI|COA|CE,           0, 0, 0, 0, 0 ],       # 146 - implied      ;
         
         # SUB # Subtract Memory from Accumulator with Borrow                     # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 147 - immediate    ; #oper
@@ -436,6 +436,9 @@ def main():
         
         # TYA # Transfer Index Y to Accumulator                                  # OPC - ADDRESSING   ; ASSEMBLER
         [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 182 - implied      ;
+        
+        # INT # Interrupt                                                        # OPC - ADDRESSING   ; ASSEMBLER
+        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 255 - implied      ;
     ]
     
     rom_data = createMicroCode(instructions_data)
