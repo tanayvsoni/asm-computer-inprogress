@@ -1098,6 +1098,10 @@
       <a name="facing" val="north"/>
       <a name="label" val="IJ"/>
     </comp>
+    <comp lib="0" loc="(2470,2650)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="SC"/>
+    </comp>
     <comp lib="0" loc="(2500,2390)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="FI"/>
@@ -6757,6 +6761,8 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(2190,2510)" to="(2440,2510)"/>
     <wire from="(2190,2770)" to="(2190,2790)"/>
     <wire from="(2190,2790)" to="(2620,2790)"/>
+    <wire from="(2200,2490)" to="(2200,2500)"/>
+    <wire from="(2200,2500)" to="(2470,2500)"/>
     <wire from="(2200,2770)" to="(2200,2780)"/>
     <wire from="(2200,2780)" to="(2660,2780)"/>
     <wire from="(2210,2360)" to="(2210,2390)"/>
@@ -6846,6 +6852,7 @@ f8 f9 fa fb fc fd fe ff
     <wire from="(2470,2140)" to="(2470,2300)"/>
     <wire from="(2470,2300)" to="(2600,2300)"/>
     <wire from="(2470,2340)" to="(2470,2390)"/>
+    <wire from="(2470,2500)" to="(2470,2650)"/>
     <wire from="(2480,2140)" to="(2480,2290)"/>
     <wire from="(2480,2290)" to="(2650,2290)"/>
     <wire from="(2480,3220)" to="(2480,3240)"/>
