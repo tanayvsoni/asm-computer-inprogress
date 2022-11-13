@@ -1,14 +1,16 @@
+# Section 1 #
+MI    = 0b10_0000_000_0000_0000_0000_0000_0000_0000_00  # Memory address register in
+COA   = 0b01_0000_000_0000_0000_0000_0000_0000_0000_00  # Program counter address bus out
 
-# INS #
-CIDL  = 0b0000010000000000000000000000000000  # Program counter LSB in #
-CIDH  = 0b0000100000000000000000000000000000  # Program counter MSB in #
-RI    = 0b0000110000000000000000000000000000  # RAM data in #
-MI    = 0b1000000000000000000000000000000000  # Memory address register in #
-EI    = 0b0001000000000000000000000000000000  # ALU in #
-AI    = 0b0001010000000000000000000000000000  # A register in #
-XI    = 0b0001100000000000000000000000000000  # X register in #
-YI    = 0b0001110000000000000000000000000000  # Y register in #
-SRDI  = 0b0010000000000000000000000000000000  # Status Register data bus in #
+# Decoder 1 #
+CIDL  = 0b00_0001_000_0000_0000_0000_0000_0000_0000_00  # Program counter LSB in
+CIDH  = 0b00_0010_000_0000_0000_0000_0000_0000_0000_00  # Program counter MSB in
+RI    = 0b00_0011_000_0000_0000_0000_0000_0000_0000_00  # RAM data in
+EI    = 0b00_0100_000_0000_0000_0000_0000_0000_0000_00  # ALU in
+AI    = 0b00_0101_000_0000_0000_0000_0000_0000_0000_00  # A register in
+XI    = 0b00_0110_000_0000_0000_0000_0000_0000_0000_00  # X register in
+YI    = 0b00_0111_000_0000_0000_0000_0000_0000_0000_00  # Y register in
+SRDI  = 0b00_1000_000_0000_0000_0000_0000_0000_0000_00  # Status Register data bus in
 SPI   = 0b0010010000000000000000000000000000  # Stack pointer in #
 TRLI  = 0b0000000000000000000000000100000000  # Transfer register LSB in #
 TRHI  = 0b0010110000000000000000000000000000  # Transfer register MSB in # 
@@ -17,7 +19,6 @@ FI    = 0b0000000000000000001000000000000000  # Status register in #
 II    = 0b0000000000000000000010000000000000  # Instruction register in #
 
 # OUTS #
-COA   = 0b0100000000000000000000000000000000  # Program counter address bus out #
 CODL  = 0b0000000010000000000000000000000000  # Program counter LSB data bus out #
 CODH  = 0b0000000011000000000000000000000000  # Program counter MSB data bus out #
 AO    = 0b0000000100000000000000000000000000  # A register data bus out #
@@ -56,13 +57,14 @@ LD    = 0b0000000000111100000000000000000000  # Load
 DSP   = 0b00000000001010000000000000000000000  # Decrement stack pointer #
 CLC   = 0b00000000001011000000000000000000000  # Clear carry flag #
 CLV   = 0b00000000001100000000000000000000000  # Clear overflow flag #
+CSB   = 0b00000000001100000000000000000000000  # Counter Dec #
 SC    = 0b00000000001100000000000000000000000  # Set Carry Flag #
 SI    = 0b00000000001100000000000000000000000  # Set Interupt Disable #
 CI    = 0b00000000001100000000000000000000000  # Clear Interupt Disable #
 CE    = 0b00000000000000100000000000000000000  # Increment program counter #
 J     = 0b00000000000000010000000000000000000  # Load program counter #
 SPE   = 0b00000000000000001000000000000000000  # Stack pointer enable #
-I     = 0b00000000000000000100000000000000000  # Interupt clear/disable# #
+IE    = 0b00000000000000000100000000000000000  # Interupt clear/disable #
 IJ    = 0b00000000000000000010000000000000000  # Jump to interupt subroutine ($BFFA) #
 EP    = 0b00000000000000000000100000000000000  # End program #
 NOP   = 0b00000000000000000000001000000000000  # No operation #
@@ -211,8 +213,8 @@ def main():
         # BPL # Branch on Plus                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 037 - relative     ; oper
         
-        # BRK # Forced Break               # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|CE|DRF|II|EP|NOP],        # 038 - implied      ;
+        # BRK # Hard/Soft Interrupt                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
+        [MI|SPAO|CODH|RI|SPE|SI|CSB, MI|SPAO|CODL|RI|SPE|CSB, MI|SPAO|SRO|RI|SPE, MI|COA|BR|IJ|J, MI|COA|CE|FEC|BR, CE|II|EP],                                 # 038 - implied      ;
         
         # BVC # Branch on Overflow Clear                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 039 - relative     ; oper 
@@ -379,8 +381,8 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ROR|EI, MI|COA|CE|II|EO|AI|EP],                          # 146 - absolute,X   ; oper,X
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ROR|EI, MI|COA|CE|II|EO|AI|EP],                          # 147 - zeropage,Y   ; oper,Y
         
-        # RTI # Return from Interrupt                                            # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 148 - implied      ;
+        # RTI # Return from Interrupt                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
+        [DSP|SPE, MI|SPAO|RO|SRDI|DSP|SPE|FI, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, MI|COA|J|BR, CE|IE|EP|CI, 0, 0 ],                                      # 148 - implied      ;
         
         # RTI # Return from Subroutine                                                                                                                         # OPC - ADDRESSING   ; ASSEMBLER
         [DSP|SPE, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, MI|COA|J|BR, MI|COA|CE|FEC|BR, CE|II|EP],                                                          # 149 - implied      ;        
@@ -445,9 +447,6 @@ def main():
         
         # TYA # Transfer Index Y to Accumulator                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|YO|AI, MI|COA|CE|II|EP],                                                                                                                # 186 - implied      ;
-        
-        # INT # Interrupt                                                        # OPC - ADDRESSING   ; ASSEMBLER
-        [ MI|COA|RO, CE|IO, IO|MI,       RO|AI,           0, 0, 0, 0, 0 ],       # 255 - implied      ;
     ]
     
     rom_data = createMicroCode(instructions_data)
