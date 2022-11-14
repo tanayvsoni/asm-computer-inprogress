@@ -1,79 +1,96 @@
 # Section 1 #
-MI    = 0b10_0000_000_0000_0000_0000_0000_0000_0000_00  # Memory address register in
-COA   = 0b01_0000_000_0000_0000_0000_0000_0000_0000_00  # Program counter address bus out
+MI    = 0b10_0000_000_0000_0000_0000_0000_00_00_00_0_000_0  # Memory address register in
+COA   = 0b01_0000_000_0000_0000_0000_0000_00_00_00_0_000_0  # Program counter address bus out
 
 # Decoder 1 #
-CIDL  = 0b00_0001_000_0000_0000_0000_0000_0000_0000_00  # Program counter LSB in
-CIDH  = 0b00_0010_000_0000_0000_0000_0000_0000_0000_00  # Program counter MSB in
-RI    = 0b00_0011_000_0000_0000_0000_0000_0000_0000_00  # RAM data in
-EI    = 0b00_0100_000_0000_0000_0000_0000_0000_0000_00  # ALU in
-AI    = 0b00_0101_000_0000_0000_0000_0000_0000_0000_00  # A register in
-XI    = 0b00_0110_000_0000_0000_0000_0000_0000_0000_00  # X register in
-YI    = 0b00_0111_000_0000_0000_0000_0000_0000_0000_00  # Y register in
-SRDI  = 0b00_1000_000_0000_0000_0000_0000_0000_0000_00  # Status Register data bus in
-SPI   = 0b0010010000000000000000000000000000  # Stack pointer in #
-TRLI  = 0b0000000000000000000000000100000000  # Transfer register LSB in #
-TRHI  = 0b0010110000000000000000000000000000  # Transfer register MSB in # 
-OI    = 0b0011000000000000000000000000000000  # Output register in #
-FI    = 0b0000000000000000001000000000000000  # Status register in #
-II    = 0b0000000000000000000010000000000000  # Instruction register in #
+CIDL  = 0b00_0001_000_0000_0000_0000_0000_00_00_00_0_000_0  # Program counter LSB in
+CIDH  = 0b00_0010_000_0000_0000_0000_0000_00_00_00_0_000_0  # Program counter MSB in
+RI    = 0b00_0011_000_0000_0000_0000_0000_00_00_00_0_000_0  # RAM data in
+EI    = 0b00_0100_000_0000_0000_0000_0000_00_00_00_0_000_0  # ALU in
+AI    = 0b00_0101_000_0000_0000_0000_0000_00_00_00_0_000_0  # A register in
+XI    = 0b00_0110_000_0000_0000_0000_0000_00_00_00_0_000_0  # X register in
+YI    = 0b00_0111_000_0000_0000_0000_0000_00_00_00_0_000_0  # Y register in
+SRDI  = 0b00_1000_000_0000_0000_0000_0000_00_00_00_0_000_0  # Status Register data bus in
+SPI   = 0b00_1001_000_0000_0000_0000_0000_00_00_00_0_000_0  # Stack pointer in
+CI    = 0b00_1010_000_0000_0000_0000_0000_00_00_00_0_000_0  # Clear Interupt Disable
+TRHI  = 0b00_1011_000_0000_0000_0000_0000_00_00_00_0_000_0  # Transfer register MSB in 
+OI    = 0b00_1100_000_0000_0000_0000_0000_00_00_00_0_000_0  # Output register in
+BR    = 0b00_1101_000_0000_0000_0000_0000_00_00_00_0_000_0  # Invert Memory Address Register CLK
+BIT   = 0b00_1110_000_0000_0000_0000_0000_00_00_00_0_000_0  # Bit Test
+SC    = 0b00_1111_000_0000_0000_0000_0000_00_00_00_0_000_0  # Set Carry Flag
 
-# OUTS #
-CODL  = 0b0000000010000000000000000000000000  # Program counter LSB data bus out #
-CODH  = 0b0000000011000000000000000000000000  # Program counter MSB data bus out #
-AO    = 0b0000000100000000000000000000000000  # A register data bus out #
-XO    = 0b0000000000000000000000000000000100  # X register data bus out #
-YO    = 0b0000000000000000000000000000000001  # Y register data bus out #
-EO    = 0b0000000111000000000000000000000000  # ALU out #
-SPAO  = 0b0000001000000000000000000000000000  # Stack pointer address bus out #
-SPDO  = 0b0000001001000000000000000000000000  # Stack pointer data bus out #
-SRO   = 0b0000001010000000000000000000000000  # Status register data bus out #
-RO    = 0b0000001011000000000000000000000000  # RAM data out #
-TRO   = 0b0000000000000000000000000001000000  # Transfer register out #
-XOX1  = 0b0000001100000000000000000000001000  # X register aux bus 1 out #
-YOX1  = 0b0000001101000000000000000000000010  # Y register aux bus 1 out #
-XOX2  = 0b0000001110000000000000000000001100  # X register aux bus 2 out #
-YOX2  = 0b0000001111000000000000000000000011  # Y register aux bus 2 out #
-ES1   = 0b0000000000000000000000000010000000  # ALU input data bus out #
-ES2   = 0b0000000000000000000000000010010000  # ALU input data bus out #
+# Decoder 2 #
+CODL  = 0b00_0000_001_0000_0000_0000_0000_00_00_00_0_000_0  # Program counter LSB data bus out
+CODH  = 0b00_0000_010_0000_0000_0000_0000_00_00_00_0_000_0  # Program counter MSB data bus out
+AO    = 0b00_0000_011_0000_0000_0000_0000_00_00_00_0_000_0  # A register data bus out
+DRF   = 0b00_0000_100_0000_0000_0000_0000_00_00_00_0_000_0  # Direct Fetch into Instruction Register
+SPDO  = 0b00_0000_101_0000_0000_0000_0000_00_00_00_0_000_0  # Stack pointer data bus out
+SRO   = 0b00_0000_110_0000_0000_0000_0000_00_00_00_0_000_0  # Status register data bus out
+RO    = 0b00_0000_111_0000_0000_0000_0000_00_00_00_0_000_0  # RAM data out
 
-# ARITHEMETIC #
-AND   = 0b0000000000000100000000000000000000  # AND
-OR    = 0b0000000000001000000000000000000000  # OR
-XOR   = 0b0000000000001100000000000000000000  # XOR
-SU    = 0b0000000000010000000000000000000000  # Subtract
-LSHFR = 0b0000000000010100000000000000000000  # Logical shift right
-ASHFL = 0b0000000000011000000000000000000000  # Arithemetic shift left
-ROR   = 0b0000000000011100000000000000000000  # Rotate right
-ROL   = 0b0000000000100000000000000000000000  # Rotate left
-CMP   = 0b0000000000100100000000000000000000  # Compare 
-INC   = 0b0000000000110100000000000000000000  # Increment x
-DEC   = 0b0000000000111000000000000000000000  # Deccrement 
-ADD   = 0b0000000000111100000000000000000000  # Add without Carry
-BIT   = 0b0000000000111100000000000000000000  # Bitwise Accumulator with Memory
-LD    = 0b0000000000111100000000000000000000  # Load
+# Decoder 3 #
+AND   = 0b00_0000_000_0001_0000_0000_0000_00_00_00_0_000_0  # AND
+OR    = 0b00_0000_000_0010_0000_0000_0000_00_00_00_0_000_0  # OR
+XOR   = 0b00_0000_000_0011_0000_0000_0000_00_00_00_0_000_0  # XOR
+SU    = 0b00_0000_000_0100_0000_0000_0000_00_00_00_0_000_0  # Subtract
+LSHFR = 0b00_0000_000_0101_0000_0000_0000_00_00_00_0_000_0  # Logical shift right
+ASHFL = 0b00_0000_000_0110_0000_0000_0000_00_00_00_0_000_0  # Arithemetic shift left
+ROR   = 0b00_0000_000_0111_0000_0000_0000_00_00_00_0_000_0  # Rotate right
+ROL   = 0b00_0000_000_1000_0000_0000_0000_00_00_00_0_000_0  # Rotate left
+CMP   = 0b00_0000_000_1001_0000_0000_0000_00_00_00_0_000_0  # Compare 
+DSP   = 0b00_0000_000_1010_0000_0000_0000_00_00_00_0_000_0  # Decrement stack pointer 
+NOP   = 0b00_0000_000_1011_0000_0000_0000_00_00_00_0_000_0  # No operation/Invert Instruction Register CLK
+SI    = 0b00_0000_000_1100_0000_0000_0000_00_00_00_0_000_0  # Set Interupt Disable
+INC   = 0b00_0000_000_1101_0000_0000_0000_00_00_00_0_000_0  # Increment
+DEC   = 0b00_0000_000_1110_0000_0000_0000_00_00_00_0_000_0  # Deccrement 
+ADD   = 0b00_0000_000_1111_0000_0000_0000_00_00_00_0_000_0  # Add without Carry
 
-# GENERAL #
-DSP   = 0b00000000001010000000000000000000000  # Decrement stack pointer #
-CLC   = 0b00000000001011000000000000000000000  # Clear carry flag #
-CLV   = 0b00000000001100000000000000000000000  # Clear overflow flag #
-CSB   = 0b00000000001100000000000000000000000  # Counter Dec #
-SC    = 0b00000000001100000000000000000000000  # Set Carry Flag #
-SI    = 0b00000000001100000000000000000000000  # Set Interupt Disable #
-CI    = 0b00000000001100000000000000000000000  # Clear Interupt Disable #
-CE    = 0b00000000000000100000000000000000000  # Increment program counter #
-J     = 0b00000000000000010000000000000000000  # Load program counter #
-SPE   = 0b00000000000000001000000000000000000  # Stack pointer enable #
-IE    = 0b00000000000000000100000000000000000  # Interupt clear/disable #
-IJ    = 0b00000000000000000010000000000000000  # Jump to interupt subroutine ($BFFA) #
-EP    = 0b00000000000000000000100000000000000  # End program #
-NOP   = 0b00000000000000000000001000000000000  # No operation #
-FEC   = 0b00000000000000000000000100000000000  # Fetch into pipeline
-DRF   = 0b00000000000000000000000100000000000  # Direct Fetch into Instruction
-RTR   = 0b00000000000000000000000010000000000  # Reset Transfer register MSB
-ECLK  = 0b00000000000000000000000000001000000  # CLK invert for ALU
-CTR   = 0b00000000000000000000000000000000001  # Carry into TRHI
-BR    = 0b00000000000000000000000000000000001  # Branch Invert MI CLK
+# Section 2 #
+CE    = 0b00_0000_000_0000_1000_0000_0000_00_00_00_0_000_0  # Increment program counter
+J     = 0b00_0000_000_0000_0100_0000_0000_00_00_00_0_000_0  # Load program counter
+SPE   = 0b00_0000_000_0000_0010_0000_0000_00_00_00_0_000_0  # Stack pointer enable
+IJ    = 0b00_0000_000_0000_0001_0000_0000_00_00_00_0_000_0  # Jump to interupt subroutine ($FFFA)
+
+# Section 3 #
+FI    = 0b00_0000_000_0000_0000_1000_0000_00_00_00_0_000_0  # Status Register In
+EP    = 0b00_0000_000_0000_0000_0100_0000_00_00_00_0_000_0  # End program
+II    = 0b00_0000_000_0000_0000_0010_0000_00_00_00_0_000_0  # Instruction Register In
+FEC   = 0b00_0000_000_0000_0000_0001_0000_00_00_00_0_000_0  # Fetch into pipeline
+
+# Section 4 #
+RTR   = 0b00_0000_000_0000_0000_0000_1000_00_00_00_0_000_0  # Reset Transfer register MSB
+EO    = 0b00_0000_000_0000_0000_0000_0100_00_00_00_0_000_0  # ALU Register Out
+ES1   = 0b00_0000_000_0000_0000_0000_0010_00_00_00_0_000_0  # ALU A Data Select
+TRO   = 0b00_0000_000_0000_0000_0000_0001_00_00_00_0_000_0  # Transfer Register Out
+
+# Section 5 #
+ECLK  = 0b00_0000_000_0000_0000_0000_0000_10_00_00_0_000_0  # CLK invert for ALU & SR
+ES2   = 0b00_0000_000_0000_0000_0000_0000_01_00_00_0_000_0  # ALU B Data Select
+
+# X Regsiter Outs #
+XO    = 0b00_0000_000_0000_0000_0000_0000_00_01_00_0_000_0  # X Register Data Bus Out
+XOX1  = 0b00_0000_000_0000_0000_0000_0000_00_10_00_0_000_0  # X Register Aux Bus 1 Out
+XOX2  = 0b00_0000_000_0000_0000_0000_0000_00_11_00_0_000_0  # X Register Aux Bus 2 Out
+
+# Y Regsiter Outs #
+YO    = 0b00_0000_000_0000_0000_0000_0000_00_00_01_0_000_0  # Y Register Data Bus Out
+YOX1  = 0b00_0000_000_0000_0000_0000_0000_00_00_10_0_000_0  # Y Register Aux Bus 1 Out
+YOX2  = 0b00_0000_000_0000_0000_0000_0000_00_00_11_0_000_0  # Y Register Aux Bus 2 Out
+
+# Section 6 #
+TRLI  = 0b00_0000_000_0000_0000_0000_0000_00_00_00_1_000_0  # Transfer Register LSB In
+
+# Decoder 4 #
+CTR   = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_001_0  # Carry into TRHI
+IE    = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_010_0  # Interupt End
+CLC   = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_011_0  # Clear carry flag
+HLT   = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_100_0  # Halt CLK
+CLV   = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_101_0  # Clear overflow flag
+LD    = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_110_0  # Load Registers
+SPAO  = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_111_0  # Stack Pointer Address Bus Out
+
+# Section 7 #
+CSB   = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_000_1  # Counter Dec
 
 def createMicroCode(data):  
     """
@@ -91,8 +108,8 @@ def createMicroCode(data):
                 try: rom_data[address] = data[instr][substep]
                 except: rom_data[address] = 0
                 
-                conditionalJumps_Expections(flag,instr,substep,address,rom_data)
-       
+                conditionalJumps_Expections(flag,instr,substep,address,rom_data) 
+                
     return rom_data
 
 def substeps_CJ(substep, rom_data, address):
@@ -447,6 +464,9 @@ def main():
         
         # TYA # Transfer Index Y to Accumulator                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|YO|AI, MI|COA|CE|II|EP],                                                                                                                # 186 - implied      ;
+        
+        # HLT # Halt Operation                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
+        [HLT],                                                                                                                                                 # 187 - implied      ;
     ]
     
     rom_data = createMicroCode(instructions_data)
