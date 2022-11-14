@@ -106,7 +106,7 @@ def createMicroCode(data):
                 address = (flag << 11) | (instr << 3) | substep
                  
                 try: rom_data[address] = data[instr][substep]
-                except: rom_data[address] = 0
+                except: pass
                 
                 conditionalJumps_Expections(flag,instr,substep,address,rom_data) 
                 
@@ -162,16 +162,15 @@ def export(rom_data):
     """
     Export Microcode into text file
     """     
-     
     with open('microcode.txt','w') as microcode:
-        for code in rom_data:
-            microcode.write("%s\n" % hex(code)[2:])
+        for i in range(len(rom_data)):
+            microcode.write(f'{hex(rom_data[i])[2:]}\n')
 
 def main():    
     # Instruction Data
     instructions_data = [
         # NOP # No operation                                                                                                                                   # OPC - ADDRESSING    ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 000 - implied       ; 
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 000 - implied       ; 
         
         # ADC # Add with Carry                                                                                                                                 # OPC - ADDRESSING    ; ASSEMBLER
         [MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|CE|II|EO|AI|EP],                                                                                                   # 001 - immediate     ; #oper
@@ -209,44 +208,44 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                        # 029 - absolute,Y   ; oper,Y
         
         # BCC # Branch on Carry Clear                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 030 - relative     ; oper
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 030 - relative     ; oper
         
         # BCS # Breanch on Carry Set                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 031 - relative     ; oper
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 031 - relative     ; oper
         
         # BEQ # Branch on Zero                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 032 - relative     ; oper
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 032 - relative     ; oper
         
         # BIT # Test Bits in Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|BIT|ES2|ECLK, MI|COA|CE|II|EP],                                                                             # 033 - zeropage     ; oper
         [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|BIT|ECLK|ES2, MI|COA|CE|II|EP],                                                              # 034 - absolute     ; oper
         
         # BMI # Branch on Minus                                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 035 - relative     ; oper
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 035 - relative     ; oper
         
         # BNE # Branch on not Zero                                                                                                                             # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 036 - relative     ; oper
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 036 - relative     ; oper
         
         # BPL # Branch on Plus                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 037 - relative     ; oper
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 037 - relative     ; oper
         
         # BRK # Hard/Soft Interrupt                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
         [MI|SPAO|CODH|RI|SPE|SI|CSB, MI|SPAO|CODL|RI|SPE|CSB, MI|SPAO|SRO|RI|SPE, MI|COA|BR|IJ|J, MI|COA|CE|FEC|BR, CE|II|EP],                                 # 038 - implied      ;
         
         # BVC # Branch on Overflow Clear                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 039 - relative     ; oper 
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 039 - relative     ; oper 
         
         # BVS # Branch on Overflow Set                                                                                                                         # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|NOP],                                                                                                                             # 040 - relative     ; oper
+        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 040 - relative     ; oper
         
         # CLC # Clear Carry Flag                                                                                                                               # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|CLC|NOP],                                                                                                                         # 041 - implied      ; 
+        [FEC|CLC, MI|COA|CE|II|EP],                                                                                                                            # 041 - implied      ; 
         
-        # CLC # Clear Interupt Disable Bit                                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|CI|NOP],                                                                                                                          # 042 - implied      ; 
+        # CLI # Clear Interupt Disable Bit                                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
+        [FEC|CI, MI|COA|CE|II|EP],                                                                                                                             # 042 - implied      ; 
         
         # CLV # Clear Overflow Flag                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|CLV|NOP],                                                                                                                         # 043 - implied      ; 
+        [FEC|CLV, MI|COA|CE|II|EP],                                                                                                                            # 043 - implied      ; 
         
         # CMP # Compare Memory with Accumulator                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|CMP|ES2, MI|COA|CE|II|EP],                                                                                                           # 044 - immediate    ; #oper
@@ -418,10 +417,10 @@ def main():
         [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|ECLK|EI|ES2|SU|FI, MI|COA|CE|II|EO|AI|EP],   # 160 - (indirect),Y ; (oper),Y
         
         # SEC # Set Carry Flag                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|SC|NOP],                                                                                                                          # 161 - implied      ;
+        [FEC|SC, MI|COA|CE|II|EP],                                                                                                                             # 161 - implied      ;
         
         # SEI # Set Interrupt Disable Status                                                                                                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|DRF|II|EP|SI|NOP],                                                                                                                          # 162 - implied      ;
+        [FEC|SI, MI|COA|CE|II|EP],                                                                                                                             # 162 - implied      ;
         
         # STA # Store Accumulator in Memory                                                                                                                    # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|TRLI|RTR, MI|TRO|AO|RI, MI|COA|CE|II|EP],                                                                                            # 163 - zeropage     ; oper
