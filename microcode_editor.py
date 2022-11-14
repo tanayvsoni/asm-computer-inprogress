@@ -208,35 +208,35 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ASHFL|EI, MI|COA|CE|II|EO|AI|EP],                        # 029 - absolute,Y   ; oper,Y
         
         # BCC # Branch on Carry Clear                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 030 - relative     ; oper
+        [MI|COA|CE, MI|COA|CE|FEC, MI|COA|CE, II|EP],                                                                                                          # 030 - relative     ; oper
         
         # BCS # Breanch on Carry Set                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 031 - relative     ; oper
+        [MI|COA|CE, MI|COA|CE|FEC, MI|COA|CE, II|EP],                                                                                                          # 031 - relative     ; oper
         
         # BEQ # Branch on Zero                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 032 - relative     ; oper
+        [MI|COA|CE, MI|COA|CE|FEC, MI|COA|CE, II|EP],                                                                                                          # 032 - relative     ; oper
         
         # BIT # Test Bits in Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|BIT|ES2|ECLK, MI|COA|CE|II|EP],                                                                             # 033 - zeropage     ; oper
         [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|BIT|ECLK|ES2, MI|COA|CE|II|EP],                                                              # 034 - absolute     ; oper
         
         # BMI # Branch on Minus                                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 035 - relative     ; oper
+        [MI|COA|CE, MI|COA|CE|FEC, MI|COA|CE, II|EP],                                                                                                          # 035 - relative     ; oper
         
         # BNE # Branch on not Zero                                                                                                                             # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 036 - relative     ; oper
+        [MI|COA|CE, MI|COA|CE|FEC, II|EP],                                                                                                                     # 036 - relative     ; oper
         
         # BPL # Branch on Plus                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 037 - relative     ; oper
+        [MI|COA|CE, MI|COA|CE|FEC, II|EP],                                                                                                                     # 037 - relative     ; oper
         
         # BRK # Hard/Soft Interrupt                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
         [MI|SPAO|CODH|RI|SPE|SI|CSB, MI|SPAO|CODL|RI|SPE|CSB, MI|SPAO|SRO|RI|SPE, MI|COA|BR|IJ|J, MI|COA|CE|FEC|BR, CE|II|EP],                                 # 038 - implied      ;
         
         # BVC # Branch on Overflow Clear                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 039 - relative     ; oper 
+        [MI|COA|CE, MI|COA|CE|FEC, MI|COA|CE, II|EP],                                                                                                          # 039 - relative     ; oper 
         
         # BVS # Branch on Overflow Set                                                                                                                         # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 040 - relative     ; oper
+        [MI|COA|CE, MI|COA|CE|FEC, MI|COA|CE, II|EP],                                                                                                          # 040 - relative     ; oper
         
         # CLC # Clear Carry Flag                                                                                                                               # OPC - ADDRESSING   ; ASSEMBLER
         [FEC|CLC, MI|COA|CE|II|EP],                                                                                                                            # 041 - implied      ; 
