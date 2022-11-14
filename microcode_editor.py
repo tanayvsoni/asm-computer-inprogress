@@ -98,7 +98,7 @@ def createMicroCode(data):
     """
     rom_data = [0] * (1024 * 256)
     
-    for flag in range(0, 7):
+    for flag in range(0, 128):
         for instr in range(0, 256):
             for substep in range(0, 9):
 
