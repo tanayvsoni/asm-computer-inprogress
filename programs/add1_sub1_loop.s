@@ -11,3 +11,9 @@ sub_Loop:
 	sta 0               ; 3 steps
     beq add_Loop        ; 3 steps / 5 steps
 	jmp sub_Loop        ; 5 steps
+
+
+.org $fffd
+jmp $4018
+inc 2
+rti

@@ -79,7 +79,7 @@
   <circuit name="main">
     <a name="circuit" val="main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="2048000.0"/>
+    <a name="simulationFrequency" val="16.0"/>
     <comp lib="0" loc="(1020,1200)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="Reset"/>
@@ -438,7 +438,7 @@
     </comp>
     <comp lib="0" loc="(1650,170)" name="Constant">
       <a name="facing" val="south"/>
-      <a name="value" val="0xfffa"/>
+      <a name="value" val="0xfffd"/>
       <a name="width" val="16"/>
     </comp>
     <comp lib="0" loc="(1650,2500)" name="Tunnel">
@@ -2209,7 +2209,8 @@
       <a name="contents">addr/data: 16 8
 1 1 1f a 40 a3 0 58
 0 40 96 1 a3 0 20 0
-40 58 a 40 16358*0 94
+40 58 a 40 4*0 50 2 94
+16354*0 58 18 40
 </a>
       <a name="misaligned" val="true"/>
     </comp>
