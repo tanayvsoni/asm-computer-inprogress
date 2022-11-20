@@ -20476,7 +20476,9 @@ f00020000 30010c0000 6*0 18020000 30010c0000 6*0 30e1030040 2360002000
       <a name="trigger" val="falling"/>
     </comp>
     <comp lib="5" loc="(1160,2310)" name="LedBar"/>
-    <comp lib="5" loc="(1190,1370)" name="LedBar"/>
+    <comp lib="5" loc="(1190,1370)" name="LedBar">
+      <a name="color" val="#ffa3b9"/>
+    </comp>
     <comp lib="5" loc="(1240,1680)" name="LedBar">
       <a name="matrixcols" val="7"/>
     </comp>
@@ -20485,6 +20487,7 @@ f00020000 30010c0000 6*0 18020000 30010c0000 6*0 30e1030040 2360002000
       <a name="matrixcols" val="16"/>
     </comp>
     <comp lib="5" loc="(2560,2060)" name="LedBar">
+      <a name="color" val="#ffa4ad"/>
       <a name="matrixcols" val="38"/>
     </comp>
     <comp lib="8" loc="(1037,1737)" name="Text">

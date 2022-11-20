@@ -1,19 +1,21 @@
 .org $4000
 
 add_Loop:
-	adc #1              ; 3 steps
-	bcs sub_Loop        ; 3 steps / 5 steps
-	sta 0               ; 3 steps
-	jmp add_Loop        ; 5 steps
+	adc #1            
+	bcs sub_Loop       
+	sta 0               
+	jmp add_Loop       
 
 sub_Loop:
-	sbc #1              ; 3 steps
-	sta 0               ; 3 steps
-    beq add_Loop        ; 3 steps / 5 steps
-	jmp sub_Loop        ; 5 steps
+	sbc #1              
+	sta 0         
+    beq add_Loop      
+	jmp sub_Loop        
 
 
-.org $fffd
-jmp $4018
-inc 2
-rti
+irq:
+	.org $fffd
+	jmp $4018
+	.org $4018
+	inc 2
+	rti

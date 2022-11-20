@@ -9,18 +9,18 @@ int instr_opcode(char *instr)
 
 int main() 
 {
-    FILE* ptr;
+    char filename[20];
+
+    printf("Enter file name: ");
+    scanf("%s", &filename);
+
+    FILE *ptr;
     char ch;
- 
-    // Opening file in reading mode
+
     ptr = fopen("./programs/add1_sub1_loop.s", "r");
  
-    if (NULL == ptr) 
-    {
-        printf("file can't be opened \n");
-    }
- 
-    printf("content of this file are \n");
+    if (NULL == ptr) {printf("file can't be opened \n");}
+    else{printf("content of this file are \n");}
  
     // Printing what is written in file
     // character by character using loop.
