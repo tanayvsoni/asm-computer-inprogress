@@ -213,7 +213,7 @@ def main():
         # BCC # Branch on Carry Clear                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
         [CE, MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                                  # 030 - relative     ; oper
         
-        # BCS # Breanch on Carry Set                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
+        # BCS # Branch on Carry Set                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
         [CE, MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                                  # 031 - relative     ; oper
         
         # BEQ # Branch on Zero                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
@@ -233,7 +233,7 @@ def main():
         [CE, MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                                  # 037 - relative     ; oper
         
         # BRK # Hard/Soft Interrupt                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|SPAO|SI|CODH|RI|SPE|CSB, MI|SPAO|CODL|RI|SPE|CSB, MI|SPAO|SRO|RI|SPE, IJ|J, MI|COA|CE|FEC, MI|COA, CE|II|EP],                         # 038 - implied      ;
+        [MI|SPAO|SI|CODH|RI|SPE|CSB, MI|SPAO|CODL|RI|SPE|CSB, MI|SPAO|SRO|RI|SPE, IJ|J, MI|COA|CE|FEC, MI|COA, CE|II|EP],                                      # 038 - implied      ;
         
         # BVC # Branch on Overflow Clear                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
         [CE, MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                                  # 039 - relative     ; oper 
@@ -315,7 +315,7 @@ def main():
         [MI|COA|CE|FEC|YOX2|EI|ES2|DEC, MI|COA|EO|YI, CE|II|EP],                                                                                               # 087 - implied      ; 
         
         # JMP # Jump to new location                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
-        [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, MI|COA|RCC|FEC, MI|COA|CE|II|EP],                                                                              # 088 - absolute     ; oper
+        [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, MI|COA|RCC|FEC, MI|COA|CE|II|EP],                                                                       # 088 - absolute     ; oper
         [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, RCC|CE|RO|CIDL, MI|COA|RO|CIDH, MI|COA|CE|FEC|BR, CE|II|EP],                                            # 089 - indirect     ; (oper)
         
         # JSR # Jump to new location Saving Return Address                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
@@ -401,7 +401,7 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, ROR|EI, MI|COA|CE|II|EO|AI|EP],                          # 147 - zeropage,Y   ; oper,Y
         
         # RTI # Return from Interrupt                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
-        [DSP|SPE|ECLK, MI|SPAO|RO|SRDI|DSP|SPE|FI|ECLK, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, J, MI|COA|CE|IE|EP|CI],                                             # 148 - implied      ;
+        [DSP|SPE|ECLK, MI|SPAO|RO|SRDI|DSP|SPE|FI|ECLK, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, J, MI|COA|CE|IE|EP|CI],                                      # 148 - implied      ;
         
         # RTI # Return from Subroutine                                                                                                                         # OPC - ADDRESSING   ; ASSEMBLER
         [DSP|SPE, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, MI|COA|J|BR, MI|COA|CE|FEC|BR, CE|II|EP],                                                          # 149 - implied      ;        

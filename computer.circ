@@ -79,7 +79,7 @@
   <circuit name="main">
     <a name="circuit" val="main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="16.0"/>
+    <a name="simulationFrequency" val="2048000.0"/>
     <comp lib="0" loc="(1020,1200)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="Reset"/>
