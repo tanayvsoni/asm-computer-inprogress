@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <unistd.h>
+#include <limits.h>
 
 char *strremove(char *str, const char *sub) {
     size_t len = strlen(sub);
@@ -24,7 +26,7 @@ void print_arr(char **file, int *size)
     printf("\n");
 }
 
-void *rm_whitespace(char *word)
+void rm_whitespace(char *word)
 {
     char *d = word;
 
@@ -33,18 +35,22 @@ void *rm_whitespace(char *word)
             ++d;
         }
     } while (*word++ = *d++);
+
 }
 
 char *get_filename()
 {
     /* Prompts user to get file name and returns directory */
 
+    char *dir;
+    char buf[PATH_MAX + 1];
+    dir = getcwd(buf, PATH_MAX + 1);
+    strcat(dir, "/assembler/programs/");
 
-    char filename[20];
-    char dir[] = "./programs/";
+    char *filename = (char*)(malloc(60*sizeof(char)));
 
     printf("Enter file name: ");
-    scanf("%s", &filename);
+    scanf("%s", filename);
 
     strcat(dir, filename);
 
@@ -56,6 +62,8 @@ char *get_filename()
         dir_pointer[i] = dir[i]; 
     }
 
+    free(filename);
+    //free(dir);
     return dir_pointer;
 }
 
@@ -70,11 +78,14 @@ char **get_file(char *dir_path, int *size)
 
     int line_count = 0;
 
-    ptr = fopen(dir_path, "r");
+    ptr = fopen(dir_path,"r");
 
     // Check if file exists
     if (NULL == ptr)
-    { printf("File can't be opened \n"); }
+    { 
+        printf("File can't be opened \n"); 
+        exit(1);
+    }
 
     while (fgets(str,60,ptr))
     {
@@ -94,7 +105,7 @@ char **get_file(char *dir_path, int *size)
                 
                 // Makes use not to store \n character and captializes str
                 else if (str[char_count] != '\n') {
-                    lines[line_count][char_count] = str[char_count];
+                    lines[line_count][char_count] = toupper(str[char_count]);
                 }
             }
             line_count++;
@@ -103,12 +114,10 @@ char **get_file(char *dir_path, int *size)
     
     int j = 0;
     for (int i = 0; i < line_count; i++) {
-
         // Remove white space and ensure any blanks elements are not stored
         rm_whitespace(lines[i]);
-
         if (*lines[i] != '\0') {
-            file_lines[j] = strupr(lines[i]);
+            file_lines[j] = lines[i];
             ++j;
         }
     }
