@@ -15,6 +15,15 @@ char *strremove(char *str, const char *sub) {
     return str;
 }
 
+void print_arr(char **file, int *size)
+{
+    for (int i = 0; i < *size; ++i) {
+        printf(" %s |", file[i]);
+    }
+
+    printf("\n");
+}
+
 void *rm_whitespace(char *word)
 {
     char *d = word;
@@ -112,40 +121,71 @@ char **get_file(char *dir_path, int *size)
     return file_lines;
 }
 
-void convert_num(char *num)
+int convert_num(char *num)
 {
+    char *token;
+    int int_num;
 
+    if (*num == '$')
+    {
+        token = strtok(num,"$");
+        int_num = (int)strtol(token, NULL, 16);
+    }
+    else if (*num == '%')
+    {
+        token = strtok(num,"%");
+        int_num = (int)strtol(token, NULL, 2);
+    }
+    else
+    {   
+        int_num = (int)strtol(token, NULL, 10);  
+    }
+
+    return int_num;
 }
 
 void address_sorting(char **code, int *size)
 {
-    int adr = 0;
+    int *address = (int*)(malloc(*size*sizeof(int)));
+    int current_adr = -1;
+    int *j = (int*)(malloc(1*sizeof(int)));
+    *j = 0;
+
+    char *token;
+    char **new_code = (char**)(malloc(*size*sizeof(char*)));
+
 
     for (int i = 0; i < *size; ++i)
     {
         if (strstr(code[i], ".ORG"))
         {
-            char *token = strtok(code[i], "~");
+            token = strtok(code[i], "~");
+            token = strtok(NULL, "~");
 
-
-            //printf(" %s |", token);
+            current_adr = convert_num(token);
         }
 
-        if (strstr(code[i], ":"))
+        else if (strstr(code[i], ":"))
         {
-            char *token = strtok(code[i], "~");
-            //printf(" %s |", token); 
+            token = strtok(code[i], "~");
+            token = strtok(token, ":");
+            printf(" %s |", token); 
+        }
+        else
+        {
+            ++current_adr;
+            new_code[*j] = code[i];
+            address[*j] = current_adr;
+            ++*j;
         }
     }
-}
-
-void print_arr(char **file, int *size)
-{
-    for (int i = 0; i < *size; ++i) {
-        printf(" %s |", file[i]);
+    printf("\n");
+    for (int i = 0; i < *j; ++i){
+        printf(" %d |", address[i]);
     }
 
     printf("\n");
+    print_arr(new_code,j);
 }
 
 int main()
@@ -155,8 +195,7 @@ int main()
 
     char **file_lines;
     int *address;
-    int *size;
-    size = (malloc(1*sizeof(int)));
+    int *size = (int*)(malloc(1*sizeof(int)));
 
     file_lines = get_file(dir_path, size);
 
