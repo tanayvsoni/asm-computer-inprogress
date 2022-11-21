@@ -6,7 +6,7 @@
 add_Loop:
 	adc #1            ;   test
 	bcs sub_Loop       
-	sta 0               
+	sta 0             
 	jmp add_Loop       
 
 sub_Loop:

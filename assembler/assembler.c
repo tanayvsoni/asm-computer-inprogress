@@ -2,10 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
-int instr_opcode(char *instr)
-{
-    return 1;
+char *strremove(char *str, const char *sub) {
+    size_t len = strlen(sub);
+    if (len > 0) {
+        char *p = str;
+        while ((p = strstr(p, sub)) != NULL) {
+            memmove(p, p + len, strlen(p + len) + 1);
+        }
+    }
+    return str;
 }
 
 void *rm_whitespace(char *word)
@@ -76,7 +83,7 @@ char **get_file(char *dir_path, int *size)
                     break; 
                 }
                 
-                // Makes use not to store \n character
+                // Makes use not to store \n character and captializes str
                 else if (str[char_count] != '\n') {
                     lines[line_count][char_count] = str[char_count];
                 }
@@ -92,7 +99,7 @@ char **get_file(char *dir_path, int *size)
         rm_whitespace(lines[i]);
 
         if (*lines[i] != '\0') {
-            file_lines[j] = lines[i];
+            file_lines[j] = strupr(lines[i]);
             ++j;
         }
     }
@@ -105,11 +112,40 @@ char **get_file(char *dir_path, int *size)
     return file_lines;
 }
 
+void convert_num(char *num)
+{
+
+}
+
+void address_sorting(char **code, int *size)
+{
+    int adr = 0;
+
+    for (int i = 0; i < *size; ++i)
+    {
+        if (strstr(code[i], ".ORG"))
+        {
+            char *token = strtok(code[i], "~");
+
+
+            //printf(" %s |", token);
+        }
+
+        if (strstr(code[i], ":"))
+        {
+            char *token = strtok(code[i], "~");
+            //printf(" %s |", token); 
+        }
+    }
+}
+
 void print_arr(char **file, int *size)
 {
     for (int i = 0; i < *size; ++i) {
         printf(" %s |", file[i]);
     }
+
+    printf("\n");
 }
 
 int main()
@@ -124,9 +160,9 @@ int main()
 
     file_lines = get_file(dir_path, size);
 
-    
-
     print_arr(file_lines,size);
+
+    address_sorting(file_lines,size);
 
     return 0;
 }
