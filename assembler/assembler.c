@@ -6,6 +6,18 @@
 #include <unistd.h>
 #include <limits.h>
 
+#define PATH "/assembler/programs/"
+#define MAX_LINE_CHAR 100
+#define MAX_LINE_NUM 1000
+#define MAX_LABELS 1000
+
+typedef struct
+{
+    char *name;
+    int address;
+} labels;
+    
+
 char *strremove(char *str, const char *sub) {
     size_t len = strlen(sub);
     if (len > 0) {
@@ -45,7 +57,7 @@ char *get_filename()
     char *dir;
     char buf[PATH_MAX + 1];
     dir = getcwd(buf, PATH_MAX + 1);
-    strcat(dir, "/assembler/programs/");
+    strcat(dir, PATH);
 
     char *filename = (char*)(malloc(60*sizeof(char)));
 
@@ -63,18 +75,17 @@ char *get_filename()
     }
 
     free(filename);
-    //free(dir);
     return dir_pointer;
 }
 
 char **get_file(char *dir_path, int *size)
 {
     FILE *ptr;
-    char str[60];
-    char lines[1000][60];
+    char str[MAX_LINE_CHAR];
+    char lines[MAX_LINE_NUM][MAX_LINE_CHAR];
 
     char **file_lines;
-    file_lines = malloc(1000*sizeof(char*));
+    file_lines = malloc(MAX_LINE_NUM*sizeof(char*));
 
     int line_count = 0;
 
@@ -87,7 +98,7 @@ char **get_file(char *dir_path, int *size)
         exit(1);
     }
 
-    while (fgets(str,60,ptr))
+    while (fgets(str,MAX_LINE_CHAR,ptr))
     {
         // Only reads files with code; skips empty lines
         if ( strcmp(str,"\n") != 0 && strcmp(str, "\r\n") != 0 && strcmp(str, "\0") != 0 && 1) {
@@ -153,48 +164,88 @@ int convert_num(char *num)
     return int_num;
 }
 
+void change_labelName(labels *a, int index, char *n)
+{
+    a[index].name = n;
+}
+
+void change_labelAddress(labels *a, int index, int adr)
+{
+    a[index].address = adr;
+}
+
+bool check_labelList(labels *a, char *label_name)
+{
+    if (a[0].name == NULL)
+    {
+        return true;
+    }
+
+    for (int i = 0; i < (sizeof(a)/sizeof(a[0])); ++i)
+    {
+        if (strcmp(a[i].name, label_name) == 0)
+        {
+            printf("\n__%s__\n", a[i].name);
+            return false;
+        }
+    }
+    return true;
+}
+
 void address_sorting(char **code, int *size)
 {
     int *address = (int*)(malloc(*size*sizeof(int)));
-    int current_adr = -1;
+    int current_adr = 0;
     int *j = (int*)(malloc(1*sizeof(int)));
     *j = 0;
+
+    labels label_list[MAX_LABELS];
+    int label = 0;
 
     char *token;
     char **new_code = (char**)(malloc(*size*sizeof(char*)));
 
-
     for (int i = 0; i < *size; ++i)
     {
+        int change_adr = 1;
         if (strstr(code[i], ".ORG"))
         {
             token = strtok(code[i], "~");
             token = strtok(NULL, "~");
 
             current_adr = convert_num(token);
+            change_adr = 0;
         }
 
         else if (strstr(code[i], ":"))
         {
             token = strtok(code[i], "~");
             token = strtok(token, ":");
-            printf(" %s |", token); 
+
+            if (check_labelList(label_list, token))
+            {
+                change_labelName(label_list,label,token);
+                change_labelAddress(label_list,label,current_adr);
+                printf(" %d |", label_list[label].address); 
+                ++label;    
+            }
+            change_adr = 0;
         }
         else
         {
-            ++current_adr;
+            current_adr += change_adr;
             new_code[*j] = code[i];
             address[*j] = current_adr;
             ++*j;
         }
     }
-    printf("\n");
+    //printf("\n");
     for (int i = 0; i < *j; ++i){
-        printf(" %d |", address[i]);
+        //printf(" %d |", address[i]);
     }
 
-    printf("\n");
-    print_arr(new_code,j);
+    //printf("\n");
+    //print_arr(new_code,j);
 }
 
 int main()
