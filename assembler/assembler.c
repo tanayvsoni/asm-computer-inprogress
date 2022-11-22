@@ -6,7 +6,12 @@
 #include <unistd.h>
 #include <limits.h>
 
-#define PATH "/assembler/programs/"
+// FOR MAC
+//#define PATH "/assembler/programs/"
+
+//FOR WINDOWS
+#define PATH "./programs/"
+
 #define MAX_LINE_CHAR 100
 #define MAX_LINE_NUM 1000
 #define MAX_LABELS 1000
@@ -54,6 +59,7 @@ char *get_filename()
 {
     /* Prompts user to get file name and returns directory */
 
+    // FOR MAC
     char *dir;
     char buf[PATH_MAX + 1];
     dir = getcwd(buf, PATH_MAX + 1);
@@ -74,7 +80,7 @@ char *get_filename()
         dir_pointer[i] = dir[i]; 
     }
 
-    free(filename);
+    //free(filename);
     return dir_pointer;
 }
 
@@ -164,13 +170,9 @@ int convert_num(char *num)
     return int_num;
 }
 
-void change_labelName(labels *a, int index, char *n)
+void update_labelData(labels *a, int index, char *n, int adr)
 {
     a[index].name = n;
-}
-
-void change_labelAddress(labels *a, int index, int adr)
-{
     a[index].address = adr;
 }
 
@@ -224,8 +226,7 @@ void address_sorting(char **code, int *size)
 
             if (check_labelList(label_list, token))
             {
-                change_labelName(label_list,label,token);
-                change_labelAddress(label_list,label,current_adr);
+                update_labelData(label_list,label,token, current_adr);
                 printf(" %d |", label_list[label].address); 
                 ++label;    
             }
