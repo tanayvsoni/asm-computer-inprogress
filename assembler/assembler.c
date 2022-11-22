@@ -7,21 +7,29 @@
 #include <limits.h>
 
 // FOR MAC
-//#define PATH "/assembler/programs/"
+//#define PATH          "/assembler/programs/"
 
 //FOR WINDOWS
-#define PATH "./programs/"
+#define PATH            "./programs/"
 
-#define MAX_LINE_CHAR 100
-#define MAX_LINE_NUM 1000
-#define MAX_LABELS 1000
+#define MAX_LINE_CHAR   100
+#define MAX_LINE_NUM    1000
+#define MAX_LABELS      1000
+#define MAX_ORGS        1000
 
 typedef struct
 {
     char *name;
     int address;
+    int linenum;
 } labels;
-    
+
+typedef struct 
+{
+    int linenum;
+    int address;
+} orgs;
+
 
 char *strremove(char *str, const char *sub) {
     size_t len = strlen(sub);
@@ -42,6 +50,8 @@ void print_arr(char **file, int *size)
 
     printf("\n");
 }
+
+/*get file & organize data*/
 
 void rm_whitespace(char *word)
 {
@@ -129,23 +139,23 @@ char **get_file(char *dir_path, int *size)
         }
     }
     
-    int j = 0;
+    *size = 0;
     for (int i = 0; i < line_count; i++) {
         // Remove white space and ensure any blanks elements are not stored
         rm_whitespace(lines[i]);
         if (*lines[i] != '\0') {
-            file_lines[j] = lines[i];
-            ++j;
+            file_lines[*size] = lines[i];
+            ++*size;
         }
     }
-
-    size[0] = j;
 
     fclose(ptr);
     free(dir_path);
     
     return file_lines;
 }
+
+/*org & label sorting functions*/
 
 int convert_num(char *num)
 {
@@ -170,53 +180,81 @@ int convert_num(char *num)
     return int_num;
 }
 
-void update_labelData(labels *a, int index, char *n, int adr)
+void update_labelData(labels *a, int index, char *n, int adr, int linum)
 {
     a[index].name = n;
     a[index].address = adr;
+    a[index].linenum = linum;
+
+    //printf("\n%s, %d\n", a[index].name, a[index].address);
 }
 
-bool check_labelList(labels *a, char *label_name)
+void update_orgData(orgs *a, int index, int linum, int adr)
 {
-    if (a[0].name == NULL)
+    a[index].linenum = linum;
+    a[index].address = adr;
+
+    //printf("\n%d, %d\n", a[index].linenum, a[index].address);
+}
+
+bool check_labelList(labels *a, char *label_name, int label_arrSize)
+{
+    if (label_arrSize == 0)
     {
         return true;
     }
 
-    for (int i = 0; i < (sizeof(a)/sizeof(a[0])); ++i)
+    for (int i = 0; i < label_arrSize; ++i)
     {
         if (strcmp(a[i].name, label_name) == 0)
         {
-            printf("\n__%s__\n", a[i].name);
+            //printf("\n__%s__\n", a[i].name);
             return false;
         }
     }
     return true;
 }
 
-void address_sorting(char **code, int *size)
+void replace_labels(char **code, int *code_size, char *labelName, int labelAdr)
+{ 
+
+
+    for (int i = 0; i < *code_size; ++i)
+    {
+        if (strstr(code[i], labelName))
+        {
+            
+            strtok(code[i], "~");
+            char buf[sizeof(int) * 4 + 1];
+            sprintf(buf, "~%d", labelAdr);
+            strcat(code[i], buf);
+
+            //printf("\n---%s---\n", code[i]);
+
+        }
+    }
+}
+
+char **org_label_sorting(labels *label_list, orgs *orgs_list, int *label, int *org, char **code, int *size, int *new_linenum)
 {
     int *address = (int*)(malloc(*size*sizeof(int)));
-    int current_adr = 0;
-    int *j = (int*)(malloc(1*sizeof(int)));
-    *j = 0;
-
-    labels label_list[MAX_LABELS];
-    int label = 0;
+    *new_linenum = 0;
+    *label = 0;
+    *org = 0;
 
     char *token;
     char **new_code = (char**)(malloc(*size*sizeof(char*)));
 
     for (int i = 0; i < *size; ++i)
     {
-        int change_adr = 1;
         if (strstr(code[i], ".ORG"))
         {
             token = strtok(code[i], "~");
             token = strtok(NULL, "~");
 
-            current_adr = convert_num(token);
-            change_adr = 0;
+            int adr = convert_num(token);
+            update_orgData(orgs_list, *org, *new_linenum, adr);
+            ++*org;
         }
 
         else if (strstr(code[i], ":"))
@@ -224,45 +262,59 @@ void address_sorting(char **code, int *size)
             token = strtok(code[i], "~");
             token = strtok(token, ":");
 
-            if (check_labelList(label_list, token))
+            if (check_labelList(label_list, token, *label))
             {
-                update_labelData(label_list,label,token, current_adr);
-                printf(" %d |", label_list[label].address); 
-                ++label;    
+                update_labelData(label_list, *label, token, 0, *new_linenum);
+                ++*label;    
             }
-            change_adr = 0;
         }
+
         else
         {
-            current_adr += change_adr;
-            new_code[*j] = code[i];
-            address[*j] = current_adr;
-            ++*j;
+            new_code[*new_linenum] = code[i];
+            ++*new_linenum;
         }
     }
-    //printf("\n");
-    for (int i = 0; i < *j; ++i){
-        //printf(" %d |", address[i]);
-    }
 
-    //printf("\n");
-    //print_arr(new_code,j);
+    return new_code;
 }
 
 int main()
 {
     char *dir_path;
-    dir_path = get_filename();
-
     char **file_lines;
+    char **parsed_code;
     int *address;
-    int *size = (int*)(malloc(1*sizeof(int)));
+    int *size = (int*)(malloc(sizeof(int)));
+    int *parsed_codeSize = (int*)(malloc(sizeof(int)));
+
+    labels labels_list[MAX_LABELS];
+    orgs orgs_list[MAX_ORGS];
+    int *ll_size = (int*)(malloc(sizeof(int)));
+    int *ol_size = (int*)(malloc(sizeof(int)));
+
+
+    dir_path = get_filename();
 
     file_lines = get_file(dir_path, size);
 
     print_arr(file_lines,size);
+    printf("\n");
+    
+    parsed_code = org_label_sorting(labels_list, orgs_list, ll_size, ol_size, file_lines,size,parsed_codeSize);
 
-    address_sorting(file_lines,size);
+    print_arr(parsed_code,parsed_codeSize);
+    printf("\n");
+
+    for (int i = 0; i < *ll_size; ++i)
+    {
+        printf("%d: %s, %d\n",labels_list[i].linenum, labels_list[i].name, labels_list[i].address);
+    }
+
+    for (int i = 0; i < *ol_size; ++i)
+    {
+        printf("%d: %d\n", orgs_list[i].linenum, orgs_list[i].address);
+    }
 
     return 0;
 }
