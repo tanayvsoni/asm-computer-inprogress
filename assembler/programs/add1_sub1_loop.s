@@ -1,6 +1,15 @@
 .org $4000
 ;test2
 
+a = 32
+a = 12;
+
+b = 23;
+
+c= 223;
+
+d = $10;
+
 ;how are your
 
 add_Loop:
@@ -10,7 +19,7 @@ add_Loop:
 	jmp add_Loop       
 
 sub_Loop:
-	sbc #1              
+	sbc #1            
 	sta 0         
 	beq add_Loop      
 	jmp sub_Loop        

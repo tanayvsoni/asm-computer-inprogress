@@ -16,6 +16,7 @@
 #define MAX_LINE_NUM    1000
 #define MAX_LABELS      1000
 #define MAX_ORGS        1000
+#define MAX_VARS        1000
 
 typedef struct
 {
@@ -23,6 +24,13 @@ typedef struct
     int address;
     int linenum;
 } labels;
+
+typedef struct 
+{
+    char *name;
+    int address;
+} variables;
+
 
 typedef struct 
 {
@@ -122,11 +130,11 @@ char **get_file(char *dir_path, int *size)
             for (int char_count = 0; char_count < strlen(str); char_count++) {
 
                 // Replace single space between instructions with ~   
-                if (str[char_count-1] != ' ' && str[char_count] == ' ' && str[char_count + 1] != ' ') {
+                /*if (str[char_count-1] != ' ' && str[char_count] == ' ' && str[char_count + 1] != ' ') {
                     lines[line_count][char_count] = '~';
                 }
                 // Skips any comments
-                else if (str[char_count] == ';') {
+                else*/ if (str[char_count] == ';') {
                     break; 
                 }
                 
@@ -174,7 +182,7 @@ int convert_num(char *num)
     }
     else
     {   
-        int_num = (int)strtol(token, NULL, 10);  
+        int_num = (int)strtol(num, NULL, 10);  
     }
 
     return int_num;
@@ -187,6 +195,25 @@ void update_labelData(labels *a, int index, char *n, int adr, int linum)
     a[index].linenum = linum;
 
     //printf("\n%s, %d\n", a[index].name, a[index].address);
+}
+
+void update_varData(variables *a, int *index, char *n, int adr)
+{
+
+    if (index != 0)
+    {
+        for (int i = 0; i < *index; ++i)
+        {
+            if (strcmp(a[i].name, n) == 0) 
+            { 
+                *index = i; 
+            }
+        }
+    }
+    
+    a[*index].name = n;
+    a[*index].address = adr;
+
 }
 
 void update_orgData(orgs *a, int index, int linum, int adr)
@@ -235,12 +262,12 @@ void replace_labels(char **code, int *code_size, char *labelName, int labelAdr)
     }
 }
 
-char **org_label_sorting(labels *label_list, orgs *orgs_list, int *label, int *org, char **code, int *size, int *new_linenum)
+char **org_label_sorting(labels *label_list, orgs *orgs_list, variables *vars_list, int *label, int *org, int *var, char **code, int *size, int *new_linenum)
 {
-    int *address = (int*)(malloc(*size*sizeof(int)));
     *new_linenum = 0;
     *label = 0;
     *org = 0;
+    *var = 0;
 
     char *token;
     char **new_code = (char**)(malloc(*size*sizeof(char*)));
@@ -249,8 +276,9 @@ char **org_label_sorting(labels *label_list, orgs *orgs_list, int *label, int *o
     {
         if (strstr(code[i], ".ORG"))
         {
-            token = strtok(code[i], "~");
-            token = strtok(NULL, "~");
+            //token = strtok(code[i], "~");
+            //token = strtok(NULL, "~");
+            token = strtok(code[i], ".ORG");
 
             int adr = convert_num(token);
             update_orgData(orgs_list, *org, *new_linenum, adr);
@@ -259,14 +287,25 @@ char **org_label_sorting(labels *label_list, orgs *orgs_list, int *label, int *o
 
         else if (strstr(code[i], ":"))
         {
-            token = strtok(code[i], "~");
-            token = strtok(token, ":");
+            //token = strtok(code[i], "~");
+            token = strtok(code[i], ":");
 
             if (check_labelList(label_list, token, *label))
             {
                 update_labelData(label_list, *label, token, 0, *new_linenum);
                 ++*label;    
             }
+        }
+
+        else if (strstr(code[i], "="))
+        {
+            char *name = strtok(code[i], "=");
+            token = strtok(NULL, "=");
+
+            int adr = convert_num(token);
+
+            update_varData(vars_list, var, name, adr);   
+            ++*var; 
         }
 
         else
@@ -284,37 +323,51 @@ int main()
     char *dir_path;
     char **file_lines;
     char **parsed_code;
-    int *address;
+    
     int *size = (int*)(malloc(sizeof(int)));
     int *parsed_codeSize = (int*)(malloc(sizeof(int)));
 
     labels labels_list[MAX_LABELS];
     orgs orgs_list[MAX_ORGS];
+    variables vars_list[MAX_VARS];
+
     int *ll_size = (int*)(malloc(sizeof(int)));
     int *ol_size = (int*)(malloc(sizeof(int)));
+    int *vl_size = (int*)(malloc(sizeof(int)));
 
 
     dir_path = get_filename();
 
     file_lines = get_file(dir_path, size);
-
-    print_arr(file_lines,size);
-    printf("\n");
     
-    parsed_code = org_label_sorting(labels_list, orgs_list, ll_size, ol_size, file_lines,size,parsed_codeSize);
+    parsed_code = org_label_sorting(labels_list, orgs_list, vars_list, ll_size, ol_size, vl_size, file_lines,size,parsed_codeSize);
 
     print_arr(parsed_code,parsed_codeSize);
-    printf("\n");
+
+    /*-------------------------------------------------------------------*/ 
+
+    printf("\n----Variables----\n");
+
+    for (int i = 0; i < *vl_size; ++i)
+    {
+        printf("%s: %d\n", vars_list[i].name, vars_list[i].address);
+    }
+
+    printf("\n----Labels----\n");
 
     for (int i = 0; i < *ll_size; ++i)
     {
         printf("%d: %s, %d\n",labels_list[i].linenum, labels_list[i].name, labels_list[i].address);
     }
 
+    printf("\n----Orgs----\n");
+
     for (int i = 0; i < *ol_size; ++i)
     {
         printf("%d: %d\n", orgs_list[i].linenum, orgs_list[i].address);
     }
+
+    /*-------------------------------------------------------------------*/ 
 
     return 0;
 }
