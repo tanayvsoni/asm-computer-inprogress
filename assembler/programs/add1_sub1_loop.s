@@ -1,7 +1,7 @@
-.org $4000
+
 ;test2
 
-a = 32
+a = 1
 a = 12;
 
 b = 23;
@@ -12,7 +12,10 @@ d = $10;
 
 ;how are your
 
-add_Loop:
+
+.org $4000
+
+add_Loop: 
 	adc #1            ;   test
 	bcs sub_Loop       
 	sta 0             

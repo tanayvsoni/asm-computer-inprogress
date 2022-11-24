@@ -226,17 +226,15 @@ void update_orgData(orgs *a, int index, int linum, int adr)
 
 bool check_labelList(labels *a, char *label_name, int label_arrSize)
 {
-    if (label_arrSize == 0)
+    if (label_arrSize != 0)
     {
-        return true;
-    }
-
-    for (int i = 0; i < label_arrSize; ++i)
-    {
-        if (strcmp(a[i].name, label_name) == 0)
+        for (int i = 0; i < label_arrSize; ++i)
         {
-            //printf("\n__%s__\n", a[i].name);
-            return false;
+            if (strcmp(a[i].name, label_name) == 0)
+            {
+                //printf("\n__%s__\n", a[i].name);
+                return false;
+            }
         }
     }
     return true;
@@ -244,8 +242,6 @@ bool check_labelList(labels *a, char *label_name, int label_arrSize)
 
 void replace_labels(char **code, int *code_size, char *labelName, int labelAdr)
 { 
-
-
     for (int i = 0; i < *code_size; ++i)
     {
         if (strstr(code[i], labelName))
@@ -318,6 +314,28 @@ char **org_label_sorting(labels *label_list, orgs *orgs_list, variables *vars_li
     return new_code;
 }
 
+char **rep_labelsVars(labels *label_list, orgs *orgs_list, variables *vars_list, int *label, int *org, int *var, char **code, int *size)
+{
+    bool load_imd[*size];
+    char spacing = '~';
+    
+    for (int i = 0; i < *size; ++i)
+    {
+        if (code[i][3] == '#')
+        {
+            load_imd[i] = true;
+        } else {load_imd[i] = false;}
+    }
+
+    for (int i = 0; i < *size; ++i)
+    {
+        if (load_imd[i])
+        {
+
+        }
+    }
+}
+
 int main()
 {
     char *dir_path;
@@ -343,6 +361,8 @@ int main()
     parsed_code = org_label_sorting(labels_list, orgs_list, vars_list, ll_size, ol_size, vl_size, file_lines,size,parsed_codeSize);
 
     print_arr(parsed_code,parsed_codeSize);
+
+    //rep_labelsVars(labels_list, orgs_list, vars_list, ll_size, ol_size, vl_size, file_lines,parsed_codeSize);
 
     /*-------------------------------------------------------------------*/ 
 
