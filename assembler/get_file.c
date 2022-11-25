@@ -1,18 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
-
-#if defined(__WIN32)
-    #define PATH "\\programs\\"
-#elif defined(__APPLE__)
-    #define PATH "/assembler/programs/"
-#endif
-
-#define NAMESIZE         60
-#define MAX_CHARS        500
-#define MAX_LINES_NUM    1000
+#include "header.h"
 
 char *get_dir()
 {
@@ -80,10 +66,9 @@ bool remove_comments(char str[], bool comment_block)
 char **og_code(int *size)
 {   
     bool comment_block = false;
-    char str[MAX_CHARS];
+    static char str[MAX_CHARS], lines[MAX_LINES_NUM][MAX_CHARS];
     *size = 0;
-
-    char lines[MAX_LINES_NUM][MAX_CHARS];
+    
     char **code = (char**)(malloc(MAX_LINES_NUM*sizeof(char)));
 
     char *dir = get_dir();
