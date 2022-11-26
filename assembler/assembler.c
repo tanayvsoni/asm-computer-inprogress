@@ -1,9 +1,9 @@
 #include "header.h"
 
 #include "get_file.c"
-#include "get_vars.c"
-#include "get_orgs.c"
-#include "get_labels.c"
+#include "./first_parse/get_vars.c"
+#include "./first_parse/get_orgs.c"
+#include "./first_parse/get_labels.c"
 #include "sort_implied_instr.c"
 
 void print_vars(vars *vars_list)
@@ -37,6 +37,14 @@ void print_orgs(orgs *orgs_list)
     }
 }
 
+void exit_prg()
+{
+    printf("\nWrite # to exit");
+    char c;
+    while ((c = getchar()) != '#')
+        putchar(c);
+}
+
 int main()
 {
     labels labels_list[MAX_LABELS] = {};
@@ -61,6 +69,7 @@ int main()
     */
    
     print_arr(code,size);
+    exit_prg();
 
     return 0;
 }
