@@ -21,7 +21,7 @@
 
 #define MAX_LABELS      1000
 #define MAX_ORGS        1000
-#define MAX_VARS        1000
+#define MAX_VARS        15
 
 typedef struct
 {

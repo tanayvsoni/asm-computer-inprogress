@@ -1,20 +1,12 @@
 
 ;test2
 
-a = 1
-a = 12;
+constant = 23
+iter = 1
 
-b = 23;
+iter = iter+1
 
-c= 4;
-
-d = 2;
-
-
-e = d+c;
-
-f = e+1
-
+d = iter - constant
 
 ;how are your
 

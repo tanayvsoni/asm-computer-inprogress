@@ -85,8 +85,8 @@ int deal_oper(vars *v, char *val)
 
     else if (strstr(val, "-"))
     {
-        op1 = strtok(val, "+");
-        op2 = strtok(NULL, "+");
+        op1 = strtok(val, "-");
+        op2 = strtok(NULL, "-");
         
         switch (op1[0])
         {

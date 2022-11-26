@@ -17,6 +17,9 @@ int main()
     {
         printf("Name: %s | Val: %d\n", vars_list[i].name, vars_list[i].value);
     }*/
+
+    printf("\n");
+
     print_arr(code,size);
 
     return 0;
