@@ -19,9 +19,10 @@
 #define MAX_CHARS        80
 #define MAX_LINES_NUM    60000
 
-#define MAX_LABELS      1000
 #define MAX_ORGS        1000
-#define MAX_VARS        15
+#define MAX_VARS        1000
+#define MAX_LABELS      100
+
 
 typedef struct
 {
@@ -87,6 +88,5 @@ void print_arr(char **file, int *size)
 
     printf("\n");
 }
-
 
 #endif

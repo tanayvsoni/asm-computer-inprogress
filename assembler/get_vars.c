@@ -1,10 +1,8 @@
 #include "header.h"
 
-bool overwrite(vars *v, char *var_name, int val)
+bool overwrite_vars(vars *v, char *var_name, int val)
 {   
-    int i;
-
-    for (i = 0; i < MAX_VARS; ++i)
+    for (int i = 0; i < MAX_VARS; ++i)
     {
         if (v[i].name != NULL && (strcmp(v[i].name, var_name) == 0))
         {
@@ -144,7 +142,7 @@ char **get_vars(vars *v, char **code, int *code_size)
 
             val = deal_oper(v,temp);
 
-            existing = overwrite(v, var_name, val);
+            existing = overwrite_vars(v, var_name, val);
 
             if (!existing)
             {
@@ -153,11 +151,7 @@ char **get_vars(vars *v, char **code, int *code_size)
                 ++amount_vars;
             }
         }
-        else
-        {
-            newcode[j] = code[i];
-            ++j;
-        }
+        else newcode[j++] = code[i];
     }
 
     *code_size = j;
