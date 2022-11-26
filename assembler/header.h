@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include <unistd.h>
 
 
@@ -20,7 +21,7 @@
 
 #define MAX_LABELS      1000
 #define MAX_ORGS        1000
-#define MAX_VARS        10
+#define MAX_VARS        1000
 
 typedef struct
 {
@@ -46,7 +47,7 @@ void rm_whitespace(char *word)
     char *d = word;
 
     do {
-        while (*d == ' ' || *d == '\t') {
+        while (*d == ' ' || *d == '\n' || *d == '\t') {
             ++d;
         }
     } while (*word++ = *d++);
@@ -58,23 +59,34 @@ int convert_num(char *num)
     char *token;
     int int_num;
 
-    if (*num == '$')
+    switch (*num)
     {
+    case '$':
         token = strtok(num,"$");
-
         int_num = (int)strtol(token, NULL, 16);
-    }
-    else if (*num == '%')
-    {
+        break;
+    
+    case '%':
         token = strtok(num,"%%");
         int_num = (int)strtol(token, NULL, 2);
-    }
-    else
-    {   
-        int_num = (int)strtol(num, NULL, 10);  
+        break;
+
+    default:
+        int_num = (int)strtol(num, NULL, 10); 
+        break;
     }
 
     return int_num;
 }
+
+void print_arr(char **file, int *size)
+{
+    for (int i = 0; i < *size; ++i) {
+        printf("%s", file[i]);
+    }
+
+    printf("\n");
+}
+
 
 #endif

@@ -16,7 +16,7 @@ char *get_dir()
 
     char *dir_output = (char*)malloc(strlen(dir) + 1);
     memcpy(dir_output, dir, strlen(dir) + 1);
-
+    
     return dir_output;
 }
 
@@ -94,6 +94,7 @@ char **og_code(int *size)
         }      
     }
 
+    free(dir);
     fclose(ptr);
 
     for (int i = 0; i < *size; ++i)
