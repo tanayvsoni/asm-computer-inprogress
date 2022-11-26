@@ -13,6 +13,7 @@
     #define PATH "\\programs\\"
 #elif defined(__APPLE__)
     #define PATH "/assembler/programs/"
+    #define PATH_MAX 100
 #endif
 
 #define NAMESIZE         60

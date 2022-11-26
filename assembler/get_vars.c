@@ -56,7 +56,7 @@ int deal_oper(vars *v, char *val)
         
         switch (op1[0])
         {
-        case '$'||'%':
+        case '$'|'%':
             op1_int = convert_num(op1);
             break;
         
@@ -68,7 +68,7 @@ int deal_oper(vars *v, char *val)
         
         switch (op2[0])
         {
-        case '$'||'%':
+        case '$'|'%':
             op2_int= convert_num(op2);
             break;
         
@@ -88,7 +88,7 @@ int deal_oper(vars *v, char *val)
         
         switch (op1[0])
         {
-        case '$'||'%':
+        case '$'|'%':
             op1_int = convert_num(op1);
             break;
         
@@ -100,7 +100,7 @@ int deal_oper(vars *v, char *val)
         
         switch (op2[0])
         {
-        case '$'||'%':
+        case '$'|'%':
             op2_int= convert_num(op2);
             break;
         
