@@ -1,12 +1,15 @@
 
 ;test2
 
-constant = 23
-iter = 1
+a = 23
 
-iter = iter+1
+a = 433
 
-d = iter - constant
+b = 23
+
+c = a+b
+
+d = c+ 1
 
 ;how are your
 

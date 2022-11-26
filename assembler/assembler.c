@@ -4,6 +4,7 @@
 #include "get_vars.c"
 #include "get_orgs.c"
 #include "get_labels.c"
+#include "sort_implied_instr.c"
 
 void print_vars(vars *vars_list)
 {
@@ -27,6 +28,15 @@ void print_labels(labels *labels_list)
     }
 }
 
+void print_orgs(orgs *orgs_list)
+{
+    for (int i = 0; i < MAX_ORGS; ++i)
+    {
+        if (orgs_list[i].address != 0)
+            printf("Linenum: %d | Address: %d\n", orgs_list[i].linenum, orgs_list[i].address);
+    }
+}
+
 int main()
 {
     labels labels_list[MAX_LABELS] = {};
@@ -35,16 +45,21 @@ int main()
 
     int *size = (int*)(malloc(sizeof(int)));
     char **code = og_code(size);
+
     code = get_vars(vars_list, code, size);
-
     code = get_labels(labels_list, vars_list, code, size);
+    code = get_orgs(orgs_list, code, size);
 
+    /*
     printf("\n");
     print_labels(labels_list);
     printf("\n");
     print_vars(vars_list);
     printf("\n");
-
+    print_orgs(orgs_list);
+    printf("\n");
+    */
+   
     print_arr(code,size);
 
     return 0;

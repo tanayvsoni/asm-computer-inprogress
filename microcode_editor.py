@@ -284,7 +284,7 @@ def main():
         # DEX # Decrement Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|XOX2|EI|ES2|DEC, MI|COA|EO|XI, CE|II|EP],                                                                                               # 067 - implied     ; 
         
-        # DEC # Decrement Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
+        # DEY # Decrement Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|YOX2|EI|ES2|DEC, MI|COA|EO|YI, CE|II|EP],                                                                                               # 068 - implied      ; 
         
         # EOR # Exclusive-OR Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
@@ -403,7 +403,7 @@ def main():
         # RTI # Return from Interrupt                                                                                                                          # OPC - ADDRESSING   ; ASSEMBLER
         [DSP|SPE|ECLK, MI|SPAO|RO|SRDI|DSP|SPE|FI|ECLK, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, J, MI|COA|CE|IE|EP|CI],                                      # 148 - implied      ;
         
-        # RTI # Return from Subroutine                                                                                                                         # OPC - ADDRESSING   ; ASSEMBLER
+        # RTS # Return from Subroutine                                                                                                                         # OPC - ADDRESSING   ; ASSEMBLER
         [DSP|SPE, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, MI|COA|J|BR, MI|COA|CE|FEC|BR, CE|II|EP],                                                          # 149 - implied      ;        
         
         # SUB # Subtract Memory from Accumulator with Borrow                                                                                                   # OPC - ADDRESSING   ; ASSEMBLER

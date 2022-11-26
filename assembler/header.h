@@ -90,4 +90,12 @@ void print_arr(char **file, int *size)
     printf("\n");
 }
 
+char *instr[] = {"NOP", "ADC", "AND", "ASL", "BCC", "BCS", "BCS", "BEQ", "BIT",
+                 "BMI", "BNE", "BPL", "BRK", "BVS", "CLC", "CLI", "CLC", "CMP",
+                 "CMP", "CPX", "CPX", "CPY", "DEC", "DEX", "DEY", "EOR", "INC",
+                 "INX", "INY", "JMP", "JSR", "LDA", "LDX", "LDY", "LSR", "ORA", 
+                 "PHA", "PHP", "PLA", "ROL", "ROR", "RTI", "RTS", "SUB", "SEC",
+                 "SEI", "STA", "STX", "STY", "TAX", "TAY", "TSX", "TSA", "TXS",
+                 "TYA", "HLT", "OUT"};
+
 #endif
