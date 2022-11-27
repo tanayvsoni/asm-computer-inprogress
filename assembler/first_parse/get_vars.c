@@ -1,4 +1,4 @@
-#include "./assembler/header.h"
+#include "../header.h"
 
 bool overwrite_vars(vars *v, char *var_name, int val)
 {   

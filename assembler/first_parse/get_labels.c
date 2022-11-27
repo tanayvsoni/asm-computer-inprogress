@@ -1,4 +1,4 @@
-#include "./assembler/header.h"
+#include "../header.h"
 
 bool overwrite_labels(labels *l, char *label_name, int line_num)
 {   
