@@ -4,7 +4,7 @@
 #include "./first_parse/get_vars.c"
 #include "./first_parse/get_orgs.c"
 #include "./first_parse/get_labels.c"
-#include "sort_implied_instr.c"
+#include "./second_parse/parse.c"
 
 void print_vars(vars *vars_list)
 {
@@ -37,6 +37,15 @@ void print_orgs(orgs *orgs_list)
     }
 }
 
+void print_instr(instr *parsed_code)
+{
+    for (int i = 0; i < MAX_LINES_NUM; ++i)
+    {
+        if (parsed_code[i].instr != NULL)
+            printf("Instr: %s | %s\n", parsed_code[i].instr, parsed_code[i].operand);
+    } 
+}
+
 void exit_prg()
 {
     printf("\nWrite # to exit");
@@ -58,7 +67,7 @@ int main()
     code = get_labels(labels_list, vars_list, code, size);
     code = get_orgs(orgs_list, code, size);
 
-    /*
+    
     printf("\n");
     print_labels(labels_list);
     printf("\n");
@@ -66,10 +75,15 @@ int main()
     printf("\n");
     print_orgs(orgs_list);
     printf("\n");
-    */
-   
-    print_arr(code,size);
-    exit_prg();
+    
+
+    instr parsed_code[MAX_LINES_NUM] = {};
+    parse(parsed_code, labels_list, vars_list, code, *size);
+
+    //print_arr(code,size);
+    print_instr(parsed_code);
+
+    //exit_prg();
 
     return 0;
 }

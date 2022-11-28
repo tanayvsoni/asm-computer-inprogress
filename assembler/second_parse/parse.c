@@ -1,27 +1,48 @@
 #include "../header.h"
 
-bool overwrite_vars(vars *v, char *var_name, int val)
-{   
+void convert_operand(vars *v, char *operand)
+{
+    char *temp = (char*)(malloc(strlen(operand)*sizeof(char)));
+    
+    if (*operand == '$' || *operand == '%' || isInt(operand))
+    {
+        sprintf(operand, "%d", convert_num(operand));
+    }
+    else if (!isInt(operand))
+    {
+        for (int i = 0; i < MAX_VARS; ++i)
+        {
+            if (v[i].name != NULL && (strcmp(v[i].name, operand) == 0))
+            {   
+                sprintf(operand, "%d", v[i].value);
+            }
+        }
+    }
+}
+
+bool isInVars(vars *v, char *operand)
+{
     for (int i = 0; i < MAX_VARS; ++i)
     {
-        if (v[i].name != NULL && (strcmp(v[i].name, var_name) == 0))
+        if (v[i].name == NULL)
+            break;
+        else if (strcmp(v[i].name, operand) == 0)
         {
-            v[i].name = var_name;
-            v[i].value = val;
             return true;
         }
     }
 
+    return false;
 }
 
-int deal_oper(vars *v, char *val)
+int sort_operand(vars *v, char *operand)
 {
     char *op1, *op2;
     int op1_int, op2_int;
 
-    if (strstr(val, "+"))
+    if (strstr(operand, "+"))
     {
-        op1 = strtok(val, "+");
+        op1 = strtok(operand, "+");
         op2 = strtok(NULL, "+");
         
         switch (op1[0])
@@ -55,9 +76,9 @@ int deal_oper(vars *v, char *val)
         return (op1_int+op2_int);    
     }
 
-    else if (strstr(val, "-"))
+    else if (strstr(operand, "-"))
     {
-        op1 = strtok(val, "-");
+        op1 = strtok(operand, "-");
         op2 = strtok(NULL, "-");
         
         switch (op1[0])
@@ -91,49 +112,38 @@ int deal_oper(vars *v, char *val)
         return (op1_int-op2_int);
     }
 
-    else if (!isInt(val)) 
+    else if (!isInt(operand)) 
     { 
-        return find_varVal(v,val);
+        return find_varVal(v,operand);
     }
 
-
-    return convert_num(val);    
+    return convert_num(operand); 
 }
 
-char **get_vars(vars *v, char **code, int *code_size)
+void parse(instr *code_list, labels *labels_list, vars *vars_list, char **code, int code_size)
 {
-    int i, amount_vars = 0;
-    int j = 0;
 
-    bool existing;
-    char *var_name, *temp, **newcode;
-    int val;
+    char *temp;
+    int n;
 
-    newcode = (char**)(malloc(MAX_LINES_NUM*sizeof(char)));
-
-    for (i = 0; i < *code_size; ++i, existing = false)
+    for (int i = 0; i < code_size; ++i)
     {
-        if (strstr(code[i], "="))
+        rm_whitespace(code[i]);
+        append(code[i],' ', 3);
+
+        code_list[i].instr = strtok(code[i], " ");
+        code_list[i].operand = strtok(NULL, " ");
+
+        /*if (*code_list[i].operand != '#')
         {
-            rm_whitespace(code[i]);
-            var_name = strtok(code[i], "=");
-            temp = strtok(NULL, "=");
+            n = sort_operand(vars_list, code_list[i].operand);
+            sprintf(temp, "%d", n);
+        }*/
 
-            val = deal_oper(v,temp);
-
-            existing = overwrite_vars(v, var_name, val);
-
-            if (!existing)
-            {
-                v[amount_vars].name = var_name;
-                v[amount_vars].value = val;
-                ++amount_vars;
-            }
+            
+        for (int j = 0; j < 3; ++j)
+        {
+            code[i][j] = toupper(code[i][j]);
         }
-        else newcode[j++] = code[i];
     }
-
-    *code_size = j;
-
-    return newcode;
 }

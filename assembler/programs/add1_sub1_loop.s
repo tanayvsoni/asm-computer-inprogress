@@ -1,15 +1,22 @@
 
 ;test2
 
+/*
+
+asjdkashjsadhfks
+
+*/
+
 a = 23
 
 a = 433
 
-b = 23
+b = $a
 
-c = a+b
+e = a
+c = %10+a
 
-d = c+ 1
+zero =0
 
 ;how are your
 
@@ -19,12 +26,12 @@ d = c+ 1
 add_Loop: 
 	adc #1            ;   test
 	bcs sub_Loop       
-	sta 0             
+	sta zero             
 	jmp add_Loop       
 
 sub_Loop:
 	sbc #1            
-	sta 0         
+	sta zero         
 	beq add_Loop      
 	jmp sub_Loop        
 
@@ -32,5 +39,5 @@ irq:
 	.org $fffd
 	jmp $4018
 	.org $4018
-	inc 2
-	rti
+	iNc 2
+	RTI

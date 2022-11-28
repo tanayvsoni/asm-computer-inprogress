@@ -44,12 +44,52 @@ typedef struct
     int address;
 } orgs;
 
+typedef struct
+{
+    char *instr;
+    char *adr_m;
+    char *operand;
+
+} instr;
+
+int find_varVal(vars *v, char *var_name)
+{
+    int output;
+
+    for (int i = 0; i < MAX_VARS; ++i)
+    {
+        if (v[i].name != NULL && (strcmp(v[i].name, var_name) == 0))
+        {
+            output = v[i].value;   
+        }
+    }
+    return output;
+}
+
+bool isInt(char *var)
+{
+    int start = 0;
+
+    if (*var == '$' || *var == '%')
+        return true;
+
+    for (int i = 0; i < strlen(var); ++i)
+    {   
+        if (isdigit(var[i]) == 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void rm_whitespace(char *word)
 {
     char *d = word;
 
     do {
-        while (*d == ' ' || *d == '\n' || *d == '\t') {
+        while (*d == ' ' || *d =='\n' || *d == '\t') {
             ++d;
         }
     } while (*word++ = *d++);
@@ -90,12 +130,33 @@ void print_arr(char **file, int *size)
     printf("\n");
 }
 
-char *instr[] = {"NOP", "ADC", "AND", "ASL", "BCC", "BCS", "BCS", "BEQ", "BIT",
-                 "BMI", "BNE", "BPL", "BRK", "BVS", "CLC", "CLI", "CLC", "CMP",
-                 "CMP", "CPX", "CPX", "CPY", "DEC", "DEX", "DEY", "EOR", "INC",
-                 "INX", "INY", "JMP", "JSR", "LDA", "LDX", "LDY", "LSR", "ORA", 
-                 "PHA", "PHP", "PLA", "ROL", "ROR", "RTI", "RTS", "SUB", "SEC",
-                 "SEI", "STA", "STX", "STY", "TAX", "TAY", "TSX", "TSA", "TXS",
-                 "TYA", "HLT", "OUT"};
+void append(char *str, char c, int n) 
+{
+    int size = strlen(str)+1;
+    char *new_str = (char*)(malloc((size+1)*sizeof(char)));
+    int i,j;
+
+    for (i = 0, j = 0; i < size; ++i, ++j)
+    {
+        if (i == n)
+        {
+            new_str[j++] = c;
+        }
+
+        new_str[j] = str[i];
+    } 
+
+    memcpy(str, new_str,j);
+
+    free(new_str);
+}
+
+char *implied_instr[] = {"NOP", "ASL", "BRK", "CLC", "CLI", "CLV", "DEX", "DEY",
+                         "INX", "INY", "LSR", "PHA", "PHP", "PLA", "PLP", "ROL",
+                         "ROR", "RTI", "RTS", "SEC", "SEI", "TAX", "TAY", "TSX", 
+                         "TSA", "TXS", "TYA", "HLT", "OUT"};
+
+char *immediate_instr[] = {"ADC", "AND", "CMP", "CPX", "CPY", "EOR", "LDA", "LDX",
+                           "LDY", "ORA", "SUB"};              
 
 #endif
