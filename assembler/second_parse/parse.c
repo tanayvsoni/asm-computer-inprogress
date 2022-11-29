@@ -1,25 +1,5 @@
 #include "../header.h"
 
-void convert_operand(vars *v, char *operand)
-{
-    char *temp = (char*)(malloc(strlen(operand)*sizeof(char)));
-    
-    if (*operand == '$' || *operand == '%' || isInt(operand))
-    {
-        sprintf(operand, "%d", convert_num(operand));
-    }
-    else if (!isInt(operand))
-    {
-        for (int i = 0; i < MAX_VARS; ++i)
-        {
-            if (v[i].name != NULL && (strcmp(v[i].name, operand) == 0))
-            {   
-                sprintf(operand, "%d", v[i].value);
-            }
-        }
-    }
-}
-
 bool isInVars(vars *v, char *operand)
 {
     for (int i = 0; i < MAX_VARS; ++i)
@@ -35,10 +15,11 @@ bool isInVars(vars *v, char *operand)
     return false;
 }
 
-int sort_operand(vars *v, char *operand)
+void sort_operand(vars *v, char *operand)
 {
     char *op1, *op2;
     int op1_int, op2_int;
+    int new_val;
 
     if (strstr(operand, "+"))
     {
@@ -73,7 +54,9 @@ int sort_operand(vars *v, char *operand)
             break;
         }
 
-        return (op1_int+op2_int);    
+        new_val = op1_int+op2_int;
+
+        sprintf(operand, "%d", new_val);    
     }
 
     else if (strstr(operand, "-"))
@@ -109,22 +92,25 @@ int sort_operand(vars *v, char *operand)
             break;
         }
 
-        return (op1_int-op2_int);
+        new_val = op1_int-op2_int;
+        sprintf(operand, "%d", new_val);
     }
 
-    else if (!isInt(operand)) 
+    else if (!isInt(operand) && isInVars(v, operand)) 
     { 
-        return find_varVal(v,operand);
+        new_val = find_varVal(v,operand);
+        sprintf(operand, "%d", new_val);
     }
 
-    return convert_num(operand); 
+    else if (isInt(operand))
+    {
+        new_val = convert_num(operand);
+        sprintf(operand, "%d", new_val); 
+    }
 }
 
 void parse(instr *code_list, labels *labels_list, vars *vars_list, char **code, int code_size)
 {
-
-    char *temp;
-    int n;
 
     for (int i = 0; i < code_size; ++i)
     {
@@ -134,13 +120,23 @@ void parse(instr *code_list, labels *labels_list, vars *vars_list, char **code, 
         code_list[i].instr = strtok(code[i], " ");
         code_list[i].operand = strtok(NULL, " ");
 
-        /*if (*code_list[i].operand != '#')
+        if (code_list[i].operand != NULL)
         {
-            n = sort_operand(vars_list, code_list[i].operand);
-            sprintf(temp, "%d", n);
-        }*/
+            if (*code_list[i].operand == '#')
+            {
+                code_list[i].adr_m = "immediate";
+                code_list[i].adr_del = 2;
+                code_list[i].operand = &code_list[i].operand[1];
+            }
+            if (strstr(code_list[i].operand, ",") == NULL && strstr(code_list[i].operand, "(") == NULL)
+                sort_operand(vars_list, code_list[i].operand);
+        }
+        else
+        {
+            code_list[i].adr_m = "implied";
+            code_list[i].adr_del = 1;
+        }
 
-            
         for (int j = 0; j < 3; ++j)
         {
             code[i][j] = toupper(code[i][j]);

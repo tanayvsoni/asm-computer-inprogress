@@ -49,6 +49,8 @@ typedef struct
     char *instr;
     char *adr_m;
     char *operand;
+    int opcode;
+    int adr_del;
 
 } instr;
 

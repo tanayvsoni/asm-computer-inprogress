@@ -18,13 +18,15 @@ c = %10+a
 
 zero =0
 
+constant = 1
+
 ;how are your
 
 
 .org $4000
 
 add_Loop: 
-	adc #1            ;   test
+	adc #constant            ;   test
 	bcs sub_Loop       
 	sta zero             
 	jmp add_Loop       
@@ -41,3 +43,4 @@ irq:
 	.org $4018
 	iNc 2
 	RTI
+	adc (23),X

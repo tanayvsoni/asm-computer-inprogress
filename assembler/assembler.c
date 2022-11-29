@@ -42,7 +42,8 @@ void print_instr(instr *parsed_code)
     for (int i = 0; i < MAX_LINES_NUM; ++i)
     {
         if (parsed_code[i].instr != NULL)
-            printf("Instr: %s | %s\n", parsed_code[i].instr, parsed_code[i].operand);
+            printf("Instr: %s | %s\nAdr Mode: %s | %d\n\n", parsed_code[i].instr, parsed_code[i].operand, 
+                                                 parsed_code[i].adr_m, parsed_code[i].adr_del);
     } 
 }
 
