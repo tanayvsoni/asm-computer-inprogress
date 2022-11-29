@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 bool isInVars(vars *v, char *operand)
 {

@@ -1,10 +1,10 @@
 #include "header.h"
 
 #include "get_file.c"
-#include "./first_parse/get_vars.c"
-#include "./first_parse/get_orgs.c"
-#include "./first_parse/get_labels.c"
-#include "./second_parse/parse.c"
+#include "./get_constants/get_vars.c"
+#include "./get_constants/get_orgs.c"
+#include "./get_constants/get_labels.c"
+#include "1stparse.c"
 
 void print_vars(vars *vars_list)
 {
