@@ -1,6 +1,6 @@
 #include "../header.h"
 
-bool overwrite_labels(labels *l, char *label_name, int line_num)
+static bool overwrite_labels(labels *l, char *label_name, int line_num)
 {   
     for (int i = 0; i < MAX_LABELS; ++i)
     {
@@ -12,19 +12,6 @@ bool overwrite_labels(labels *l, char *label_name, int line_num)
         }
     }
 
-}
-
-bool is_inVars(vars *v, char *label_name)
-{
-    for (int i = 0; i < MAX_VARS; ++i)
-    {
-        if (v[i].name != NULL && (strcmp(v[i].name, label_name) == 0))
-        {
-            return true;   
-        }
-    }
-
-    return false;
 }
 
 char **get_labels(labels *l, vars *v, char **code, int *code_size)
@@ -42,7 +29,7 @@ char **get_labels(labels *l, vars *v, char **code, int *code_size)
             rm_whitespace(code[i]);
             label_name = strtok(code[i], ":");
             
-            if (!is_inVars(v,label_name))
+            if (!isInVars(v,label_name))
             {
                 existing = overwrite_labels(l, label_name, line_num);
 

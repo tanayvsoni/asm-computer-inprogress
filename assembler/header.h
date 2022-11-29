@@ -54,6 +54,21 @@ typedef struct
 
 } instr;
 
+bool isInVars(vars *v, char *operand)
+{
+    for (int i = 0; i < MAX_VARS; ++i)
+    {
+        if (v[i].name == NULL)
+            break;
+        else if (strcmp(v[i].name, operand) == 0)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 int find_varVal(vars *v, char *var_name)
 {
     int output;

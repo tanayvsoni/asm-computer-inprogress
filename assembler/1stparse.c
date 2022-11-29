@@ -1,21 +1,6 @@
 #include "header.h"
 
-bool isInVars(vars *v, char *operand)
-{
-    for (int i = 0; i < MAX_VARS; ++i)
-    {
-        if (v[i].name == NULL)
-            break;
-        else if (strcmp(v[i].name, operand) == 0)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-void sort_operand(vars *v, char *operand)
+static void sort_operand(vars *v, char *operand)
 {
     char *op1, *op2;
     int op1_int, op2_int;
@@ -109,7 +94,7 @@ void sort_operand(vars *v, char *operand)
     }
 }
 
-void parse(instr *code_list, labels *labels_list, vars *vars_list, char **code, int code_size)
+void first_parse(instr *code_list, labels *labels_list, vars *vars_list, char **code, int code_size)
 {
 
     for (int i = 0; i < code_size; ++i)

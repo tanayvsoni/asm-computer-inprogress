@@ -24,6 +24,13 @@ constant = 1
 
 
 .org $4000
+.db 232
+
+.db 232, 23, 322
+
+.tx "Hello"
+
+.dw 256
 
 add_Loop: 
 	adc #constant            ;   test

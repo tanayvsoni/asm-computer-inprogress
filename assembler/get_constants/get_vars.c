@@ -1,6 +1,6 @@
 #include "../header.h"
 
-bool overwrite_vars(vars *v, char *var_name, int val)
+static bool overwrite_vars(vars *v, char *var_name, int val)
 {   
     for (int i = 0; i < MAX_VARS; ++i)
     {
@@ -14,7 +14,7 @@ bool overwrite_vars(vars *v, char *var_name, int val)
 
 }
 
-int deal_oper(vars *v, char *val)
+static int deal_oper(vars *v, char *val)
 {
     char *op1, *op2;
     int op1_int, op2_int;
