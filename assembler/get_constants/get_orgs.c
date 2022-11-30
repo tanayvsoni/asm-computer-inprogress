@@ -7,6 +7,13 @@ char **get_orgs(orgs *orgs_list, char **code, int *code_size)
     char *org_adr, **newcode;
     int int_orgAdr;
 
+    // Initialize orgs list 
+    for(int i = 0; i < MAX_ORGS; ++i)
+    {
+        orgs_list[i].address = 0;
+        orgs_list[i].linenum = 0;
+    }
+
     newcode = (char**)(malloc(MAX_LINES_NUM*sizeof(char)));
 
     for (i = 0, j = 0, amount_orgs = 0; i < *code_size; ++i)
@@ -27,7 +34,7 @@ char **get_orgs(orgs *orgs_list, char **code, int *code_size)
     }
 
     *code_size = j;
-
+    free(code);
     return newcode;
     
 }

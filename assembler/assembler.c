@@ -4,7 +4,9 @@
 #include "./get_constants/get_vars.c"
 #include "./get_constants/get_orgs.c"
 #include "./get_constants/get_labels.c"
+#include "./instructions/sort_implied.c"
 #include "1stparse.c"
+#include "./dictionary/entry.h"
 
 void print_vars(vars *vars_list)
 {
@@ -57,9 +59,11 @@ void exit_prg()
 
 int main()
 {
-    labels labels_list[MAX_LABELS] = {};
-    orgs orgs_list[MAX_ORGS] = {};
-    vars vars_list[MAX_VARS] = {};
+    labels *labels_list = (labels*)(malloc(MAX_LABELS*sizeof(labels)));
+    orgs *orgs_list = (orgs*)(malloc(MAX_ORGS*sizeof(orgs)));
+    vars *vars_list = (vars*)(malloc(MAX_VARS*sizeof(vars)));
+
+    instr *parsed_code = (instr*)(malloc(MAX_LINES_NUM*sizeof(instr)));
 
     int *size = (int*)(malloc(sizeof(int)));
     char **code = og_code(size);
@@ -77,12 +81,30 @@ int main()
     print_orgs(orgs_list);
     printf("\n");
     
-
-    instr parsed_code[MAX_LINES_NUM] = {};
     first_parse(parsed_code, labels_list, vars_list, code, *size);
 
-    //print_arr(code,size);
     print_instr(parsed_code);
+
+    char *test_instr[] = {"NOP", "ADC", "AND", "ASL"};
+    char *adr_m[2][11] = {{"implied"}, 
+                          {"immediate", "zeropage","zeropageX", "zeropageY", "absolute", "absoluteX", "absoluteY", "BindirectXB", "BindirectYB", "BindirectBX" , "BindirectBY"}};
+
+
+    int value[] = {1, 2, 3, 4};
+
+    dictionary *d = (dictionary*)(malloc(MAX_LINES_NUM*sizeof(dictionary)));
+
+    for (int i = 0; i < MAX_LINES_NUM; ++i)
+    {
+        d[i].instr = NULL;
+        d[i].adr_mode = NULL;
+        d[i].value = 0;
+    }
+
+    for (int i = 0; i < sizeof(test_instr)/sizeof(test_instr[0]); ++i)
+    {
+        new_entry(d, test_instr[i], adr_m[i], value);
+    }
 
     //exit_prg();
 

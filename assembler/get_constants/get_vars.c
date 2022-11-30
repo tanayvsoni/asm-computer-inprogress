@@ -109,6 +109,13 @@ char **get_vars(vars *v, char **code, int *code_size)
     char *var_name, *temp, **newcode;
     int val;
 
+    // Initialize Variables list
+    for(int i = 0; i < MAX_VARS; ++i)
+    {
+        v[i].name = NULL;
+        v[i].value = 0;
+    }
+
     newcode = (char**)(malloc(MAX_LINES_NUM*sizeof(char)));
 
     for (i = 0; i < *code_size; ++i, existing = false)
@@ -134,6 +141,6 @@ char **get_vars(vars *v, char **code, int *code_size)
     }
 
     *code_size = j;
-
+    free(code);
     return newcode;
 }

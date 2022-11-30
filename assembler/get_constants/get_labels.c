@@ -20,6 +20,14 @@ char **get_labels(labels *l, vars *v, char **code, int *code_size)
     bool existing;
     char *label_name, **newcode;
 
+    // Initialize labels list
+    for(int i = 0; i < MAX_LABELS; ++i)
+    {
+        l[i].name = NULL;
+        l[i].address = 0;
+        l[i].linenum = 0;
+    }
+
     newcode = (char**)(malloc(MAX_LINES_NUM*sizeof(char)));
 
     for (i = 0, j = 0, line_num = 0, amount_labels = 0, existing = false; i < *code_size; ++i)
@@ -50,6 +58,6 @@ char **get_labels(labels *l, vars *v, char **code, int *code_size)
     }
 
     *code_size = j;
-
+    free(code);
     return newcode;
 }
