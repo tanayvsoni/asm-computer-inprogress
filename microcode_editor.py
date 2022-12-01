@@ -355,7 +355,7 @@ def main():
         [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|RTR, MI|TRO, RO|AI, LSHFR|EI, MI|COA|CE|II|EO|AI|EP],                                                   # 115 - zeropage,Y   ; oper,Y
         [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI, MI|TRO, RO|AI, LSHFR|EI, MI|COA|CE|II|EO|AI|EP],                                                            # 116 - absolute     ; oper
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, LSHFR|EI, MI|COA|CE|II|EO|AI|EP],                        # 117 - absolute,X   ; oper,X
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, LSHFR|EI, MI|COA|CE|II|EO|AI|EP],                        # 118 - zeropage,Y   ; oper,Y
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO, RO|AI, LSHFR|EI, MI|COA|CE|II|EO|AI|EP],                        # 118 - aboslute,Y   ; oper,Y
             
         # ORA # OR Memory with Accumulator                                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|OR|EI|ES2, MI|COA|EO|AI, CE|II|EP],                                                                                                  # 119 - immediate    ; #oper

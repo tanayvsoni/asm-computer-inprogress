@@ -85,15 +85,8 @@ int main()
 
     print_instr(parsed_code);
 
-    char *test_instr[] = {"NOP", "ADC", "AND", "ASL"};
-    char *adr_m[2][11] = {{"implied"}, 
-                          {"immediate", "zeropage","zeropageX", "zeropageY", "absolute", "absoluteX", "absoluteY", "BindirectXB", "BindirectYB", "BindirectBX" , "BindirectBY"}};
-
-
-    int value[] = {1, 2, 3, 4};
-
     dictionary *d = (dictionary*)(malloc(MAX_LINES_NUM*sizeof(dictionary)));
-
+    // Initialize dictionary array
     for (int i = 0; i < MAX_LINES_NUM; ++i)
     {
         d[i].instr = NULL;
@@ -101,9 +94,10 @@ int main()
         d[i].value = 0;
     }
 
+    // Import entrys into dictionary
     for (int i = 0; i < sizeof(test_instr)/sizeof(test_instr[0]); ++i)
     {
-        new_entry(d, test_instr[i], adr_m[i], value);
+        new_entry(d, test_instr[i], adr_m[i], value[i]);
     }
 
     //exit_prg();
