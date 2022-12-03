@@ -47,4 +47,4 @@ irq:
 	.org $4018
 	iNc 2
 	RTI
-	adc (23),X
+	adc 23+a,X

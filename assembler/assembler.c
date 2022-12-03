@@ -79,13 +79,13 @@ int main()
     code = get_orgs(orgs_list, code, size);
 
     
-    printf("\n");
+    /*printf("\n");
     print_labels(labels_list);
     printf("\n");
     print_vars(vars_list);
     printf("\n");
     print_orgs(orgs_list);
-    printf("\n");
+    printf("\n");*/
     
     first_parse(parsed_code, labels_list, vars_list, code, *size);
     free(size);
@@ -98,6 +98,7 @@ int main()
         d[i].instr = NULL;
         d[i].adr_mode = NULL;
         d[i].value = 0;
+        //d[i].exists = false;
     }
 
     // Import entrys into dictionary
@@ -106,15 +107,15 @@ int main()
     implied(d, parsed_code);
     immediate(d, parsed_code);
     //data_bytes(d, parsed_code);
-    zeropage(d, parsed_code);
+    zeropage(d, vars_list, parsed_code);
 
     print_instr(parsed_code);
 
-    char test_instr[] = "INC";
-    char test_adr_mode[] = "zeropage";
-    int n = 73+78+67+122+101+114+111+112+97+103+101;
-    int l = 83+66+67+97+98+115+111+108+117+116+101;
-    printf("--%d--", l);
+    //char test_instr[] = "ADC";
+    //char test_adr_mode[] = "zeropageX";
+
+    //print_dictionary(d);
+    //printf("--%d--", d[907].instr);
     
     //exit_prg();
 
