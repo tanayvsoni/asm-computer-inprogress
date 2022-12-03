@@ -1,12 +1,18 @@
 #include "header.h"
 
-#include "get_file.c"
-#include "./get_constants/get_vars.c"
-#include "./get_constants/get_orgs.c"
-#include "./get_constants/get_labels.c"
-#include "./instructions/sort_implied.c"
-#include "1stparse.c"
+#include "get_file.h"
+
+#include "./get_constants/get_vars.h"
+#include "./get_constants/get_orgs.h"
+#include "./get_constants/get_labels.h"
+
+#include "1stparse.h"
 #include "./dictionary/entry.h"
+
+#include "./instructions/dataBytesAndText.h"
+#include "./instructions/implied.h"
+#include "./instructions/immediate.h"
+#include "./instructions/zeropage.h"
 
 void print_vars(vars *vars_list)
 {
@@ -44,8 +50,8 @@ void print_instr(instr *parsed_code)
     for (int i = 0; i < MAX_LINES_NUM; ++i)
     {
         if (parsed_code[i].instr != NULL)
-            printf("Instr: %s | %s\nAdr Mode: %s | %d\n\n", parsed_code[i].instr, parsed_code[i].operand, 
-                                                 parsed_code[i].adr_m, parsed_code[i].adr_del);
+            printf("Instr: %s | %s\nAdr Mode: %s | %d\nOPCODE: %d\n\n", parsed_code[i].instr, parsed_code[i].operand, 
+                                                 parsed_code[i].adr_m, parsed_code[i].adr_del, parsed_code[i].opcode);
     } 
 }
 
@@ -82,11 +88,11 @@ int main()
     printf("\n");
     
     first_parse(parsed_code, labels_list, vars_list, code, *size);
+    free(size);
 
-    print_instr(parsed_code);
-
-    dictionary *d = (dictionary*)(malloc(MAX_LINES_NUM*sizeof(dictionary)));
     // Initialize dictionary array
+    dictionary *d = (dictionary*)(malloc(MAX_LINES_NUM*sizeof(dictionary)));
+
     for (int i = 0; i < MAX_LINES_NUM; ++i)
     {
         d[i].instr = NULL;
@@ -95,11 +101,21 @@ int main()
     }
 
     // Import entrys into dictionary
-    for (int i = 0; i < sizeof(test_instr)/sizeof(test_instr[0]); ++i)
-    {
-        new_entry(d, test_instr[i], adr_m[i], value[i]);
-    }
+    new_entry(d);
+    
+    implied(d, parsed_code);
+    immediate(d, parsed_code);
+    //data_bytes(d, parsed_code);
+    zeropage(d, parsed_code);
 
+    print_instr(parsed_code);
+
+    char test_instr[] = "INC";
+    char test_adr_mode[] = "zeropage";
+    int n = 73+78+67+122+101+114+111+112+97+103+101;
+    int l = 83+66+67+97+98+115+111+108+117+116+101;
+    printf("--%d--", l);
+    
     //exit_prg();
 
     return 0;

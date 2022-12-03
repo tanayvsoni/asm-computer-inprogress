@@ -36,7 +36,7 @@ add_Loop:
 	jmp add_Loop       
 
 sub_Loop:
-	sbc #constant            
+	sbc #constant          
 	sta zero         
 	beq add_Loop      
 	jmp sub_Loop        

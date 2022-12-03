@@ -24,6 +24,9 @@
 #define MAX_VARS        1000
 #define MAX_LABELS      100
 
+#define AMOUNT_INSTR    56
+#define AMOUNT_ADR_MODE 189
+
 
 typedef struct
 {
@@ -147,6 +150,100 @@ void print_arr(char **file, int *size)
     printf("\n");
 }
 
+void sort_operand(vars *v, char *operand)
+{
+    char *op1, *op2;
+    int op1_int, op2_int;
+    int new_val;
+
+    if (strstr(operand, "+"))
+    {
+        op1 = strtok(operand, "+");
+        op2 = strtok(NULL, "+");
+        
+        switch (op1[0])
+        {
+        case '$'|'%':
+            op1_int = convert_num(op1);
+            break;
+        
+        default:
+            if (isInt(op1)) 
+                op1_int = convert_num(op1); 
+            else 
+                op1_int = find_varVal(v,op1);
+            break;
+        }
+        
+        switch (op2[0])
+        {
+        case '$'|'%':
+            op2_int= convert_num(op2);
+            break;
+        
+        default:
+            if (isInt(op2)) 
+                op2_int = convert_num(op2); 
+            else 
+                op2_int = find_varVal(v,op2); 
+            break;
+        }
+
+        new_val = op1_int+op2_int;
+
+        sprintf(operand, "%d", new_val);    
+    }
+
+    else if (strstr(operand, "-"))
+    {
+        op1 = strtok(operand, "-");
+        op2 = strtok(NULL, "-");
+        
+        switch (op1[0])
+        {
+        case '$'|'%':
+            op1_int = convert_num(op1);
+            break;
+        
+        default:
+            if (isInt(op1))
+                op1_int = convert_num(op1);
+            else 
+                op1_int = find_varVal(v,op1);
+            break;
+        }
+        
+        switch (op2[0])
+        {
+        case '$'|'%':
+            op2_int= convert_num(op2);
+            break;
+        
+        default:
+            if (isInt(op2))
+                op2_int = convert_num(op2);
+            else
+                op2_int = find_varVal(v,op2);
+            break;
+        }
+
+        new_val = op1_int-op2_int;
+        sprintf(operand, "%d", new_val);
+    }
+
+    else if (!isInt(operand) && isInVars(v, operand)) 
+    { 
+        new_val = find_varVal(v,operand);
+        sprintf(operand, "%d", new_val);
+    }
+
+    else if (isInt(operand))
+    {
+        new_val = convert_num(operand);
+        sprintf(operand, "%d", new_val); 
+    }
+}
+
 void append(char *str, char c, int n) 
 {
     int size = strlen(str)+1;
@@ -168,13 +265,14 @@ void append(char *str, char c, int n)
     free(new_str);
 }
 
-char *test_instr[] = {"NOP", "ADC", "AND", "ASL", "BCC", "BCS", "BEQ", "BIT", "BMI", "BNE", "BPL", "BRK", "BVC", "BVS", "CLC", "CLI", "CLV",
+// Instructions, Addressing Modes, and OPCODEs for each one
+char *INSTR[] = {"NOP", "ADC", "AND", "ASL", "BCC", "BCS", "BEQ", "BIT", "BMI", "BNE", "BPL", "BRK", "BVC", "BVS", "CLC", "CLI", "CLV",
                       "CMP", "CPX", "CPY", "DEC", "DEX", "DEY", "EOR", "INC", "INX", "INY", "JMP", "JSR", "LDA", "LDX", "LDY", "LSR", "ORA",
-                      "PHA", "PHP", "PLA", "PLP", "ROL", "ROR", "RTI", "RTS", "SUB", "SEC", "SEI", "STA", "STX", "STY", "TAX", "TAY", "TSX",
+                      "PHA", "PHP", "PLA", "PLP", "ROL", "ROR", "RTI", "RTS", "SBC", "SEC", "SEI", "STA", "STX", "STY", "TAX", "TAY", "TSX",
                       "TSA", "TXS", "TYA", "HLT", "OUT"
                     };
 
-char *adr_m[188][11] = {
+char *ADR_MODE[189][12] = {
         /*NOP*/       {"implied"}, 
         /*ADC*/       {"immediate", "zeropage", "zeropageX", "zeropageY", "absolute", "absoluteX", "absoluteY", "BindirectXB", "BindirectYB", "BindirectBX" , "BindirectBY"},
         /*AND*/       {"immediate", "zeropage", "zeropageX", "zeropageY", "absolute", "absoluteX", "absoluteY", "BindirectXB", "BindirectYB", "BindirectBX" , "BindirectBY"},
@@ -233,7 +331,7 @@ char *adr_m[188][11] = {
         /*OUT*/       {"implied"}
         };
 
-int value[188][11] = {
+int OPCODE[189][12] = {
         /*NOP*/     {0},
         /*ADC*/     {1,2,3,4,5,6,7,8,9,10,11},
         /*AND*/     {12,13,14,15,16,17,18,19,20,21,22},
@@ -291,5 +389,7 @@ int value[188][11] = {
         /*HLT*/     {187},
         /*OUT*/     {188}
         };
+
+
 
 #endif

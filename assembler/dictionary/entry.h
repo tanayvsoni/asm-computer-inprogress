@@ -22,20 +22,33 @@ static int value_string(char *str)
     return sum;
 }
 
-void new_entry(dictionary *d, char *instruction, char **adr_mode, int value[])
+void new_entry(dictionary *d)
 {
-    int val1 = value_string(instruction);
+    int val1, sum, i, j;
 
-    for (int i = 0; i < sizeof(adr_mode)/sizeof(adr_mode[0]); ++i)
+    for (i = 0; i < AMOUNT_INSTR; ++i)
     {
-        int sum = val1;
-        sum += value_string(adr_mode[i]);
-        d[sum].instr = instruction;
-        d[sum].adr_mode = adr_mode[i];
-        d[sum].value = value[i];   
+        val1 = value_string(INSTR[i]);
+        sum = 0;
+
+        for (j = 0; j < AMOUNT_ADR_MODE; ++j)
+        {
+            if (ADR_MODE[i][j] == NULL) break;
+
+            sum = val1 + value_string(ADR_MODE[i][j]);
+
+            d[sum].instr = INSTR[i];
+            d[sum].adr_mode = ADR_MODE[i][j];
+            d[sum].value = OPCODE[i][j]; 
+
+        }
     }
 }
 
-
+int find_entry_val(dictionary *d, char *instruction, char *adr_mode)
+{
+    int sum = value_string(instruction) + value_string(adr_mode);
+    return d[sum].value;
+}
 
 #endif
