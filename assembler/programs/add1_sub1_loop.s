@@ -22,12 +22,12 @@ constant = 1
 
 ;how are your
 
+.org $4000
+
 .db 232
 .db 232, 23, 322
 .tx "Hello"
 .dw 256
-
-.org $4000
 
 add_Loop: 
 	adc #1            ;   test
@@ -47,4 +47,5 @@ irq:
 	.org $4018
 	iNc 2
 	RTI
-	adc 23+a,X
+	adc (1+a,X)
+	adc (2+a),Y

@@ -1,6 +1,18 @@
 #include "../header.h"
 #include "../dictionary/entry.h"
 
+int amount_commas(char *str)
+{
+    int commas = 0;
+
+    for (int i = 0; i < strlen(str); ++i)
+    {
+        if (str[i] == ',') commas++;
+    }
+
+    return commas;
+}
+
 void data_bytes(dictionary *d, instr *code_list)
 {
     int temp;
@@ -11,19 +23,32 @@ void data_bytes(dictionary *d, instr *code_list)
 
         if (strcmp(code_list[i].instr, ".DW") == 0)
         {   
-            code_list[i].adr_m = "dataWord";
+            code_list[i].adr_del = 2;
             //code_list[i].adr_del = 2;
             //code_list[i].opcode = d[i].value;
         }
 
         if (strcmp(code_list[i].instr, ".DB") == 0)
         {
-            code_list[i].adr_m = "dataByte";
+            if (strstr(code_list[i].operand, ",") == NULL)
+            {
+                code_list[i].adr_del = 1;
+            }
+            else
+            {
+                for (int j = 0; j <= amount_commas(code_list[i].operand); ++j)
+                {
+                    code_list[i].adr_del++;
+                }
+            }
         }
 
         if (strcmp(code_list[i].instr, ".TX") == 0)
         {
-            code_list[i].adr_m = "text";
+            code_list[i].operand = &code_list[i].operand[1];
+            strtok(code_list[i].operand, "\"");
+
+            code_list[i].adr_del = strlen(code_list[i].operand);
         }   
     }   
 }

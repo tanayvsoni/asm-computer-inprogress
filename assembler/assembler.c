@@ -6,13 +6,12 @@
 #include "./get_constants/get_orgs.h"
 #include "./get_constants/get_labels.h"
 
-#include "1stparse.h"
+#include "./instructions/1stparse.h"
 #include "./dictionary/entry.h"
 
+#include "./instructions/2ndparse.h"
 #include "./instructions/dataBytesAndText.h"
-#include "./instructions/implied.h"
-#include "./instructions/immediate.h"
-#include "./instructions/zeropage.h"
+#include "set_addresses.h"
 
 void print_vars(vars *vars_list)
 {
@@ -31,7 +30,7 @@ void print_labels(labels *labels_list)
     {
         if (labels_list[i].name != NULL)
         {
-            printf("Linenum: %d | Name: %s\n", labels_list[i].linenum, labels_list[i].name);
+            printf("Linenum: %d | Name: %s | Adr: %d\n", labels_list[i].linenum, labels_list[i].name, labels_list[i].address);
         }
     }
 }
@@ -50,8 +49,8 @@ void print_instr(instr *parsed_code)
     for (int i = 0; i < MAX_LINES_NUM; ++i)
     {
         if (parsed_code[i].instr != NULL)
-            printf("Instr: %s | %s\nAdr Mode: %s | %d\nOPCODE: %d\n\n", parsed_code[i].instr, parsed_code[i].operand, 
-                                                 parsed_code[i].adr_m, parsed_code[i].adr_del, parsed_code[i].opcode);
+            printf("Instr: %s | %s\nAdr Mode: %s | %d\nOPCODE: %d | ADR: %d\n\n", parsed_code[i].instr, parsed_code[i].operand, 
+                                                 parsed_code[i].adr_m, parsed_code[i].adr_del, parsed_code[i].opcode, parsed_code[i].adr);
     } 
 }
 
@@ -71,25 +70,6 @@ int main()
 
     instr *parsed_code = (instr*)(malloc(MAX_LINES_NUM*sizeof(instr)));
 
-    int *size = (int*)(malloc(sizeof(int)));
-    char **code = og_code(size);
-
-    code = get_vars(vars_list, code, size);
-    code = get_labels(labels_list, vars_list, code, size);
-    code = get_orgs(orgs_list, code, size);
-
-    
-    /*printf("\n");
-    print_labels(labels_list);
-    printf("\n");
-    print_vars(vars_list);
-    printf("\n");
-    print_orgs(orgs_list);
-    printf("\n");*/
-    
-    first_parse(parsed_code, labels_list, vars_list, code, *size);
-    free(size);
-
     // Initialize dictionary array
     dictionary *d = (dictionary*)(malloc(MAX_LINES_NUM*sizeof(dictionary)));
 
@@ -103,13 +83,32 @@ int main()
 
     // Import entrys into dictionary
     new_entry(d);
+
+    int *size = (int*)(malloc(sizeof(int)));
+    char **code = og_code(size);
+
+    code = get_vars(vars_list, code, size);
+    code = get_labels(labels_list, vars_list, code, size);
+    code = get_orgs(orgs_list, code, size);
     
-    implied(d, parsed_code);
-    immediate(d, parsed_code);
-    //data_bytes(d, parsed_code);
-    zeropage(d, vars_list, parsed_code);
+    
+    first_parse(parsed_code, labels_list, vars_list, code, *size);
+    free(size);
+    second_parse(d, vars_list, parsed_code);
+    data_bytes(d, parsed_code);
+    set_adr(parsed_code,orgs_list);
+    set_labels(labels_list, parsed_code);
+    
 
     print_instr(parsed_code);
+
+    /*printf("\n");
+    print_labels(labels_list);
+    printf("\n");
+    print_vars(vars_list);
+    printf("\n");
+    print_orgs(orgs_list);
+    printf("\n");*/
 
     //char test_instr[] = "ADC";
     //char test_adr_mode[] = "zeropageX";

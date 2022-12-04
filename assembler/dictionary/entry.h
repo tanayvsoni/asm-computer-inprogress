@@ -62,11 +62,12 @@ int find_entry_val(dictionary *d, char *instruction, char *adr_mode)
 
 void print_dictionary(dictionary *d)
 {
+    printf("\n");
     for (int i = 0; i < MAX_LINES_NUM; ++i)
     {
         if (d[i].instr != NULL)
         {
-            printf("\n%s: %s: %d: %d", d[i].instr, d[i].adr_mode, d[i].value, (get_hash(d[i].instr) + get_hash(d[i].adr_mode)) % MAX_LINES_NUM);
+            printf("%d,", (get_hash(d[i].instr) + get_hash(d[i].adr_mode)) % MAX_LINES_NUM);
         }
     }
 }

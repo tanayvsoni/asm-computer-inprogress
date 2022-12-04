@@ -53,6 +53,7 @@ typedef struct
     char *adr_m;
     char *operand;
     int opcode;
+    int adr;
     int adr_del;
 
 } instr;
@@ -277,16 +278,16 @@ char *ADR_MODE[189][12] = {
         /*ADC*/       {"immediate", "zeropage", "zeropageX", "zeropageY", "abs", "absX", "absY", "BindXB", "BindYB", "BindBX" , "BindBY"},
         /*AND*/       {"immediate", "zeropage", "zeropageX", "zeropageY", "abs", "absX", "absY", "BindXB", "BindYB", "BindBX" , "BindBY"},
         /*ASL*/       {"implied", "zeropage", "zeropageX", "zeropageY", "abs", "absX", "absY"},
-        /*BCC*/       {"relative"},
-        /*BCS*/       {"relative"},
-        /*BEQ*/       {"relative"},
+        /*BCC*/       {"abs"},
+        /*BCS*/       {"abs"},
+        /*BEQ*/       {"abs"},
         /*BIT*/       {"zeropage", "abs"},
-        /*BMI*/       {"relative"},
-        /*BNE*/       {"relative"},
-        /*BPL*/       {"relative"},
+        /*BMI*/       {"abs"},
+        /*BNE*/       {"abs"},
+        /*BPL*/       {"abs"},
         /*BRK*/       {"implied"},
-        /*BVC*/       {"relative"},
-        /*BVS*/       {"relative"},
+        /*BVC*/       {"abs"},
+        /*BVS*/       {"abs"},
         /*CLC*/       {"implied"},
         /*CLI*/       {"implied"},
         /*CLV*/       {"implied"},
