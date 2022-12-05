@@ -12,6 +12,9 @@
 #include "./instructions/2ndparse.h"
 #include "./instructions/dataBytesAndText.h"
 #include "set_addresses.h"
+#include "./instructions/3rdparse.h"
+
+#include "output.h"
 
 void print_vars(vars *vars_list)
 {
@@ -90,17 +93,18 @@ int main()
     code = get_vars(vars_list, code, size);
     code = get_labels(labels_list, vars_list, code, size);
     code = get_orgs(orgs_list, code, size);
-    
-    
+
     first_parse(parsed_code, labels_list, vars_list, code, *size);
     free(size);
     second_parse(d, vars_list, parsed_code);
     data_bytes(d, parsed_code);
     set_adr(parsed_code,orgs_list);
     set_labels(labels_list, parsed_code);
-    
+    third_parse(d,labels_list,parsed_code);
 
     print_instr(parsed_code);
+
+    output_code(parsed_code);
 
     /*printf("\n");
     print_labels(labels_list);

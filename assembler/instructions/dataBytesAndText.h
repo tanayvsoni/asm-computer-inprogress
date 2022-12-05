@@ -1,18 +1,6 @@
 #include "../header.h"
 #include "../dictionary/entry.h"
 
-int amount_commas(char *str)
-{
-    int commas = 0;
-
-    for (int i = 0; i < strlen(str); ++i)
-    {
-        if (str[i] == ',') commas++;
-    }
-
-    return commas;
-}
-
 void data_bytes(dictionary *d, instr *code_list)
 {
     int temp;

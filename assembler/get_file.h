@@ -2,7 +2,6 @@
 
 char *get_dir()
 {
-    char *filename = (char*)(malloc(NAMESIZE*sizeof(char)));
     char *dir;
 
     char buf[PATH_MAX + 1];
@@ -63,6 +62,19 @@ bool remove_comments(char str[], bool comment_block)
     return comment_block;
 }
 
+bool is_line_empty(char str[])
+{
+    for (int i = 0; i < MAX_CHARS; ++i)
+    {
+        if (str[i] == '\0') break;
+
+        if (str[i] != '\t' || str[i] != '\n' || str[i] != ' ')
+            return false;
+    }
+
+    return true;
+}
+
 char **og_code(int *size)
 {   
     bool comment_block = false;
@@ -81,12 +93,15 @@ char **og_code(int *size)
     }
 
 
-    while(fgets(str, MAX_CHARS, ptr))
+    while(fgets(str, MAX_CHARS, ptr) != NULL)
     {
         comment_block = remove_comments(str, comment_block);
 
         // Removes empty lines
-        if (str[1] != '\0')
+        if (strcmp(str,"\n"  ) != 0 &&
+            strcmp(str,"\r\n") != 0 &&
+            strcmp(str,"\0"  ) != 0 &&
+        1)
         {
             memcpy(lines[*size], str, strlen(str) + 1);
             //printf("%s", lines[i]);

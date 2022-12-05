@@ -16,7 +16,7 @@
     #define PATH_MAX 100
 #endif
 
-#define NAMESIZE         60
+#define NAMESIZE         70
 #define MAX_CHARS        80
 #define MAX_LINES_NUM    60000
 
@@ -58,6 +58,18 @@ typedef struct
 
 } instr;
 
+int amount_commas(char *str)
+{
+    int commas = 0;
+
+    for (int i = 0; i < strlen(str); ++i)
+    {
+        if (str[i] == ',') commas++;
+    }
+
+    return commas;
+}
+
 bool isInVars(vars *v, char *operand)
 {
     for (int i = 0; i < MAX_VARS; ++i)
@@ -89,9 +101,8 @@ int find_varVal(vars *v, char *var_name)
 
 bool isInt(char *var)
 {
-    int start = 0;
-
-    if (*var == '$' || *var == '%')
+    
+    if (var[0] == '$' || var[0] == '%')
         return true;
 
     for (int i = 0; i < strlen(var); ++i)
@@ -107,6 +118,7 @@ bool isInt(char *var)
 
 void rm_whitespace(char *word)
 {
+
     char *d = word;
 
     do {
@@ -265,6 +277,8 @@ void append(char *str, char c, int n)
 
     free(new_str);
 }
+
+char filename[NAMESIZE];
 
 // Instructions, Addressing Modes, and OPCODEs for each one
 char *INSTR[] = {"NOP", "ADC", "AND", "ASL", "BCC", "BCS", "BEQ", "BIT", "BMI", "BNE", "BPL", "BRK", "BVC", "BVS", "CLC", "CLI", "CLV",

@@ -1576,6 +1576,10 @@
       <a name="label" val="Address_Bus"/>
       <a name="width" val="16"/>
     </comp>
+    <comp lib="0" loc="(790,250)" name="Constant">
+      <a name="value" val="0x4000"/>
+      <a name="width" val="16"/>
+    </comp>
     <comp lib="0" loc="(80,1500)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="CLK"/>
@@ -1595,10 +1599,6 @@
       <a name="label" val="STEP"/>
       <a name="width" val="3"/>
     </comp>
-    <comp lib="0" loc="(820,250)" name="Constant">
-      <a name="value" val="0x4000"/>
-      <a name="width" val="16"/>
-    </comp>
     <comp lib="0" loc="(830,220)" name="Tunnel">
       <a name="facing" val="south"/>
       <a name="label" val="Reset"/>
@@ -1606,10 +1606,6 @@
     <comp lib="0" loc="(860,2020)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="IC"/>
-    </comp>
-    <comp lib="0" loc="(860,830)" name="Bit Extender">
-      <a name="in_width" val="14"/>
-      <a name="type" val="zero"/>
     </comp>
     <comp lib="0" loc="(870,2170)" name="Tunnel">
       <a name="facing" val="south"/>
@@ -2207,10 +2203,10 @@
       <a name="addrWidth" val="16"/>
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 16 8
-1 1 1f a 40 a3 0 58
-0 40 96 1 a3 0 20 0
-40 58 a 40 4*0 50 2 94
-16354*0 58 18 40
+16384*0 1 1 1f a 40 a3 0
+58 0 40 96 1 a3 0 20
+0 40 58 a 40 4*0 50 2
+94 49122*0 58 18 40
 </a>
       <a name="misaligned" val="true"/>
     </comp>
@@ -21351,7 +21347,7 @@ f00020000 30010c0000 6*0 18020000 30010c0000 6*0 30e1030040 2360002000
     <wire from="(490,1500)" to="(540,1500)"/>
     <wire from="(490,1530)" to="(490,1550)"/>
     <wire from="(530,2400)" to="(580,2400)"/>
-    <wire from="(530,620)" to="(640,620)"/>
+    <wire from="(530,620)" to="(600,620)"/>
     <wire from="(540,1500)" to="(540,1530)"/>
     <wire from="(540,1530)" to="(580,1530)"/>
     <wire from="(540,1580)" to="(550,1580)"/>
@@ -21365,6 +21361,9 @@ f00020000 30010c0000 6*0 18020000 30010c0000 6*0 30e1030040 2360002000
     <wire from="(570,2350)" to="(580,2350)"/>
     <wire from="(570,2370)" to="(630,2370)"/>
     <wire from="(60,1460)" to="(80,1460)"/>
+    <wire from="(600,620)" to="(600,830)"/>
+    <wire from="(600,620)" to="(640,620)"/>
+    <wire from="(600,830)" to="(860,830)"/>
     <wire from="(610,1540)" to="(660,1540)"/>
     <wire from="(610,1850)" to="(640,1850)"/>
     <wire from="(610,1880)" to="(630,1880)"/>
@@ -21451,6 +21450,7 @@ f00020000 30010c0000 6*0 18020000 30010c0000 6*0 30e1030040 2360002000
     <wire from="(790,1920)" to="(810,1920)"/>
     <wire from="(790,1930)" to="(810,1930)"/>
     <wire from="(790,1940)" to="(800,1940)"/>
+    <wire from="(790,250)" to="(820,250)"/>
     <wire from="(790,340)" to="(790,350)"/>
     <wire from="(790,380)" to="(790,390)"/>
     <wire from="(790,670)" to="(790,750)"/>
@@ -21476,12 +21476,8 @@ f00020000 30010c0000 6*0 18020000 30010c0000 6*0 30e1030040 2360002000
     <wire from="(810,540)" to="(840,540)"/>
     <wire from="(810,610)" to="(830,610)"/>
     <wire from="(810,630)" to="(830,630)"/>
-    <wire from="(810,800)" to="(810,830)"/>
-    <wire from="(810,800)" to="(830,800)"/>
-    <wire from="(810,830)" to="(820,830)"/>
     <wire from="(830,500)" to="(830,610)"/>
     <wire from="(830,500)" to="(840,500)"/>
-    <wire from="(830,630)" to="(830,800)"/>
     <wire from="(840,2210)" to="(840,2250)"/>
     <wire from="(840,2250)" to="(860,2250)"/>
     <wire from="(850,1380)" to="(980,1380)"/>

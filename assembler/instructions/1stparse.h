@@ -1,9 +1,10 @@
 #include "../header.h"
 
+
 void first_parse(instr *code_list, labels *labels_list, vars *vars_list, char **code, int size)
 {
-
-    for(int i = 0; i < MAX_LINES_NUM; ++i)
+    int j = 0;
+    for (int i = 0; i < MAX_LINES_NUM; ++i)
     {
         code_list[i].instr = NULL;
         code_list[i].adr_m = NULL;
@@ -14,8 +15,7 @@ void first_parse(instr *code_list, labels *labels_list, vars *vars_list, char **
     }
 
     for (int i = 0; i < size; ++i)
-    {
-
+    {   
         rm_whitespace(code[i]);
         append(code[i],' ', 3);
 
