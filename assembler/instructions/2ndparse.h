@@ -1,7 +1,7 @@
 #include "../header.h"
 #include "../dictionary/entry.h"
 
-void second_parse(dictionary *d, vars *v, instr *code_list)
+void second_parse(dictionary *d, labels *l, vars *v, instr *code_list)
 {
     for (int i = 0; i < MAX_LINES_NUM; ++i)
     {
@@ -31,9 +31,9 @@ void second_parse(dictionary *d, vars *v, instr *code_list)
                 strstr(code_list[i].operand, ",X") && strstr(code_list[i].operand, "(") == NULL)
         {
             strtok(code_list[i].operand, ",X");
-            sort_operand(v,code_list[i].operand);
+            sort_operand(l, v,code_list[i].operand);
 
-            if (convert_num(code_list[i].operand) < 256)
+            if (isInt(code_list[i].operand) && convert_num(code_list[i].operand) < 256)
             {
                 code_list[i].adr_m = "zeropageX";
                 code_list[i].adr_del = 2;
@@ -50,7 +50,7 @@ void second_parse(dictionary *d, vars *v, instr *code_list)
                 strstr(code_list[i].operand, ",Y") && strstr(code_list[i].operand, "(") == NULL)
         {
             strtok(code_list[i].operand, ",Y");
-            sort_operand(v,code_list[i].operand);
+            sort_operand(l, v,code_list[i].operand);
 
             if (convert_num(code_list[i].operand) < 256)
             {
@@ -70,7 +70,7 @@ void second_parse(dictionary *d, vars *v, instr *code_list)
         {
             code_list[i].operand = &code_list[i].operand[1];
             strtok(code_list[i].operand, ",X)");
-            sort_operand(v,code_list[i].operand);
+            sort_operand(l, v,code_list[i].operand);
 
             code_list[i].adr_m = "BindXB";
             code_list[i].adr_del = 3;
@@ -82,7 +82,7 @@ void second_parse(dictionary *d, vars *v, instr *code_list)
         {
             code_list[i].operand = &code_list[i].operand[1];
             strtok(code_list[i].operand, ",Y)");
-            sort_operand(v,code_list[i].operand);
+            sort_operand(l, v,code_list[i].operand);
 
             code_list[i].adr_m = "BindYB";
             code_list[i].adr_del = 3;
@@ -94,7 +94,7 @@ void second_parse(dictionary *d, vars *v, instr *code_list)
         {
             code_list[i].operand = &code_list[i].operand[1];
             strtok(code_list[i].operand, "),X");
-            sort_operand(v,code_list[i].operand);
+            sort_operand(l, v,code_list[i].operand);
 
             code_list[i].adr_m = "BindBX";
             code_list[i].adr_del = 3;
@@ -106,7 +106,7 @@ void second_parse(dictionary *d, vars *v, instr *code_list)
         {
             code_list[i].operand = &code_list[i].operand[1];
             strtok(code_list[i].operand, "),Y");
-            sort_operand(v,code_list[i].operand);
+            sort_operand(l, v,code_list[i].operand);
 
             code_list[i].adr_m = "BindBY";
             code_list[i].adr_del = 3;
@@ -118,7 +118,7 @@ void second_parse(dictionary *d, vars *v, instr *code_list)
         {
             code_list[i].operand = &code_list[i].operand[1];
             strtok(code_list[i].operand, ")");
-            sort_operand(v,code_list[i].operand);
+            sort_operand(l, v,code_list[i].operand);
 
             code_list[i].adr_m = "bBindBb";
             code_list[i].adr_del = 3;

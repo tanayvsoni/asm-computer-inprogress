@@ -173,7 +173,7 @@ def main():
     # Instruction Data
     instructions_data = [
         # NOP # No operation                                                                                                                                   # OPC - ADDRESSING    ; ASSEMBLER
-        [FEC, MI|COA|CE|II|EP],                                                                                                                                # 000 - implied       ;
+        [FEC, MI|COA, CE|II|EP],                                                                                                                               # 000 - implied       ;
         
         # ADC # Add with Carry                                                                                                                                 # OPC - ADDRESSING    ; ASSEMBLER
         [MI|COA|CE|FEC|RO|EI|ES2|FI, MI|COA|EO|AI, CE|II|EP],                                                                                                  # 001 - immediate     ; #oper
@@ -309,10 +309,10 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                     # 085 - absolute,Y   ; oper,Y
         
         # INX # Increment Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|XOX2|EI|ES2|INC, MI|COA|EO|XI, CE|II|EP],                                                                                               # 086 - implied     ; 
+        [FEC|XOX2|EI|INC, EO|XI, MI|COA|CE|II|EP],                                                                                                             # 086 - implied      ; 
         
         # INY # Increment Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|YOX2|EI|ES2|DEC, MI|COA|EO|YI, CE|II|EP],                                                                                               # 087 - implied      ; 
+        [FEC|YOX2|EI|INC, EO|YI, MI|COA|CE|II|EP],                                                                                                             # 087 - implied      ; 
         
         # JMP # Jump to new location                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, MI|COA|RCC|FEC, MI|COA|CE|II|EP],                                                                       # 088 - absolute     ; oper
@@ -420,10 +420,10 @@ def main():
         [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|ECLK|EI|ES2|SU|FI, MI|COA|CE|II|EO|AI|EP],   # 160 - (indirect),Y ; (oper),Y
         
         # SEC # Set Carry Flag                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|SC, MI|COA|CE|II|EP],                                                                                                                             # 161 - implied      ;
+        [FEC|SC, MI|COA, CE|II|EP],                                                                                                                            # 161 - implied      ;
         
         # SEI # Set Interrupt Disable Status                                                                                                                   # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|SI, MI|COA|CE|II|EP],                                                                                                                             # 162 - implied      ;
+        [FEC|SI, MI|COA, CE|II|EP],                                                                                                                            # 162 - implied      ;
         
         # STA # Store Accumulator in Memory                                                                                                                    # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|TRLI|RTR, MI|TRO|AO|RI, MI|COA|CE|II|EP],                                                                                            # 163 - zeropage     ; oper
@@ -450,28 +450,28 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|YO|RI|ECLK, MI|COA|CE|II|EP],                                    # 180 - absolute,X   ; oper,X
 
         # TAX # Transfer Accumulator to Index X                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|AO|XI, MI|COA|CE|II|EP],                                                                                                                          # 181 - implied      ;
+        [FEC|AO|XI, MI|COA, CE|II|EP],                                                                                                                         # 181 - implied      ;
         
         # TAY # Transfer Accumulator to Index Y                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|AO|YI, MI|COA|CE|II|EP],                                                                                                                          # 182 - implied      ;
+        [FEC|AO|YI, MI|COA, CE|II|EP],                                                                                                                         # 182 - implied      ;
         
         # TSX # Transfer Stack Pointer to Index X                                                                                                              # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|SPDO|XI, MI|COA|CE|II|EP],                                                                                                                        # 183 - implied      ;
+        [FEC|SPDO|XI, MI|COA, CE|II|EP],                                                                                                                       # 183 - implied      ;
         
         # TSA # Transfer Index X to Accumulator                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|XO|AI, MI|COA|CE|II|EP],                                                                                                                          # 184 - implied      ;
+        [FEC|XO|AI, MI|COA, CE|II|EP],                                                                                                                         # 184 - implied      ;
         
         # TXS # Transfer Index X to Stack Register                                                                                                             # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|XO|SPI, MI|COA|CE|II|EP],                                                                                                                         # 185 - implied      ;
+        [FEC|XO|SPI, MI|COA, CE|II|EP],                                                                                                                        # 185 - implied      ;
         
         # TYA # Transfer Index Y to Accumulator                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|YO|AI, MI|COA|CE|II|EP],                                                                                                                          # 186 - implied      ;
+        [FEC|YO|AI, MI|COA, CE|II|EP],                                                                                                                         # 186 - implied      ;
         
         # HLT # Halt Operation                                                                                                                                 # OPC - ADDRESSING   ; ASSEMBLER
         [HLT],                                                                                                                                                 # 187 - implied      ;
         
         # OUT # Output to ASCII Terminal                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [AO|OI|FEC, MI|COA|CE|II|EP],                                                                                                                          # 188 - implied      ;
+        [AO|OI|FEC, MI|COA, CE|II|EP],                                                                                                                         # 188 - implied      ;
     ]
     
     rom_data = createMicroCode(instructions_data)

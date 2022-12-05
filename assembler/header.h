@@ -58,6 +58,21 @@ typedef struct
 
 } instr;
 
+bool isInlabels(labels *l, char *operand)
+{
+    for (int i = 0; i < MAX_LABELS; ++i)
+    {
+        if (l[i].name == NULL) break;
+
+        if (strcmp(l[i].name, operand) == 0)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 int amount_commas(char *str)
 {
     int commas = 0;
@@ -163,16 +178,25 @@ void print_arr(char **file, int *size)
     printf("\n");
 }
 
-void sort_operand(vars *v, char *operand)
+void sort_operand(labels *l, vars *v, char *operand)
 {
     char *op1, *op2;
     int op1_int, op2_int;
     int new_val;
 
+    char *temp = (char*)(malloc((strlen(operand)+1)*sizeof(char)));
+    memcpy(temp, operand, strlen(operand) + 1);
+
     if (strstr(operand, "+"))
     {
         op1 = strtok(operand, "+");
         op2 = strtok(NULL, "+");
+
+        if (isInlabels(l, op1) || isInlabels(l,op2)) 
+        {
+            memcpy(operand, temp, strlen(temp) + 1);
+            goto skip;
+        }
         
         switch (op1[0])
         {
@@ -212,6 +236,12 @@ void sort_operand(vars *v, char *operand)
         op1 = strtok(operand, "-");
         op2 = strtok(NULL, "-");
         
+        if (isInlabels(l, op1) || isInlabels(l,op2)) 
+        {
+            memcpy(operand, temp, strlen(temp) + 1);
+            goto skip;
+        }
+
         switch (op1[0])
         {
         case '$'|'%':
@@ -255,6 +285,8 @@ void sort_operand(vars *v, char *operand)
         new_val = convert_num(operand);
         sprintf(operand, "%d", new_val); 
     }
+
+    skip: 
 }
 
 void append(char *str, char c, int n) 

@@ -96,7 +96,7 @@ int main()
 
     first_parse(parsed_code, labels_list, vars_list, code, *size);
     free(size);
-    second_parse(d, vars_list, parsed_code);
+    second_parse(d, labels_list, vars_list, parsed_code);
     data_bytes(d, parsed_code);
     set_adr(parsed_code,orgs_list);
     set_labels(labels_list, parsed_code);
@@ -106,13 +106,13 @@ int main()
 
     output_code(parsed_code);
 
-    /*printf("\n");
+    printf("\n");
     print_labels(labels_list);
     printf("\n");
     print_vars(vars_list);
     printf("\n");
     print_orgs(orgs_list);
-    printf("\n");*/
+    printf("\n");
 
     //char test_instr[] = "ADC";
     //char test_adr_mode[] = "zeropageX";

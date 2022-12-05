@@ -31,7 +31,7 @@ void first_parse(instr *code_list, labels *labels_list, vars *vars_list, char **
                 code_list[i].operand = &code_list[i].operand[1];
             }
             if (strstr(code_list[i].operand, ",") == NULL && strstr(code_list[i].operand, "(") == NULL)
-                sort_operand(vars_list, code_list[i].operand);
+                sort_operand(labels_list, vars_list, code_list[i].operand);
         }
         else
         {
