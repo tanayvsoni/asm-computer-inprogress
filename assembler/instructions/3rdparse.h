@@ -124,8 +124,8 @@ void third_parse(dictionary *d, labels *l, instr *code_list)
             if (code_list[i].adr_m == NULL)
             {
                 code_list[i].adr_m = "abs";
-                code_list[i].opcode = find_entry_val(d,code_list[i].instr, code_list[i].adr_m);
             }
+            code_list[i].opcode = find_entry_val(d,code_list[i].instr, code_list[i].adr_m);
             sort_labelsoperand(l, code_list[i].operand);
         }
     }

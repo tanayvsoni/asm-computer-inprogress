@@ -11,12 +11,15 @@ sub_Loop:
 	sbc #1          
 	sta 0         
 	beq add_Loop      
-	jmp sub_Loop        
+	jmp sub_Loop       
+
+jump_location:
+	.dw $4025 
 
 irq:
 	.org $fffd
-	jmp $4018
+	jmp (jump_location)
 
-	.org $4018
+	.org $4025
 	inc 2
 	rti

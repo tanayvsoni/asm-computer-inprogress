@@ -67,6 +67,7 @@ void print_dictionary(dictionary *d)
     {
         if (d[i].instr != NULL)
         {
+            //printf("%s %s: %d\n", d[i].instr, d[i].adr_mode, (get_hash(d[i].instr) + get_hash(d[i].adr_mode)) % MAX_LINES_NUM);
             printf("%d,", (get_hash(d[i].instr) + get_hash(d[i].adr_mode)) % MAX_LINES_NUM);
         }
     }

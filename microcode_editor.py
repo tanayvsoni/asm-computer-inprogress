@@ -316,7 +316,7 @@ def main():
         
         # JMP # Jump to new location                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, MI|COA|RCC|FEC, MI|COA|CE|II|EP],                                                                       # 088 - absolute     ; oper
-        [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, RCC|CE|RO|CIDL, MI|COA|RO|CIDH, MI|COA|CE|FEC|BR, CE|II|EP],                                            # 089 - indirect     ; (oper)
+        [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, RCC|CE|RO|CIDL, MI|COA|RCC|RO|CIDH,  MI|COA|BR|RCC|J, MI|COA|RCC|FEC, MI|COA|CE|II|EP],                 # 089 - indirect     ; (oper)
         
         # JSR # Jump to new location Saving Return Address                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
         [RO|CIDL, MI|COA|CE|RO|CIDH, MI|SPAO|CODH|RI|SPE, MI|SPAO|CODL|RI|SPE, MI|COA|BR|J, MI|COA|CE|FEC|BR, CE|II|EP],                                       # 090 - absolute     ; oper
