@@ -81,7 +81,6 @@ int main()
         d[i].instr = NULL;
         d[i].adr_mode = NULL;
         d[i].value = 0;
-        //d[i].exists = false;
     }
 
     // Import entrys into dictionary
@@ -113,12 +112,6 @@ int main()
     printf("\n");
     print_orgs(orgs_list);
     printf("\n");
-
-    //char test_instr[] = "ADC";
-    //char test_adr_mode[] = "zeropageX";
-
-    //print_dictionary(d);
-    //printf("--%d--", d[907].instr);
     
     //exit_prg();
 
