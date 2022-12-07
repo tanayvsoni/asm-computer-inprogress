@@ -39,6 +39,7 @@ void output_code(instr *code)
 
                 else if (strcmp(code[j].instr, ".DB") == 0)
                 {
+
                     if (strstr(code[j].operand, ",") == NULL)
                     {
                         fprintf(fp, "%02x\n", atoi(code[j].operand));
@@ -66,6 +67,7 @@ void output_code(instr *code)
                         fprintf(fp, "%02x\n", code[j].operand[k]);
                         i++;
                     }
+                    i--;
                 }
 
                 else if (strstr(code[j].adr_m, "immediate") || strstr(code[j].adr_m, "zeropage"))

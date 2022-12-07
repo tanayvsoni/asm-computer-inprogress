@@ -13,7 +13,7 @@ stop:
     hlt
 
 message:
-    .tx "I love Shannon"
+    .tx "Hello World"
     .db 0
 
 interrupt:

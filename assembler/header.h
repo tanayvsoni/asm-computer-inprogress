@@ -133,14 +133,31 @@ bool isInt(char *var)
 
 void rm_whitespace(char *word)
 {
+    char *d = (char*)(malloc((strlen(word)+1)*sizeof(char)));
+    int j;
+    bool quote = false;
 
-    char *d = word;
+    for (int i = 0, j = 0; i < strlen(word)+1; ++i)
+    {
+        if (word[i] == '\"' && quote == false) 
+            quote = true;
+
+        else if (word[i] == '\"' && quote == true)
+            quote = false;
+
+        if (isspace(word[i]) == 0 || quote)
+            d[j++] = word[i];
+    }
+    //printf("--%s--", d);
+    memcpy(word, d, strlen(word) + 1);
+
+    /*char *d = word;
 
     do {
         while (*d == ' ' || *d =='\n' || *d == '\t') {
             ++d;
         }
-    } while (*word++ = *d++);
+    } while (*word++ = *d++);*/
 
 }
 

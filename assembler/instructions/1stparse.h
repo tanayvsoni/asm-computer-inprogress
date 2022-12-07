@@ -17,10 +17,12 @@ void first_parse(instr *code_list, labels *labels_list, vars *vars_list, char **
     for (int i = 0; i < size; ++i)
     {   
         rm_whitespace(code[i]);
-        append(code[i],' ', 3);
+        append(code[i],'~', 3);
+        //printf("%s\n", code[i]);
 
-        code_list[i].instr = strtok(code[i], " ");
-        code_list[i].operand = strtok(NULL, " ");
+        code_list[i].instr = strtok(code[i], "~");
+        code_list[i].operand = strtok(NULL, "~");
+        //printf("%s: %s\n", code_list[i].instr, code_list[i].operand);
 
         if (code_list[i].operand != NULL)
         {
