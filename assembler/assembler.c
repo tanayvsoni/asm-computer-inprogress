@@ -103,15 +103,14 @@ int main()
 
     print_instr(parsed_code);
 
-    output_code(parsed_code);
-
     printf("\n");
     print_labels(labels_list);
     printf("\n");
     print_vars(vars_list);
     printf("\n");
     print_orgs(orgs_list);
-    printf("\n");
+
+    output_code(parsed_code);
     
     //exit_prg();
 

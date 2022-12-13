@@ -7,7 +7,7 @@ void output_code(instr *code)
     FILE *fp;
 
     char temp[NAMESIZE+60] = "./assembler_output/";
-
+    int complied_bytes = 0;
     int len = strlen(filename);
 
     filename[len-2] = '.';
@@ -35,6 +35,7 @@ void output_code(instr *code)
                     fprintf(fp, "%02x\n", lowByte);
                     fprintf(fp, "%02x\n", highByte);
                     i++;
+                    complied_bytes += 2;
                 }
 
                 else if (strcmp(code[j].instr, ".DB") == 0)
@@ -43,6 +44,7 @@ void output_code(instr *code)
                     if (strstr(code[j].operand, ",") == NULL)
                     {
                         fprintf(fp, "%02x\n", atoi(code[j].operand));
+                        complied_bytes++;
                     }
                     else
                     {
@@ -53,6 +55,7 @@ void output_code(instr *code)
                         {
                             fprintf(fp, "%02x\n", atoi(pt));
                             count++;
+                            complied_bytes++;
                             pt = strtok (NULL, ",");
                         }
                         i += count;
@@ -66,6 +69,7 @@ void output_code(instr *code)
                     {
                         fprintf(fp, "%02x\n", code[j].operand[k]);
                         i++;
+                        complied_bytes++;
                     }
                     i--;
                 }
@@ -74,6 +78,7 @@ void output_code(instr *code)
                 {
                     fprintf(fp, "%02x\n", code[j].opcode);
                     fprintf(fp, "%02x\n", atoi(code[j].operand));
+                    complied_bytes += 2;
                     i++;
                 }
 
@@ -87,11 +92,13 @@ void output_code(instr *code)
                     fprintf(fp, "%02x\n", lowByte);
                     fprintf(fp, "%02x\n", highByte);
                     i += 2;
+                    complied_bytes += 3;
                 }
                 
                 else
                 {
                     fprintf(fp, "%02x\n", code[j].opcode);
+                    complied_bytes++;
                 } 
             
                 goto skip;
@@ -103,4 +110,6 @@ void output_code(instr *code)
             i++;
     }
     fclose(fp);
+
+    printf("\n%d Bytes Complied", complied_bytes);
 }
