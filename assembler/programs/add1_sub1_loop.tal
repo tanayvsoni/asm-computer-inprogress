@@ -14,7 +14,7 @@ sub_Loop:
 	jmp sub_Loop       
 	
 jump_location:
-	.dw $4025 
+	.dw $4025
 
 irq:
 	.org $fffd

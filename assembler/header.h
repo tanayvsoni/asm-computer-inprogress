@@ -17,7 +17,7 @@
 #endif
 
 #define NAMESIZE         70
-#define MAX_CHARS        80
+#define MAX_CHARS        120
 #define MAX_LINES_NUM    60000
 
 #define MAX_ORGS        1000

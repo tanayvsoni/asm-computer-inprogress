@@ -242,13 +242,13 @@ def main():
         [CE, MI|COA|CE|FEC, MI|COA|CE|II|EP],                                                                                                                  # 040 - relative     ; oper
         
         # CLC # Clear Carry Flag                                                                                                                               # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|CLC, MI|COA|CE|II|EP],                                                                                                                            # 041 - implied      ; 
+        [FEC|CLC, MI|COA, CE|II|EP],                                                                                                                           # 041 - implied      ; 
         
         # CLI # Clear Interupt Disable Bit                                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|CI, MI|COA|CE|II|EP],                                                                                                                             # 042 - implied      ; 
+        [FEC|CI, MI|COA, CE|II|EP],                                                                                                                            # 042 - implied      ; 
         
         # CLV # Clear Overflow Flag                                                                                                                            # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|CLV, MI|COA|CE|II|EP],                                                                                                                            # 043 - implied      ; 
+        [FEC|CLV, MI|COA, CE|II|EP],                                                                                                                           # 043 - implied      ; 
         
         # CMP # Compare Memory with Accumulator                                                                                                                # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|CMP|ES2, MI|COA, CE|II|EP],                                                                                                          # 044 - immediate    ; #oper
@@ -282,10 +282,10 @@ def main():
         [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                     # 066 - absolute,Y   ; oper,Y
         
         # DEX # Decrement Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|XOX2|EI|ES2|DEC, MI|COA|EO|XI, CE|II|EP],                                                                                               # 067 - implied     ; 
+        [FEC|XOX2|EI|DEC, EO|XI, MI|COA|CE|II|EP],                                                                                                             # 067 - implied     ; 
         
         # DEY # Decrement Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|YOX2|EI|ES2|DEC, MI|COA|EO|YI, CE|II|EP],                                                                                               # 068 - implied      ; 
+        [FEC|YOX2|EI|DEC, EO|XI, MI|COA|CE|II|EP],                                                                                                             # 068 - implied      ; 
         
         # EOR # Exclusive-OR Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|XOR|EI|ES2, MI|COA|EO|AI, CE|II|EP],                                                                                                 # 069 - immediate    ; #oper

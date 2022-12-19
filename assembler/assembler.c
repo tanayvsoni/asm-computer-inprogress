@@ -93,6 +93,8 @@ int main()
     code = get_labels(labels_list, vars_list, code, size);
     code = get_orgs(orgs_list, code, size);
 
+
+    //print_arr(code,size);
     first_parse(parsed_code, labels_list, vars_list, code, *size);
     free(size);
     second_parse(d, labels_list, vars_list, parsed_code);
@@ -103,12 +105,12 @@ int main()
 
     print_instr(parsed_code);
 
-    printf("\n");
+    /*printf("\n");
     print_labels(labels_list);
     printf("\n");
     print_vars(vars_list);
     printf("\n");
-    print_orgs(orgs_list);
+    print_orgs(orgs_list);*/
 
     output_code(parsed_code);
     

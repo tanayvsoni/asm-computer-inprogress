@@ -10,11 +10,11 @@ void output_code(instr *code)
     int complied_bytes = 0;
     int len = strlen(filename);
 
-    filename[len-2] = '.';
+    filename[len-4] = '.';
+    filename[len-3] = 't';
+    filename[len-2] = 'x';
     filename[len-1] = 't';
-    filename[len] = 'x';
-    filename[len+1] = 't';
-    filename[len+2] = '\0';
+    filename[len] = '\0';
 
     fp = fopen(strcat(temp,filename), "w");
     int i = 0;
