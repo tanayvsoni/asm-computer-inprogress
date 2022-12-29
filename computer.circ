@@ -79,7 +79,7 @@
   <circuit name="main">
     <a name="circuit" val="main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="4000.0"/>
+    <a name="simulationFrequency" val="2048000.0"/>
     <comp lib="0" loc="(1020,1200)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="Reset"/>
@@ -1102,6 +1102,10 @@
       <a name="facing" val="north"/>
       <a name="label" val="DSP"/>
     </comp>
+    <comp lib="0" loc="(2470,1510)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="Reset"/>
+    </comp>
     <comp lib="0" loc="(2470,2390)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="IJ"/>
@@ -1133,6 +1137,12 @@
     <comp lib="0" loc="(2500,3280)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="RTR"/>
+    </comp>
+    <comp lib="0" loc="(2520,1510)" name="Clock">
+      <a name="facing" val="north"/>
+    </comp>
+    <comp lib="0" loc="(2530,1400)" name="Constant">
+      <a name="facing" val="north"/>
     </comp>
     <comp lib="0" loc="(2530,2390)" name="Tunnel">
       <a name="facing" val="north"/>
@@ -1214,6 +1224,10 @@
     <comp lib="0" loc="(2680,2660)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="AO"/>
+    </comp>
+    <comp lib="0" loc="(2690,1670)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="Reset"/>
     </comp>
     <comp lib="0" loc="(2690,3190)" name="Pin">
       <a name="appearance" val="classic"/>
@@ -2203,9 +2217,10 @@
       <a name="addrWidth" val="16"/>
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 16 8
-16384*0 5b 0 66 8 71 0 1e
-c 40 29 2 1 8d 8e 0
-43 24 6 40 a3 1 bb
+16384*0 1 1 1f a 40 a3 0
+58 0 40 96 1 a3 0 20
+0 40 58 a 40 50 2 94
+49126*0 58 14 40
 </a>
       <a name="misaligned" val="true"/>
     </comp>
@@ -20689,6 +20704,10 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <comp lib="5" loc="(1970,130)" name="LedBar">
       <a name="matrixcols" val="16"/>
     </comp>
+    <comp lib="5" loc="(2510,1400)" name="RGB Video">
+      <a name="height" val="256"/>
+      <a name="width" val="256"/>
+    </comp>
     <comp lib="5" loc="(2560,2060)" name="LedBar">
       <a name="color" val="#ffa4ad"/>
       <a name="matrixcols" val="38"/>
@@ -20743,6 +20762,9 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <comp loc="(1170,1760)" name="status_register"/>
     <comp loc="(1830,1490)" name="ALU"/>
     <comp loc="(2040,230)" name="program_counter"/>
+    <comp loc="(2670,1440)" name="VIDEO_CARD">
+      <a name="facing" val="north"/>
+    </comp>
     <wire from="(1000,1310)" to="(1000,1380)"/>
     <wire from="(1000,1310)" to="(1310,1310)"/>
     <wire from="(1000,1380)" to="(1000,1510)"/>
@@ -21322,6 +21344,8 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <wire from="(2460,2130)" to="(2460,2310)"/>
     <wire from="(2460,2310)" to="(2570,2310)"/>
     <wire from="(2460,2830)" to="(2460,2930)"/>
+    <wire from="(2470,1500)" to="(2470,1510)"/>
+    <wire from="(2470,1500)" to="(2510,1500)"/>
     <wire from="(2470,2130)" to="(2470,2300)"/>
     <wire from="(2470,2300)" to="(2610,2300)"/>
     <wire from="(2470,2340)" to="(2470,2390)"/>
@@ -21341,8 +21365,12 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <wire from="(2500,2820)" to="(2500,2930)"/>
     <wire from="(2500,3190)" to="(2500,3230)"/>
     <wire from="(2500,3250)" to="(2500,3280)"/>
+    <wire from="(2510,1400)" to="(2510,1500)"/>
     <wire from="(2510,2130)" to="(2510,2260)"/>
     <wire from="(2510,2260)" to="(2780,2260)"/>
+    <wire from="(2520,1400)" to="(2520,1460)"/>
+    <wire from="(2520,1460)" to="(2520,1510)"/>
+    <wire from="(2520,1460)" to="(2640,1460)"/>
     <wire from="(2520,2130)" to="(2520,2250)"/>
     <wire from="(2520,2250)" to="(2830,2250)"/>
     <wire from="(2530,2130)" to="(2530,2240)"/>
@@ -21355,12 +21383,18 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <wire from="(2540,2810)" to="(2540,2930)"/>
     <wire from="(2540,3190)" to="(2540,3230)"/>
     <wire from="(2540,3250)" to="(2540,3280)"/>
+    <wire from="(2550,1400)" to="(2550,1430)"/>
+    <wire from="(2550,1430)" to="(2670,1430)"/>
     <wire from="(2550,2130)" to="(2550,2220)"/>
     <wire from="(2550,2220)" to="(2930,2220)"/>
+    <wire from="(2560,1400)" to="(2560,1420)"/>
+    <wire from="(2560,1420)" to="(2690,1420)"/>
     <wire from="(2560,2130)" to="(2560,2210)"/>
     <wire from="(2560,2210)" to="(2970,2210)"/>
     <wire from="(2560,2650)" to="(2560,2660)"/>
     <wire from="(2560,2650)" to="(2620,2650)"/>
+    <wire from="(2570,1400)" to="(2570,1410)"/>
+    <wire from="(2570,1410)" to="(2710,1410)"/>
     <wire from="(2570,2130)" to="(2570,2200)"/>
     <wire from="(2570,2200)" to="(2980,2200)"/>
     <wire from="(2570,2310)" to="(2570,2390)"/>
@@ -21390,6 +21424,8 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <wire from="(2630,2530)" to="(2630,2660)"/>
     <wire from="(2630,3220)" to="(2630,3240)"/>
     <wire from="(2630,3220)" to="(2680,3220)"/>
+    <wire from="(2640,1460)" to="(2640,1660)"/>
+    <wire from="(2640,1660)" to="(2670,1660)"/>
     <wire from="(2640,2130)" to="(3180,2130)"/>
     <wire from="(2640,2530)" to="(2640,2650)"/>
     <wire from="(2640,2650)" to="(2680,2650)"/>
@@ -21401,6 +21437,7 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <wire from="(2660,2530)" to="(2660,2630)"/>
     <wire from="(2660,2630)" to="(2770,2630)"/>
     <wire from="(2660,2780)" to="(2660,2930)"/>
+    <wire from="(2670,1430)" to="(2670,1440)"/>
     <wire from="(2670,2530)" to="(2670,2620)"/>
     <wire from="(2670,2620)" to="(2820,2620)"/>
     <wire from="(2680,2530)" to="(2680,2610)"/>
@@ -21408,12 +21445,15 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <wire from="(2680,2650)" to="(2680,2660)"/>
     <wire from="(2680,3220)" to="(2680,3240)"/>
     <wire from="(2680,3220)" to="(2730,3220)"/>
+    <wire from="(2690,1420)" to="(2690,1440)"/>
+    <wire from="(2690,1660)" to="(2690,1670)"/>
     <wire from="(2690,3190)" to="(2690,3230)"/>
     <wire from="(2690,3250)" to="(2690,3280)"/>
     <wire from="(270,1520)" to="(270,1550)"/>
     <wire from="(270,1520)" to="(280,1520)"/>
     <wire from="(270,1550)" to="(360,1550)"/>
     <wire from="(2700,2280)" to="(2700,2390)"/>
+    <wire from="(2710,1410)" to="(2710,1440)"/>
     <wire from="(2720,2640)" to="(2720,2660)"/>
     <wire from="(2730,3220)" to="(2730,3240)"/>
     <wire from="(2730,3220)" to="(2780,3220)"/>
@@ -24011,86 +24051,2157 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <wire from="(80,530)" to="(110,530)"/>
     <wire from="(830,100)" to="(830,120)"/>
   </circuit>
-  <circuit name="interupt_reg_checker">
+  <circuit name="VIDEO_CARD">
     <a name="appearance" val="logisim_evolution"/>
-    <a name="circuit" val="interupt_reg_checker"/>
+    <a name="circuit" val="VIDEO_CARD"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="16.0"/>
-    <comp lib="0" loc="(310,340)" name="Pin">
+    <a name="simulationFrequency" val="512.0"/>
+    <comp lib="0" loc="(1010,680)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(1080,390)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(110,50)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(110,80)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(1110,260)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(1160,700)" name="Pin">
       <a name="appearance" val="classic"/>
-      <a name="label" val="inpt"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="VSYNC"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(1180,450)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="HSYNC"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(1190,640)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(1230,220)" name="Tunnel">
+      <a name="label" val="X_COORD"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="0" loc="(350,340)" name="Splitter">
+    <comp lib="0" loc="(1380,600)" name="Tunnel">
+      <a name="label" val="Y_COORD"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(150,50)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(150,80)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="RST"/>
+    </comp>
+    <comp lib="0" loc="(220,1260)" name="Splitter">
       <a name="appear" val="center"/>
       <a name="fanout" val="8"/>
       <a name="incoming" val="8"/>
     </comp>
-    <comp lib="0" loc="(840,350)" name="Pin">
+    <comp lib="0" loc="(220,1260)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="X_COORD"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(220,1340)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="8"/>
+      <a name="incoming" val="8"/>
+    </comp>
+    <comp lib="0" loc="(220,1340)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="Y_COORD_REAL"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(260,1300)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="facing" val="west"/>
+      <a name="fanout" val="16"/>
+      <a name="incoming" val="16"/>
+    </comp>
+    <comp lib="0" loc="(320,910)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(340,110)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RGB"/>
+      <a name="width" val="24"/>
+    </comp>
+    <comp lib="0" loc="(340,50)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="X_COORD"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(340,80)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="Y_COORD"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(380,50)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
-      <a name="label" val="oupt"/>
+      <a name="label" val="XC"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(380,560)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(380,80)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="YC"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(390,200)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(400,1010)" name="Constant"/>
+    <comp lib="0" loc="(400,990)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(470,220)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(470,240)" name="Constant"/>
+    <comp lib="0" loc="(470,270)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(480,230)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(480,580)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(480,600)" name="Constant"/>
+    <comp lib="0" loc="(500,110)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="RGB"/>
+      <a name="output" val="true"/>
+      <a name="width" val="24"/>
+    </comp>
+    <comp lib="0" loc="(580,1070)" name="Splitter">
+      <a name="appear" val="center"/>
+    </comp>
+    <comp lib="0" loc="(590,930)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(610,1300)" name="Tunnel">
+      <a name="label" val="RGB"/>
+      <a name="width" val="24"/>
+    </comp>
+    <comp lib="0" loc="(680,930)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(680,950)" name="Constant"/>
+    <comp lib="0" loc="(890,1010)" name="Tunnel">
+      <a name="label" val="Y_COORD_REAL"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(890,1050)" name="Tunnel">
+      <a name="label" val="Y_COORD"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(900,230)" name="Constant">
+      <a name="facing" val="north"/>
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(960,580)" name="Constant">
+      <a name="facing" val="north"/>
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="1" loc="(1010,340)" name="OR Gate">
+      <a name="facing" val="north"/>
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1040,240)" name="NOR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1040,290)" name="NOR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1050,690)" name="OR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1070,440)" name="OR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1110,700)" name="NOR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1110,750)" name="NOR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1120,600)" name="NOR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1120,650)" name="NOR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1130,450)" name="NOR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(1130,500)" name="NOR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(380,920)" name="OR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(450,210)" name="OR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(460,570)" name="OR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(610,1130)" name="AND Gate">
+      <a name="facing" val="south"/>
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="1" loc="(620,1080)" name="NOT Gate">
+      <a name="facing" val="south"/>
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(640,920)" name="OR Gate">
+      <a name="size" val="30"/>
+    </comp>
+    <comp lib="2" loc="(910,220)" name="BitSelector">
+      <a name="group" val="8"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="2" loc="(970,570)" name="BitSelector">
+      <a name="group" val="8"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="4" loc="(1110,190)" name="Register">
+      <a name="appearance" val="logisim_evolution"/>
+    </comp>
+    <comp lib="4" loc="(1190,570)" name="Register">
+      <a name="appearance" val="logisim_evolution"/>
+    </comp>
+    <comp lib="4" loc="(350,1240)" name="ROM">
+      <a name="addrWidth" val="16"/>
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="contents">addr/data: 16 24
+915*ffffff fefefe 257*ffffff fefefe ffffff fefefe ffffff ffffff
+ffffff fefefe 502*ffffff fefefe 5*ffffff fafafa eaeaea d3d3d3
+cdcdcd d9d9d9 f0f0f0 fcfcfc 246*ffffff fcfcfc bebebe 5e5e5e
+1e1e1e 20202 0 0 0 60606 272727 646464
+b5b5b5 f8f8f8 238*ffffff fffeff fffeff ffffff fefefe bcbcbc
+393939 20202 9*0 10101 2d2d2d b9b7b8 fffdfe 34*ffffff
+fefefe e8e8e8 acacac 848484 6e6e6e 646464 656565 6f6f6f
+8b8b8b bebebe fcfcfc 97*ffffff fefefe 95*ffffff e5e5e5 575757
+30102 20001 12*0 20202 696969 f4f4f4 ffffff ffffff
+ffffff fefefe 12*ffffff fefefe 12*ffffff fefefe e6e6e6 b0b0b0
+6f6f6f 2f2f2f 40404 4*0 10101 10101 0 0
+2b2b2b bababa fefefe 94*ffffff fefefe 13*ffffff fefefe 81*ffffff
+bdbdbd 1c1c1c 5*0 10101 9*0 10101 0 393939
+e7e7e7 4*ffffff fffeff fffeff 20*ffffff e7e7e7 868686 353535
+90909 0 0 0 10101 9*0 60606 878787
+fefefe 85*ffffff fefefe 95*ffffff fefefe 5*ffffff fefefe 999999
+70707 19*0 262626 dededc fefefc ffffff fefefe ffffff
+ffffff fffffd fffffd 15*ffffff fdfdfd cbcbcb 5b5b5b 90909
+7*0 10101 9*0 10101 7c7c7c fefefe 84*ffffff fefefe
+100*ffffff fefefe 8f8f8f 30301 19*0 10101 0 262626
+e3e3e3 ffffff ffffff feffff feffff 10*ffffff fefefe 4*ffffff
+fdfdfd b8b8b8 424242 30303 4*0 10101 6*0 10101
+0 0 10101 5*0 20202 9b9b9b 95*ffffff fefefe
+fbfbfb f9f9f9 fbfbfb fefefe 5*ffffff fefefe 73*ffffff fefefe
+4*ffffff fefefe 9e9e9e 30303 0 0 10000 10000
+4*0 10000 30000 60000 80202 30200 5*0 10000
+10000 0 0 0 2f2f2f eeeeee 16*ffffff fdfdfd
+bfbfbf 3c3c3c 20202 23*0 a0a0a d5d5d5 fefefe 89*ffffff
+fdfdfd d4d4d4 909090 5b5b5b 363636 212121 1a1a1a 1f1f1f
+363636 636363 989898 d3d3d3 fbfbfb fefefe 74*ffffff fefefe
+4*ffffff c1c1c1 70707 6*0 30000 60000 260004 6e1119
+a31d28 c52030 d12231 c82230 a81e2b 6d161e 2d0004 b0000
+0 2 2 4*0 4a4a4a fafafa fffffd fefefc
+12*ffffff dadada 525252 20202 26*0 454545 fefefe fefefe
+86*ffffff fbfbfb a7a7a7 363636 30303 9*0 30303 1f1f1f
+636363 b0b0b0 f2f2f2 76*ffffff e7e7e7 1b1b1b 0 0
+100 201 0 10000 30000 230000 84121c cc293a
+de2535 e72234 e72234 e72234 e72233 e72234 e62334 c72938
+64131a 1a0000 70000 5*0 10101 7b7b7b ffffff ffffff
+fffeff fffeff 8*ffffff f3f3f3 7f7f7f c0c0c 28*0 10101
+b8b8b8 86*ffffff dadada 3e3e3e 10101 15*0 121212 5c5c5c
+b0b0b0 f3f3f3 17*ffffff fefefe 45*ffffff fffffd fffffd ffffff
+fefefe 5*ffffff fcfcfc 4c4c4c 0 100 100 0
+0 20001 150000 4c0004 ab2836 d8293a e72234 e72234
+e72234 e82134 e82134 e72234 e72234 e72234 e12536 d8293a
+981a26 260000 40001 10000 4*0 30303 b8b8b8 ffffff
+fffeff fffeff 6*ffffff fefefe b8b8b8 272727 31*0 3a3a3a
+fdfdfd fefefe 81*ffffff fefefe ffffff c9c9c9 171717 19*0
+10101 151515 5d5d5d b7b7b7 fafafa 69*ffffff 959595 10101
+4*0 60000 120000 500710 c32b38 e62334 e62334 5*e72234
+e82134 e82134 e72234 e72234 e62334 d32b3c 9b2933 360000
+f0000 5*0 1b1b1b ebebeb 7*ffffff f1f1f1 626262 40404
+16*0 10101 0 0 0 10101 11*0 10101
+bdbdbd 83*ffffff efefef 1c1c1c 13*0 10101 10*0 272727
+929292 efefef 66*ffffff d8d8d8 c0c0c 0 0 100
+100 0 170000 64030e c22f3f dd2839 11*e72234 e82134
+e62236 df2636 ae2431 2d0000 40000 10000 4*0 5b5b5b
+fefcfd fffeff fffeff fffeff ffffff fefefe d8d8d8 2e2e2e
+21*0 70707 202020 363636 4b4b4b 434343 50505 8*0
+484848 fefefe 82*ffffff 767676 10101 12*0 10101 13*0
+181818 7e7e7e eaeaea 63*ffffff fcfcfc 414141 4*0 40000
+b0000 440309 c52d3c e62236 4*e72234 e62334 e62334 4*e72234
+e82134 e82134 e72234 e72234 e72234 d32b3c 942931 2d0000
+e0000 0 2 2 0 20202 b6b6b6 4*ffffff
+b7b7b7 141414 0 10101 0 0 0 10101
+13*0 70707 4f4f4f a4a4a4 e2e2e2 fcfcfc ffffff ffffff
+fefefe b9b9b9 b0b0b 7*0 40404 d2d2d2 6*ffffff fefefe
+74*ffffff dddddd 80808 26*0 10101 0 0 d0d0d
+747474 e3e3e3 ffffff fefefe ffffff fefefe ffffff ffffff
+ffffff fefefe fefefe 51*ffffff fefefe 999999 10101 4*0
+120000 3e0000 ab2f3a d72b3b e72234 e72234 e62133 e72233
+e62132 6*e72234 e72236 e72236 e72234 e72234 e82134 e32436
+d52a3a 921823 1f0000 10000 4*0 252726 f4f6f5 fefefe
+fbfbfb 868686 30303 11*0 10101 5*0 20202 2c2c2c
+909090 ebebeb 8*ffffff 989898 20202 10101 6*0 636363
+81*ffffff 5d5d5d 32*0 f0f0f 737373 e6e6e6 50*ffffff fefefe
+6*ffffff fefefe e9e9eb 151517 4*0 10000 210000 9d1f2a
+d92838 e12536 14*e72234 e62133 e72234 e72234 e72234 cd2f3e
+601117 150000 70000 4*0 8a8a8a f1f1f1 575757 10101
+10101 15*0 30303 494949 b8b8b8 fafafa 10*ffffff f9f9f9
+252525 7*0 131313 f5f5f5 5*ffffff fefefe 73*ffffff d4d4d4
+40404 16*0 10101 17*0 f0f0f 7d7d7d ededed 52*ffffff
+fdfffe feffff ffffff ffffff 686868 4*0 80000 160000
+631018 cc2e3d 17*e72234 e82335 e72234 e72234 d9283a b6323f
+4a0000 140000 4*0 111111 2d2d2d 10101 4*0 10101
+10101 9*0 80808 5f5f5f d2d2d2 fefefe 9*ffffff fefefe
+ffffff ffffff ffffff 9a9a9a 10101 10101 0 0
+0 10101 10101 10101 b7b7b7 79*ffffff 5b5b5b 22*0
+10101 14*0 181818 929292 f7f7f7 53*ffffff d4d4d4 60606
+4*0 140000 470000 b63240 d8293a e72234 e72236 e72236
+e72234 e82335 e72236 e82337 13*e72234 e32436 dc273a a4202e
+1f0000 0 10000 10000 0 0 2 2
+0 0 10101 10*0 b0b0b 6b6b6b dddddd 16*ffffff
+f4f4f4 191919 6*0 10101 6e6e6e 78*ffffff dadada 60606
+10*0 70707 252525 414141 3c3c3c 1d1d1d 60606 10101
+10101 4*0 10101 0 0 0 10101 11*0
+10101 2a2a2a b0b0b0 fcfcfc ffffff ffffff fefefe 5*ffffff
+fefefe 8*ffffff fefefe 12*ffffff fefefe 14*ffffff fefefe 4*ffffff
+fefeff 505052 0 0 0 10101 201 1f0000
+9f1f2c da273a e32436 22*e72234 cb2f3d 580b11 140000 60000
+0 20001 10000 2 2 11*0 c0c0c 6c6c6c
+e1e1e1 19*ffffff 7a7a7a 7*0 2b2b2b fefefe 77*ffffff 6c6c6c
+9*0 282828 999999 e5e5e5 fefefe ffffff ffffff fefefe
+e4e4e4 b6b6b6 7c7c7c 3d3d3d d0d0d 10101 19*0 10101
+484848 d4d4d4 fefefe 22*ffffff f9f9f9 ededed e5e5e5 dbdbdb
+d0d0d0 c7c7c7 bcbcbc b1b1b1 a4a4a4 929292 7d7d7d 6f6f6f
+626262 585858 535353 585858 5e5e5e 5e5e5e 5e5e5e 5f5f5f
+646464 696969 6e6e6e 737373 797979 818181 7c7c7c 20202
+10103 2 100 60000 120000 590c14 cc303e 24*e72234
+d52a3a a22e39 320000 100000 2 8*0 10101 4*0
+50505 626262 e0e0e0 21*ffffff dbdbdb 50505 0 0
+0 10101 0 0 40404 e3e3e3 76*ffffff ececec
+f0f0f 7*0 10101 6c6c6c f5f5f5 9*ffffff fefefe eeeeee
+acacac 515151 90909 19*0 90909 777777 f2f2f2 13*ffffff
+fefefe f6f6f6 d8d8d8 b1b1b1 8c8c8c 686868 474747 292929
+151515 a0a0a 60606 40404 10101 10101 18*0 2
+2 20202 4*0 120000 380000 a92f3a d52a3a 17*e72234
+e72236 e72236 e82134 e82134 e72234 e72234 e72234 dd2638
+c7313d 6c070f 190000 12*0 10101 343434 c7c7c7 fefefe
+22*ffffff fefefe 424242 5*0 10101 0 acacac 71*ffffff
+fefefe 4*ffffff 909090 8*0 616161 fefefe 14*ffffff e6e6e6
+898989 272727 10101 18*0 242424 b6b6b6 fefefe ffffff
+ffffff fefefe ffffff ffffff fefefe ffffff f3f3f3 cbcbcb
+959595 636363 363636 e0e0e 0 10101 35*0 1c0000
+831119 d12c3a df2636 24*e72234 e42334 df2636 af2733 220000
+10000 100 100 8*0 e0e0e 8c8c8c fafafa ffffff
+ffffff ffffff fefefe 20*ffffff fefefe 9d9d9d 7*0 707070
+75*ffffff fcfcfc 2d2d2d 7*0 131313 eaeaea ffffff fefefe
+12*ffffff fefefe ffffff ffffff f8f8f8 aeaeae 3e3e3e 10101
+13*0 10101 0 0 10101 30303 5a5a5a c5c5c5
+f8f8f8 fefefe f9f9f9 c5c5c5 838383 424242 121212 10101
+34*0 100 100 0 0 0 30000 70000
+360001 c22e3c e62334 e62334 26*e72234 cb2f3d 4d060e f0000
+60000 4*0 10101 0 0 0 3c3c3c d8d8d8
+4*ffffff fefefe 22*ffffff e9e9e9 70707 6*0 3a3a3a 75*ffffff
+c5c5c5 10101 7*0 898989 fefefe 19*ffffff fefefe c0c0c0
+474747 30303 7*0 10101 4*0 10101 0 0
+10101 0 0 80808 1c1c1c 101010 4*0 10101
+0 10101 0 0 0 10101 26*0 10101
+0 10000 10000 10101 0 0 b0000 210000
+7e1d28 cf2d3c e82335 22*e72234 e72233 e72233 e72234 e72234
+e72236 d22b3d 8b262e 250000 d0000 6*0 a0a0a 898989
+fbfbfb ffffff ffffff ffffff fefefe 24*ffffff fefefe 3d3d3d
+6*0 f0f0f f8f8f8 74*ffffff 6b6b6b 7*0 171717 f1f1f1
+22*ffffff fdfdfd c0c0c0 3f3f3f 64*0 140000 450000 b83442
+d8293a e72236 27*e72234 d9283a b93542 470000 140000 5*0
+272727 c9c9c9 fefefe 30*ffffff 7f7f7f 5*0 10101 10101
+d3d3d3 ffffff ffffff fefefe 70*ffffff f7f7f7 171717 6*0
+10101 848484 14*ffffff fefefe 10*ffffff fefefe b3b3b3 2e2e2e
+10101 54*0 2 2 4*0 100 1b0000 87131e
+d22b3c e02536 e82334 e72234 e82335 25*e72234 df2638 cf2d3c
+810e1b 190000 2 0 0 0 2f2f2f f2f2f2
+4*ffffff fefefe 27*ffffff bcbcbc 7*0 a6a6a6 73*ffffff bcbcbc
+7*0 d0d0d e9e9e9 27*ffffff f8f8f8 949494 151515 21*0
+10101 8*0 10101 27*0 10000 30000 2c0000 c02c3a
+e62236 e72234 e72234 e72234 e62133 16*e72234 e72236 e72236
+6*e72234 e82134 e72236 e12536 b62838 240000 30000 0
+0 0 161616 fbfbfb 32*ffffff efefef 60606 6*0
+7a7a7a ffffff ffffff ffffff fefefe 69*ffffff 6c6c6c 0
+10101 5*0 636363 30*ffffff eaeaea 666666 50505 7*0
+10101 9*0 10101 5*0 10101 32*0 70000 160000
+621118 cc2e3d 27*e72234 e72236 e72236 e72234 e72234 e72236
+ca2f3f 49030b e0000 40000 0 0 0 c4c4c4
+32*ffffff fefefe 2b2b2b 6*0 4f4f4f 72*ffffff fcfcfc 242424
+6*0 10101 c7c7c7 32*ffffff c4c4c4 303030 50*0 100
+100 0 0 0 e0000 2c0000 9b2b37 d32b3a
+4*e72234 e62133 22*e72234 e72236 e72236 e72236 e82337 e82134
+d12c3c 7a1d25 1f0000 a0000 0 0 10101 787878
+29*ffffff fefefe ffffff ffffff ffffff 585858 6*0 272727
+68*ffffff fefefe ffffff ffffff ffffff d8d8d8 20202 0
+10101 4*0 2b2b2b fcfcfc 27*ffffff fefefe 4*ffffff fefefe
+f7f7f7 848484 a0a0a 10101 0 10101 16*0 10101
+7*0 10101 22*0 10101 10101 10101 150000 550003
+c03441 da2838 25*e72234 e62334 e62334 5*e72234 d52a3a a6303c
+320000 f0000 0 0 0 2d2d2d fdfdfd 32*ffffff
+868686 6*0 80808 f8f8f8 71*ffffff 9a9a9a 6*0 10101
+818181 36*ffffff d1d1d1 363636 32*0 10101 30303 80808
+f0f0f 141414 181818 1b1b1b 212121 282828 2f2f2f 343434
+393939 3d3d3d 414141 434343 101010 0 0 0
+10000 1e0000 8d151f d32b3a e02536 e72234 e82335 30*e72234
+da2838 c03441 570005 150000 0 0 0 20202
+dddddd 32*ffffff b1b1b1 6*0 10101 dcdcdc 71*ffffff 5d5d5d
+0 10101 5*0 d3d3d3 37*ffffff f6f6f6 7d7d7d 60606
+17*0 10101 30303 90909 171717 2f2f2f 494949 626262
+797979 929292 a9a9a9 bfbfbf c9c9c9 d5d5d5 e1e1e1 eaeaea
+eeeeee f4f4f4 f5f5f5 f8f8f8 fafafa fcfcfc fcfcfc fdfdfd
+fefefe ffffff ffffff ffffff f4f4f4 111111 0 10000
+10000 30000 270000 bd2c39 e42334 e62334 32*e72234 e02536
+cf2d3c 83111b 1b0000 2 0 0 0 999999
+32*ffffff d4d4d4 7*0 b8b8b8 71*ffffff 242424 6*0 252525
+fcfcfc 39*ffffff c3c3c3 232323 10*0 30303 242424 575757
+818181 9d9d9d b6b6b6 cccccc e3e3e3 f3f3f3 24*ffffff b3b3b3
+10101 0 0 60000 110000 500710 cb2f3d e72234
+e72234 e72234 e62133 e72234 e72234 e82335 22*e72234 e62334
+e62334 e72234 e72234 e72234 e42336 dd2736 ac2533 200000
+10000 0 0 0 595959 32*ffffff f0f0f0 10101
+6*0 989898 70*ffffff ededed 40404 0 10101 4*0
+676767 ffffff ffffff fefefe 38*ffffff ebebeb 5e5e5e 40404
+5*0 50505 3f3f3f 8b8b8b d4d4d4 fafafa 21*ffffff fefefe
+9*ffffff 6c6c6c 0 0 0 b0000 220000 81202b
+d12c3c 27*e72234 e62334 e62334 6*e72234 e62334 c62f3e 310000
+70000 10000 0 0 252525 fdfdfd 32*ffffff 131313
+6*0 797979 70*ffffff c0c0c0 7*0 aaaaaa 42*ffffff fefefe
+e2e2e2 a0a0a0 7c7c7c 757575 868686 adadad ebebeb 34*ffffff
+fefefe 2f2f2f 2 10103 0 110000 360000 ad333e
+d62a3a 11*e72234 e82134 e82134 5*e72234 e42336 df2636 bd1f2e
+82131c 5a0b11 44070e 47060c 660b14 9a1b26 d22737 e62334
+e62334 e72234 e82335 4*e72234 cb2f3d 570a12 140000 60000
+0 0 60606 efefef 32*ffffff 2f2f2f 6*0 5b5b5b
+70*ffffff 949494 6*0 10101 e2e2e2 84*ffffff ebebeb 50505
+0 10101 0 150000 5b0008 c13341 da2838 9*e72234
+e72236 e72236 5*e72234 e32235 dd2638 ae202e 48070d 110000
+40000 0 0 0 10000 d0000 2e0000 7c1820
+d02b3b 5*e72234 e72236 ce2d3d 6c151e 1b0000 80000 0
+0 0 d1d1d1 32*ffffff 4a4a4a 6*0 3e3e3e 70*ffffff
+6c6c6c 6*0 1a1a1a fefefe 47*ffffff fefefe ffffff ffffff
+ffffff fefefe 32*ffffff b4b4b4 0 0 0 2
+1b0000 83101d cf2c3d df2636 e72234 e72234 e82134 11*e72234
+e62133 e62334 ce2d3d 761923 230000 b0000 0 10000
+10000 0 0 10101 0 0 150000 500004
+b12a38 d82938 e72234 e62133 e62133 e62334 c82d3b 530a11
+110000 60000 0 0 0 b1b1b1 fefefe 31*ffffff
+686868 6*0 252525 fefefe 69*ffffff 424242 6*0 464646
+42*ffffff fefefe 42*ffffff 7a7a7a 0 100 100 2
+200000 a5212e dd2638 e32436 13*e72234 e62334 df2638 cf2d3c
+84101d 1c0000 10000 100 100 7*0 30000 70000
+360003 ba2936 e12534 e42336 d0293b 851b25 390004 d0000
+5*0 121212 313131 5b5b5b 939393 d5d5d5 fdfdfd fefefe
+fefefe 25*ffffff 868686 6*0 f0f0f fcfcfc 68*ffffff fefefe
+1e1e1e 4*0 10101 0 6f6f6f 38*ffffff fefefe ffffff
+ffffff ffffff fefefe 42*ffffff 434343 0 0 10000
+10000 2a0000 c12f3c e62236 6*e72234 e82134 e82134 e62133
+5*e72234 e82335 d12c3c 85212b 260000 b0000 12*0 140000
+4d0002 a03642 822730 3e0005 f0000 10101 10*0 40404
+323232 9a9a9a f4f4f4 25*ffffff 9e9e9e 6*0 20202 f1f1f1
+68*ffffff f5f5f5 50505 6*0 969696 84*ffffff fcfcfc f0f0f
+0 100 30000 d0000 450209 ca2f3d 9*e72234 e72233
+e72233 e72234 e72234 e72233 e62334 e12637 b32734 2a0000
+30000 10000 0 10000 10000 10*0 10000 40203
+10000 10000 15*0 252525 b5b5b5 fefefe 23*ffffff b5b5b5
+7*0 dedede 67*ffffff fefefe dadada 7*0 bababa fefefe
+83*ffffff d8d8d8 0 0 0 80000 160000 66131b
+cc2e3c 11*e72234 e62135 e72236 e72234 dc2738 c33241 5e0009
+170000 5*0 100 100 12*0 10000 10000 10101
+6*0 10101 10101 5*0 40404 737373 f9f9f9 17*ffffff
+fefefe 4*ffffff c9c9c9 7*0 c8c8c8 67*ffffff fefefe bbbbbb
+6*0 10101 d9d9d9 46*ffffff fefefe 35*ffffff fefefe ffffff
+a6a6a6 0 0 100 b0000 220000 85212b d12c3c
+14*e72234 d22b3c 8e262f 260000 c0000 100 0 0
+10000 10000 10000 20001 10101 0 2 2
+26*0 494949 f0f0f0 21*ffffff e0e0e0 10101 6*0 b3b3b3
+68*ffffff a0a0a0 6*0 40404 f3f3f3 84*ffffff 767676 0
+0 0 f0000 2c0000 a12f39 d32b3a e82335 4*e72234
+e82134 e82134 4*e72234 e72236 e82337 e62334 ca2f3d 4b050d
+f0000 60000 10000 0 0 10101 e0000 3a0107
+781b25 9a202d 8e1b28 4c0f16 170000 60000 0 2
+2 8*0 10101 4*0 2 9*0 3b3b3b f0f0f0
+13*ffffff fefefe ffffff fdfdfd f0f0f0 e0e0e0 d6d6d6 d1d1d1
+cbcbcb 30303 0 0 0 10101 0 0
+a3a3a3 68*ffffff 898989 6*0 171717 85*ffffff 474747 0
+0 0 120000 3f0000 b63742 d8293a e82335 10*e72234
+e72236 e62236 e12536 b62a37 240000 10000 0 10101
+0 80000 170000 651319 cb2d3b e72234 e72234 e42336
+dc2738 a6222f 210000 12*0 10101 20001 20001 10101
+20202 4*0 10101 0 10000 10000 0 0
+434343 f6f6f6 9*ffffff f4f4f4 cbcbcb 939393 626262 383838
+141414 50505 11*0 929292 ffffff fefefe 66*ffffff 727272
+6*0 2e2e2e 84*ffffff fdfdfd 1e1e1e 0 0 0
+150000 570005 c03441 da2838 10*e72234 e82335 e72234 e12536
+d32b3a 8d151f 1c0000 0 0 0 10000 190000
+6a050d c8303d dc2738 e72234 e72234 e62133 e72234 c63240
+2a0000 30000 6*0 20001 60000 110000 3d080e 78141e
+a51d2b bc202e c41f2f b71f2c 991b26 63141a 280002 b0000
+10101 10002 10002 10101 4*0 696969 fefefe 5*ffffff
+e9e9e9 9c9c9c 505050 161616 10101 14*0 10101 0
+343434 9c9c9c ececec ffffff fefefe 64*ffffff 5f5f5f 6*0
+474747 84*ffffff efefef 20202 0 0 0 180000
+720812 ca2f3d dd2638 12*e72234 dd2638 c7313d 6c070f 180000
+0 0 10000 60000 2f0000 bf2d3a e42334 e62334
+e72234 e72234 e42336 dc2738 a6222f 200000 6*0 70000
+140000 570c13 ba2634 e12438 e62334 e72234 e62132 e72233
+e72234 e72234 e62236 cf2a3b 841c25 340002 e0000 6*0
+20202 adadad ffffff ffffff f8f8f8 adadad 4a4a4a 70707
+21*0 10101 e0e0e 808080 f5f5f5 64*ffffff 4e4e4e 6*0
+5a5a5a 84*ffffff c8c8c8 4*0 1c0000 8b1521 d32b3c e02536
+12*e72234 da2838 bd3340 510000 150000 0 0 80000
+190000 6a141d ce2d3d e72234 e82335 e72234 e72234 da273a
+c03441 560005 150000 2 10000 10000 0 10000
+30000 250000 941823 d52a3a e12536 e72234 e62334 e72435
+e72234 e72234 e92235 e82134 e72234 e62334 e42334 c52a38
+5f0f18 170000 60000 100 4*0 1f1f1f efefef d2d2d2
+313131 18*0 10101 8*0 3a3a3a e4e4e4 63*ffffff 3d3d3d
+6*0 6b6b6b 84*ffffff a4a4a4 0 0 0 10101
+1d0000 9f202b d92838 e32436 12*e72234 d8293a b53742 3b0000
+120000 0 2 e0000 2a0000 982a35 d22b3c e82335
+e72234 e72234 e72234 d12c3c 83222b 230000 b0000 4*0
+f0000 350000 9c2835 d32b3a e72234 e62133 e72234 e82337
+e72236 e72234 e62133 4*e72234 e62133 e12536 d52a3c 941725
+210000 30000 0 2 0 0 10101 4f4f4f
+131313 10101 28*0 232323 e1e1e1 61*ffffff fefefe 323232
+6*0 7a7a7a fefefe 83*ffffff 828282 0 0 0
+10000 220000 b32a34 e02536 e42334 12*e72234 d52a3a aa353e
+300000 f0000 0 0 110000 380000 b23641 d62a3a
+e72234 e72234 e72234 e62334 c62f3e 3c0003 a0000 30000
+0 0 10000 30000 280000 aa2230 de2537 e42336
+e82134 13*e72234 d22b3c 89242c 280000 d0000 10101 35*0
+2e2e2e efefef 61*ffffff 333333 6*0 888888 84*ffffff 616161
+0 0 10000 30000 2b0000 c32f3d e72435 8*e72234
+e62334 e62334 e72234 e72234 e72234 d32b3c a2303a 2d0000
+e0000 0 0 140000 450000 bd3644 d92a3b e72234
+e72234 e12536 d82938 9a1c27 1c0000 4*0 d0000 250000
+88232b d12c3c 16*e72234 e02536 d22b3c 8b1521 1b0000 0
+10101 15*0 10000 10000 30102 30102 30102 20001
+4*10000 9*0 10101 5b5b5b fefefe ffffff fefefe 58*ffffff
+353535 10101 5*0 959595 ffffff ffffff fefefe 81*ffffff
+424242 0 0 30000 80000 3a0004 c8303d 11*e72234
+e82134 e82134 e72234 d32b3c 9e2f38 2b0000 f0000 0
+0 140000 490000 bd3644 d9283a e72234 e72233 da2838
+c3323f 5d0008 150000 10101 0 0 0 180000
+720812 ca2f3d dd2638 7*e72234 e82134 e82134 e62334 e62334
+e72234 e72234 e82335 4*e72234 cb2f3d 570a12 140000 60000
+0 10000 10000 4*0 2 2 10000 40000
+a0000 260307 540d15 7c141f a01927 b81d2b c82031 cf2031
+c91f2c c11c2a af1b29 981825 79131e 520b13 270408 c0000
+40000 7*0 20202 bebebe fefefe ffffff fffeff fffeff
+feffff feffff 54*ffffff 3c3c3c 6*0 9c9c9c 83*ffffff fefefe
+2a2a2a 0 0 40000 e0000 4b050d ca2f3d 14*e72234
+d32b3a a2303a 2d0000 e0000 0 0 120000 3b0000
+b63742 d62a3a e62133 e72236 d52a3c a4303b 300000 100000
+0 0 30000 60000 320000 bf2d3a e42334 e72234
+e82134 e72234 e72234 e72234 e82335 e72234 e72234 e82134
+e82134 4*e72234 e82134 e92235 e72234 e72234 e72234 d52a3c
+a9313d 370000 f0000 5*0 2 20003 10000 160000
+4a070e 891623 c02230 df2435 e42334 e72234 e72234 e82335
+e72234 e72234 e82134 e82134 e72234 e72234 e72234 e62236
+e02536 c12332 811620 41040b 100000 10000 2 2
+0 0 0 404040 fefefe 5*ffffff feffff ffffff
+ffffff fffeff 50*ffffff 464646 10101 5*0 9d9d9d 83*ffffff
+fbfbfb 151515 0 10101 70000 140000 5c0c15 cb2f3d
+e62133 e72234 e82335 e82134 e82134 7*e72234 e82335 e72236
+d52a3c ac3440 320000 f0000 0 0 e0000 2a0000
+9a2c37 d32b3c e72234 e72234 ce2d3c 731922 1c0000 80000
+0 0 b0000 220000 831f29 d12c3c e82134 6*e72234
+e82134 e82134 8*e72234 e82134 e82134 e72234 df2638 ce2d3c
+7d0d19 1b0000 20001 0 0 10101 30000 70000
+2f0004 87151f c62535 df2636 13*e72234 e62334 e62334 e52233
+e62334 e82335 d32b3c 8d222c 310000 e0000 2 0
+0 0 20202 cecece 59*ffffff 545454 6*0 888888
+80*ffffff fefefe ffffff ffffff f5f5f5 70707 0 0
+80000 190000 69131c ce2d3d 13*e72234 e82233 d92838 b73843
+400000 120000 0 0 80000 1a0000 6a151c ce2d3c
+e72234 e62133 ca2f3d 440309 b0000 40000 0 0
+140000 480000 ba3341 d92a3b e72234 e72234 e72234 e72236
+e72236 e62135 e72236 e72234 e72234 e82134 e82134 6*e72234
+e82335 e72234 e82335 e72234 e42336 be2b3b 280000 30000
+0 2 0 e0000 280000 952a34 d22c3a e72234
+e72234 e72234 e82134 e82134 e72234 e72234 e72233 e72233
+e82335 10*e72234 e42336 dd2638 aa2230 260000 30000 4*0
+747675 feffff 58*ffffff 646464 6*0 6e6e6e 5*ffffff fefefe
+77*ffffff efefef 10101 0 0 a0000 1b0000 711721
+ce2d3c 9*e72234 e62334 e62334 e72234 e72234 e72234 dc2738
+c3323f 600109 160000 0 0 10000 70000 2f0000
+bf2d3a e32434 e12536 b82a38 250000 10000 2 2
+0 1b0000 83111b d12c3d df2636 15*e72234 e62334 e62334
+e72234 e72234 e72234 e62133 e72234 cc2e3d 5c0f15 150000
+70000 0 0 110000 320000 ae343f d62b3b 9*e72234
+e72233 e72233 8*e72234 e62334 e62334 e72234 cf2d3c 7a1d27
+1f0000 a0000 0 0 0 292929 fdfdfd 58*ffffff
+767676 6*0 525252 78*ffffff fefefe 4*ffffff eaeaea 10101
+0 0 a0000 1c0000 741823 ce2d3c 14*e72234 e02536
+d12c3c 87131e 1b0000 4*0 180000 6f0710 c33241 cb2d3c
+941725 1c0000 4*0 220000 b32938 e12438 e42334 e72233
+e72233 e72233 18*e72234 e82134 d42c3d 922832 280000 d0000
+0 0 e0000 290000 992b36 d22c3a e72234 e72234
+e72234 e82335 18*e72234 d9283a b8343f 480000 140000 0
+0 0 40404 e3e3e3 58*ffffff 8c8c8c 6*0 353535
+fefefe ffffff ffffff ffffff fefefe 75*ffffff fefefe ffffff
+ffffff ebebeb 10101 0 0 a0000 1c0000 741823
+ce2d3c 14*e72234 e62334 e02536 b52936 220000 10000 0
+0 0 a0000 1c0000 671e25 ad3a47 68020f 160000
+0 0 30000 b0000 3e0005 ca2f3d e82134 22*e72234
+e82134 d9283a b83642 430000 120000 0 0 b0000
+1f0000 7d1d28 cf2d3a e72233 6*e72234 e72233 e72233 13*e72234
+df2636 cf2d3c 83111b 190000 0 10000 10000 0
+b4b4b4 58*ffffff a1a1a1 6*0 141414 fefefe 82*ffffff f2f2f2
+20202 0 0 a0000 1c0000 701620 ce2d3c e72234
+e82134 e82134 8*e72234 e62133 e72234 e72234 e72234 e72233
+ca2f3d 490409 e0000 40000 0 10000 10000 10101
+40001 160a0e a0002 30000 0 0 80000 160000
+631117 cd2f3d e72233 23*e72234 dc2738 c7313d 6a050d 160000
+0 0 80000 170000 600f16 cc2e3d e82335 e62133
+e72234 e72234 e72234 e82134 e82134 e72234 e72234 e82337
+e72236 5*e72234 e82335 5*e72234 e42336 dd2736 ab2432 1f0000
+2 0 0 0 8e8e8e 58*ffffff bbbbbb 6*0
+20202 e7e7e7 11*ffffff fefefe 70*ffffff f7f7f7 b0b0b 0
+0 80000 160000 641119 cc2e3c e72233 6*e72234 e62334
+e62334 7*e72234 d12c3c 89232e 250000 b0000 9*0 100
+a0000 220000 832229 d12c3c 24*e72234 e02536 d32b3c 8c1420
+1b0000 0 0 40000 d0000 46030c ca2f3d e72234
+e72234 e72234 e72236 e72236 6*e72234 e72236 e82337 10*e72234
+e42334 c02e3b 250000 10000 0 0 0 767676
+58*ffffff dadada 7*0 b9b9b9 ffffff fefefe ffffff ffffff
+ffffff fefefe 76*ffffff fcfcfc 191919 0 0 60000
+120000 570c13 cc303e 11*e72234 e92235 e92235 e72234 e72234
+e72234 da273a c03240 570004 150000 0 10101 2
+7*0 e0000 2a0000 9c2e39 d32b3a 24*e72234 e32436 dc2738
+a5212e 1d0000 0 0 10000 10000 250000 ae2632
+df2638 e42336 e72236 e72236 e72236 8*e72234 e62133 e72234
+e82134 e82134 e72234 e72234 e82134 e82134 e72234 e72234
+e62334 c5313f 2b0000 30000 10000 0 0 646464
+58*ffffff f5f5f5 60606 5*0 10101 818181 83*ffffff 303030
+0 0 40000 d0000 46030a ca2f3d e72234 e72234
+e82335 8*e72234 e62133 e72234 e82335 e72234 e72234 e42336
+dd2736 ac2430 250000 30000 8*0 10101 110000 380000
+b23641 d62a3a 24*e72234 e62334 e12536 b72b38 240000 10000
+0 0 0 70000 1a0000 500a12 92141f cd2637
+e02536 e72234 e82335 5*e72234 e82134 e82134 6*e62334 4*e72234
+e62334 c5313f 310000 60000 10000 0 0 565656
+58*ffffff fefefe 212121 6*0 434343 83*ffffff 4e4e4e 0
+0 10000 60000 320000 c62f3e 11*e72234 e72233 e82334
+e82134 e82134 e82335 e72234 e72234 cf2d3c 791c26 210000
+a0000 2 7*0 140000 440000 ba3643 d82938 24*e72234
+e62334 e42334 be2d3a 250000 10000 5*0 10000 60000
+2a0001 86121b cf2a3a df2636 e72234 e82134 e82134 8*e72234
+e62334 e62334 4*e72234 e62133 c8303f 360001 70000 30000
+0 0 4f4f4f 59*ffffff 474747 0 10101 4*0
+a0a0a f4f4f4 78*ffffff fefefe ffffff ffffff ffffff 757575
+0 0 0 10000 240000 b22835 e12536 e42334
+7*e72234 e72233 e72233 7*e72234 dd2638 cb2f3c 760b15 190000
+2 7*0 140000 4d0000 bd3541 d92838 e62133 24*e72234
+e42334 c12f3c 270000 30000 0 0 0 10101
+0 0 0 40000 d0000 46030a bc2836 e42336
+e62333 e62132 8*e72234 e62334 e62334 5*e72234 c8303f 380002
+80000 30000 0 0 4c4c4c 59*ffffff 747474 7*0
+afafaf ffffff ffffff e8e8e8 a9a9a9 c5c5c5 fefefe ffffff
+ffffff ffffff fefefe 72*ffffff a2a2a2 4*0 1d0000 961a25
+d62a3a e12536 7*e72234 e72233 e72233 e72234 e72234 e82134
+e82134 5*e72234 ce2d3d 6b141c 1d0000 80000 6*0 150000
+4f0000 be3441 d92838 e62133 24*e72234 e62334 c22e3c 270000
+30000 6*0 100 100 0 150000 500001 b9313d
+d92838 e72233 e72233 e72233 13*e72234 c8303f 380002 80000
+30000 0 0 4c4c4c 59*ffffff 9f9f9f 7*0 545454
+fefefe b0b0b0 151515 0 30303 7f7f7f 76*ffffff d4d4d4
+4*0 180000 6f0710 c72f3c dd2638 e62133 10*e72234 e62133
+6*e72234 e32436 da2838 a31c2a 3a0107 b0000 40000 4*0
+140000 4c0000 bc3543 da2939 25*e72234 e42334 c02e3b 260000
+10000 0 100 7*0 70000 160000 5f0f18 cc2d3f
+e72236 15*e72234 c8303f 360001 70000 30000 0 0
+505050 59*ffffff cccccc 10101 6*0 20202 353535 30303
+0 0 0 40404 e0e0e0 75*ffffff fbfbfb 161616
+100 100 0 120000 430000 b83642 d92838 e82134
+4*e72234 e82134 e82134 e72234 e72234 e72234 e62133 9*e72234
+e32436 dd2837 aa202d 3f0209 e0000 40000 0 0
+120000 440000 b93743 d82938 24*e72234 e62334 e32436 ba2c3a
+240000 10000 0 10101 8*0 20001 210000 a3212d
+da273a e32436 e72236 e72234 e82335 e72234 e72234 e82134
+e82134 6*e72234 e82335 c7303f 320000 70000 20001 0
+0 575757 59*ffffff f6f6f6 70707 9*0 10101 0
+0 0 afafaf ffffff ffffff fefefe 73*ffffff 525252
+0 0 0 d0000 270000 902831 d22b3c 7*e72234
+e92235 e82134 e82134 e82134 10*e72234 e82335 d52a3c a12f39
+2f0000 f0000 0 0 110000 390000 b33741 d62a38
+e72234 e82134 e82134 16*e72234 e62133 4*e72234 e42336 df2636
+ad2533 200000 10002 0 0 2 2 7*0
+150000 560004 c03441 da2838 e72234 e72234 e72234 e82134
+e82134 e72236 e72236 6*e72234 e62334 c4303e 2a0000 30000
+10000 0 0 696969 6*ffffff fffeff fffeff 52*ffffff
+2d2d2d 13*0 b0b0b0 76*ffffff 9c9c9c 0 0 0
+70000 130000 590c12 cb2f3d 4*e72234 e82335 e72234 e72234
+e82134 e82134 12*e72234 e62334 d72b3b b63742 3e0000 120000
+0 0 f0000 2d0000 a3313b d32b3a 24*e72234 e12536
+d62a38 9a1e28 1c0000 12*0 d0000 290000 922832 d22c3a
+e72234 e82335 10*e72234 e62334 e42334 bf2e3b 230000 10000
+0 0 0 7c7c7c ffffff ffffff fffeff fffeff
+ffffff ffffff fffeff fffeff 52*ffffff 5e5e5e 5*0 10101
+7*0 cfcfcf fefefe ffffff ffffff ffffff fefefe 71*ffffff
+e7e7e7 40404 0 0 10000 10000 270000 b82a38
+e32338 e62334 e72234 e82134 e82134 e72234 e82335 4*e72234
+e62334 e62334 6*e72234 e82335 e72234 e72234 db283b bd3340
+510001 150000 0 0 d0000 240000 89242c d12c3c
+22*e72234 e82335 e72234 df2636 cf2d3c 82101a 190000 0
+0 10000 40000 210001 852830 72151f 1d0000 30000
+20001 0 10000 80000 140000 5d0e14 cb2f3d 12*e72234
+e62334 e12637 b32936 200000 10101 0 0 0
+979797 60*ffffff 8f8f8f 12*0 131313 f9f9f9 75*ffffff fefefe
+ffffff 464646 10101 0 0 0 190000 740a14
+cb2f3d dd2638 e72234 e82335 15*e72234 e72233 e72233 e72234
+dc2738 c7303f 67010c 160000 0 0 80000 180000
+69131c cc2e3c 5*e72234 e82134 e82134 e62334 e62334 12*e72234
+e82335 e72234 e72234 dc2738 c4323f 62010a 160000 0
+0 80000 160000 631018 cc2e3d d32b3c 982932 310000
+e0000 2 0 30000 60000 360001 c7313d 12*e72234
+e32436 da2838 a3202e 1d0000 2 2 2 0
+b2b2b2 60*ffffff c0c0c0 12*0 7c7c7c 77*ffffff fefefe a8a8aa
+10103 0 0 0 100000 2f0000 a02d3a d32b3a
+5*e72234 e72233 e72233 e72234 e72234 e72233 e72233 5*e72234
+e82335 e72234 e72234 e72234 df2638 ce2d3d 7c0c18 190000
+0 0 40000 b0000 410006 c8303d 24*e72234 d8293a
+b33540 3c0000 120000 0 0 b0000 230000 812029
+d12c3c e02536 d22b3c 88121e 1b0000 4*0 220000 b62a35
+e12536 e62334 e62133 e82335 7*e72234 e82134 e12536 d32b3a
+901822 1b0000 2 2 2 0 d3d3d3 60*ffffff
+eeeeee 60606 8*0 10101 0 121212 ececec 78*ffffff
+f7f7f7 1b1b1b 0 0 0 40000 d0000 46030a
+c52f3b e62334 e62333 e72233 e62334 e62334 15*e72234 e02739
+cf2d3c 810e1b 190000 0 0 0 10000 240000
+b62a37 e12438 e62334 20*e72234 e62133 e82134 d22b3c 8e262f
+250000 d0000 0 0 f0000 2c0000 a22f3c d32b3a
+e72234 e42336 bf2c3c 280000 30000 10000 10000 10000
+200000 a21e2b dc2738 e32436 e72234 e72233 e82334 7*e72234
+df2638 cc2e3c 7b0d18 190000 0 0 0 70707
+eeeeee 61*ffffff 292929 10*0 848484 6*ffffff fefefe 66*ffffff
+fefefe ffffff ffffff ffffff fefefe ffffff feffff 868686
+0 10000 0 0 0 160000 5b0009 bb2f3c
+da2838 9*e72234 e72233 e72233 6*e72234 e62133 d52a3a a22a36
+3d0000 f0000 0 0 10101 2 1a0000 820f1c
+d12c3d df2636 15*e72234 e62334 e62334 e72234 e62133 e72234
+e72234 e72234 cb2f3d 550a0f 130000 60000 0 0
+140000 460000 bc3543 d8293a e72234 e72234 ca2f3d 4d060c
+f0000 40000 0 0 1d0000 931624 d6293c e12536
+10*e72234 dc2738 c3323f 5f0008 160000 0 0 0
+212121 fefefe 61*ffffff 5c5c5c 0 0 0 10101
+5*0 161616 f0f0f0 80*ffffff eeeeee 151515 4*0 30000
+70000 330004 a11d2a d9283a e42537 7*e72234 e82134 e82134
+e72234 e72234 e82134 e72234 e62236 ce2637 8d1924 4b050d
+150000 30000 5*0 140000 430000 b83441 d8293a 16*e72234
+e82335 e82134 e82134 e62334 e42334 e12534 b62834 250000
+30000 10101 0 0 180000 700610 ca2f3d dd2638
+e72234 e72234 cc2e3d 621117 160000 70000 0 0
+1b0000 87131e d12c3d e02536 10*e72234 d8293a b93540 440000
+120000 0 0 0 4b4b4b 62*ffffff 929292 9*0
+8c8c8c 82*ffffff 8e8e8e 5*0 100 50001 e0000 42060e
+951924 cb2435 e12536 e82134 4*e72234 e62133 e62334 e42336
+d32234 ae1c27 7d121c 3f080d 120000 70000 0 2
+2 5*0 a0000 1e0000 721822 ce2d3c e62334 6*e72234
+e72236 e72236 e62133 9*e72234 e82134 df2638 c93140 6e0611
+190000 4*0 1d0000 9f1c2a da273a e32436 e72234 e72234
+cc2e3d 621118 170000 70000 0 0 1b0000 81121b
+cf2c3d df2636 e72234 e72234 e72234 e82335 e72234 e72234
+e72234 e82134 e82134 e72234 d32b3a a3313b 2e0000 e0000
+0 0 0 7a7a7a 61*ffffff fefefe bfbfbf 7*0
+10101 1c1c1c f4f4f4 80*ffffff fffffd fffffd f6f6f6 2d2d2d
+7*0 10000 10000 120001 33060b 540e16 6c121b 78131b
+79131e 72121d 611017 480b12 29060a 100003 50000 10101
+0 10101 0 0 2 2 5*0 10000
+30000 2a0000 b52936 e12536 e62334 e82134 e62133 16*e72234
+d32b3c 992b34 2c0000 e0000 0 10000 30000 40000
+2f0000 c32f3d e62334 e72234 e72234 e72234 ca2f3d 4b060b
+f0000 40000 0 0 1c0000 8b131f d52a3c e02536
+9*e72234 e82335 d12c3c 84202a 230000 b0000 0 0
+0 acacac 58*ffffff fefefe ffffff ffffff ffffff c3c3c3
+7*0 10101 959595 84*ffffff c7c7c7 70707 0 0
+10101 6*0 2 2 0 0 2 2
+10101 0 10002 10002 14*0 10000 170000 5f0008
+c2313e da2838 e72234 e72236 e82337 e72234 e72234 e72236
+e72236 e72234 e72234 e62334 e72435 6*e72234 e62334 c52d3c
+3f0106 b0000 30000 0 0 80000 160000 621118
+cc2e3d e72234 e72234 e62334 e32436 b92b39 270000 10000
+0 0 0 1d0000 9d1f2b d9283a e22539 e72236
+5*e72234 e62133 e72234 e72234 e72234 cc2e3d 601117 150000
+70000 0 0 30303 e1e1e1 62*ffffff 8e8e8e 0
+10101 5*0 222222 f5f5f5 84*ffffff fefefe 999999 30303
+27*0 10101 0 10101 0 0 0 80000
+1a0000 6c161f ce2d3d e82337 e72234 e72234 e72236 e72236
+4*e72234 e82335 e72234 e72234 e72234 e72233 e72233 e82134
+df2638 cb2f3d 740913 190000 0 20001 10000 0
+b0000 220000 82212a d12c3c e72234 e62334 dd2638 cb2f3d
+770c16 1a0000 4*0 220000 b62a37 e12438 e62334 e72234
+e72234 e72234 e82335 e72234 e72234 e62133 e72234 e72234
+e72234 c8303f 3b0002 a0000 30000 0 0 1e1e1e
+fbfbfb 61*ffffff fdfdfd 2d2d2d 7*0 9c9c9c 84*ffffff fefefe
+ffffff fdfffe 9ea09f 80808 0 0 10101 14*0
+10000 10000 6*0 10100 1c1c1a a0a0a0 30303 4*0
+10000 1f0000 8f1721 d4293b e02536 11*e72234 e92235 e82134
+e72234 cf2d3c 761b24 1f0000 b0000 0 2 2
+0 70000 150000 5f1016 cc2e3c e72233 e72233 d22c3a
+89232e 280000 d0000 0 0 30000 80000 3a0004
+c8303f e72236 8*e72234 e72236 e62236 e12438 b52936 240000
+10000 100 100 0 575755 62*ffffff c0c0c0 10101
+6*0 262626 f8f8f8 87*ffffff fefefe c4c4c4 222222 100
+100 12*0 10000 10000 4*0 100 100 0
+b0b0b 5d5d5d e1e1e1 fefefe 636363 2 2 0
+0 0 b0000 240000 801f2a d12c3d e72236 e82134
+e82134 5*e72234 e62133 e82134 e82134 e72236 df253a cd2a3b
+820f1c 1d0000 20001 4*0 10101 0 0 130000
+510811 85212d 851b25 64131a 190000 30000 0 0
+0 80000 180000 68121b cc2e3d e72236 9*e72234 df2435
+d32b3c 8b1521 1b0000 201 0 0 0 959593
+62*ffffff 5d5d5d 7*0 999999 83*ffffff feffff feffff 5*ffffff
+efefef 707070 80808 0 10101 4*0 2 2
+0 0 100 100 6*0 30303 323232 8c8c8c
+e5e5e5 ffffff ffffff fffeff ebe9ea 1a1a1a 5*0 10000
+1b0000 740c15 c42c39 dd2638 4*e72234 e62133 e72234 e72234
+e72234 e62236 e02536 b92636 4d070f f0000 70000 10101
+12*0 2 2 0 0 2 e0000 2d0000
+9c2c38 d32b3a e72234 e72234 e82335 e62133 e72234 e72234
+e72234 e62334 e62334 e72234 dc2738 c43141 61000b 160000
+0 0 10101 10101 d6d6d6 4*ffffff feffff feffff
+55*ffffff eeeeee b0b0b 6*0 191919 f4f4f4 90*ffffff fefefe
+ffffff dbdbdb 686868 111111 0 0 0 10101
+0 10101 4*0 2 2 10000 b090a 373737
+848484 d2d2d2 fefefe fffeff fffeff ffffff fefefe ffffff
+ffffff b3b3b3 30303 100 100 0 0 0
+30000 70000 2d0004 88121e cb2637 df2636 e82335 e72234
+e72234 e72234 e62236 e12536 bd2534 67111a 1f0000 90000
+4*0 10101 15*0 160000 5b0006 c3323f da2838 8*e72234
+e82335 e72234 d6293c b03341 390000 110000 0 0
+0 212121 fcfcfc 4*ffffff feffff feffff 55*ffffff 9a9a9a
+7*0 7f7f7f 95*ffffff ececec a2a2a2 555555 171717 20202
+10101 0 0 10101 20202 151515 404040 737373
+aeaeae e6e6e6 fefefe 9*ffffff fefefe 7a7a7a 0 10101
+0 0 100 0 0 30000 30000 180002
+490b10 76151e 991b27 a41c2a 981c27 761520 3e090f 130000
+60000 0 10101 4*0 10101 8*0 2 2
+0 0 10000 10000 20001 210000 a6222d dc2738
+e32434 e82335 e82337 e72236 e72236 e82337 5*e72234 d12c3c
+82212c 220000 b0000 0 10101 0 686868 61*ffffff
+fefefe 3b3b3b 6*0 70707 e5e5e5 93*ffffff fefefe 4*ffffff
+fdfdfd e1e1e1 c5c5c5 bcbcbc c2c2c2 d4d4d4 ebebeb fefefe
+15*ffffff fcfcfc 575757 6*0 10000 10000 30000 0
+10101 10103 2 0 0 10002 10002 6*0
+10000 10000 13*0 80000 190000 69131c ce2d3c 12*e72234
+ca2f3f 440108 d0000 40000 0 0 0 b4b4b4
+61*ffffff dcdcdc 30303 5*0 10101 575757 99*ffffff fefefe
+4*ffffff fefefe 16*ffffff fefefe ffffff f5f5f5 494949 0
+0 10101 0 0 0 10101 0 0
+0 2 2 0 0 100 100 6*0
+10101 70000 200c0d 1d0709 50001 2 9*0 170000
+61000b c22f3f dc2738 e72234 e62334 e62334 6*e72234 e62334
+e32436 da2838 a5212f 200000 10002 0 0 0
+e0e0e f5f5f5 61*ffffff 838383 6*0 10101 bcbcbc 97*ffffff
+fefefe 11*ffffff fefefe 11*ffffff fefefe ffffff ffffff f6f6f6
+535353 0 10101 9*0 2 2 7*0 70000
+150000 5e0e17 cb303e c72c3a 590c14 150000 70000 6*0
+60000 120000 560b12 c72c3c e62236 e82335 e72234 4*e62334
+5*e72234 dc2738 c3323f 61020a 160000 4*0 595959 61*ffffff
+fefefe 2e2e2e 6*0 222222 fcfcfc 100*ffffff fefefe 20*ffffff
+fefefe ffffff ffffff ffffff f9f9f9 737373 30303 10101
+6*0 100 100 9*0 160000 66020c c4303e dd2638
+e32436 d52a3a 961824 310002 80000 30000 2 0
+10000 30000 240000 87111d d02b3b e02536 e72234 e82335
+10*e72234 d32b3c 9b2d36 2c0000 e0000 4*0 b6b6b6 61*ffffff
+d4d4d4 7*0 7a7a7a 119*ffffff fefefe 7*ffffff fefefe bababa
+2b2b2b 10101 5*0 10101 10*0 1f0000 a3212d dc2738
+e12534 e62333 e72233 e02433 d42838 a21623 640a14 45040c
+44060b 5f0912 94121e cb2637 df2636 13*e72234 e82134 cc2e3d
+530a11 110000 70000 10000 0 0 2c2c2c fcfcfc
+61*ffffff 818181 0 0 0 10101 0 0
+20202 d0d0d0 102*ffffff fefefe 12*ffffff fefefe fefefe 9*ffffff
+fefefe ffffff ffffff f7f7f7 a2a2a2 383838 30303 7*0
+10101 0 201 100 0 0 0 1d0000
+991d28 d8293a e12536 e72234 e72233 e72233 4*e72234 e72233
+e72233 e72234 e72234 e72234 e62133 11*e72234 e42336 df2636
+ad2533 210000 5*0 9c9c9c 61*ffffff fdfdfd 2f2f2f 6*0
+252525 fefefe 131*ffffff fdfdfd d7d7d7 909090 565656 282828
+111111 c0c0c 121212 282828 555557 8e8e90 a5a5a5 4*0
+190000 67030d c7303f dc2738 e72234 e72234 e82335 6*e72234
+e72233 e72233 4*e72234 e82335 6*e72234 e82335 e72234 dc2738
+c4323f 62010a 160000 4*0 1c1c1c f6f6f6 60*ffffff fefefe
+dbdbdb 30303 5*0 10101 767676 137*ffffff f8f8f8 f4f4f4
+fafafa ffffff ffffff ffffff f6f6f8 9090b 0 0
+0 110000 360000 af3240 d62a3a e82134 16*e72234 e82335
+e72234 e72236 e72236 e72234 e72234 e72234 d32b3c 942933
+2b0000 e0000 4*0 8b8b8b 62*ffffff 8e8e8e 6*0 20202
+c4c4c4 144*ffffff 484848 10101 0 0 a0000 1c0000
+731722 ce2d3c e72234 e62133 13*e72234 e62334 e62334 6*e72234
+e62334 c8303d 450307 d0000 40000 0 0 0
+161616 f0f0f0 54*ffffff fefefe 7*ffffff 404040 6*0 1b1b1b
+f9f9f9 144*ffffff a4a4a4 10101 0 0 30000 80000
+330000 c52e3d e62236 12*e72234 e82134 e82134 e82134 e92235
+e72236 e72236 e72234 e72234 e72233 e12534 d62b3b 931924
+1d0000 0 0 0 10101 0 838383 62*ffffff
+eaeaea 90909 6*0 626262 fefefe 144*ffffff f2f2f2 101010
+0 0 0 100 1a0000 87131e d12c3c e02536
+e72234 e72233 e72234 e72234 e72236 15*e72234 d92a3b b2333e
+430000 120000 10101 0 0 0 141414 ededed
+5*ffffff fefefe 56*ffffff a9a9a9 7*0 adadad 137*ffffff fefefe
+8*ffffff 6c6c6c 4*0 110000 3c0000 af333e d62a3a 7*e72234
+e62334 e62334 e72234 e72234 e72233 e72233 e72234 e72234
+e82335 e72234 e72233 e62132 e72234 cc2e3d 601117 160000
+70000 0 10101 0 0 868686 63*ffffff 636363
+5*0 10101 80808 ebebeb 146*ffffff d6d6d6 50505 0
+0 0 70000 160000 5f1016 cc2e3d e72234 e62334
+e62334 e72233 e72233 13*e72234 e32436 da2838 a11f2b 1f0000
+0 0 10101 0 0 0 b9b9b9 7*ffffff
+fefefe 54*ffffff fbfbfb 1f1f1f 10101 5*0 393939 148*ffffff
+575757 4*0 10000 210000 a2202c da2838 e32436 e72234
+e72234 e72234 e72233 e72233 6*e72234 e62333 e62333 e72234
+e72234 e72234 d62a3a ae303e 400000 110000 6*0 676767
+ffffff ffffff fefefe 59*ffffff d6d6d6 20202 4*0 10101
+0 7b7b7b 139*ffffff fffffd fffffd 7*ffffff d2d2d4 60606
+0 0 0 100 110000 440000 b0303d d8293a
+e72234 e72234 e72234 e72236 e72236 6*e72234 e82335 e72234
+e72234 e62334 e42334 c42e3a 45040a e0000 40000 6*0
+1c1c1c f9f9f9 61*ffffff 959595 7*0 bfbfbf 148*ffffff fefefe
+656565 4*0 40000 e0000 49030d c42e3a e62334 e52233
+5*e72234 e82335 e72234 e82134 e82134 e72234 e72234 e72234
+da2838 bc303d 5a0008 160000 10000 4*0 2 2
+0 10101 c9c9c9 61*ffffff 565656 6*0 b0b0b f1f1f1
+148*ffffff fefefe e5e5e5 131313 5*0 170000 62030b c12f3c
+da2838 7*e72234 e62334 e72435 e62133 e62334 e32436 bc2836
+43050a e0000 40000 10002 0 0 0 10101
+4*0 808080 59*ffffff fefefe fbfbfb 1a1a1a 6*0 3c3c3c
+151*ffffff 969696 10101 4*0 50000 d0000 46050b bc2836
+e32436 e72236 e82136 e82335 6*e72234 d52a3c 97252f 390000
+f0000 0 10000 10000 8*0 3b3b3b 60*ffffff d8d8d8
+20202 6*0 767676 151*ffffff fcfcfc 444444 6*0 e0000
+310000 881e28 d02b3b e62334 5*e72234 db2637 ba2936 6a0912
+1a0000 10000 0 100 6*0 2 2 0
+0 90909 eeeeee 59*ffffff 9e9e9e 6*0 10101 afafaf
+152*ffffff e0e0e0 141414 7*0 e0000 3f0106 891b26 cb2636
+e32436 e42336 d42536 a51e2c 630c14 1c0000 30000 15*0
+b6b6b6 ffffff ffffff fefefe 56*ffffff 666666 0 0
+0 10101 0 0 20202 e5e5e5 153*ffffff b5b5b5
+50505 0 100 100 5*0 40001 80000 110507
+100607 90001 10000 0 10101 7*0 60606 3e3e3e
+7*0 7a7a7a 59*ffffff 303030 6*0 212121 fdfdfd 154*ffffff
+989898 30303 21*0 80808 a2a2a2 c1c1c1 7*0 414141
+58*ffffff f4f4f4 70707 6*0 535353 155*ffffff fefefe 989898
+60405 10000 10000 10000 0 0 10000 10000
+12*0 131313 b7b7b7 ffffff f2f2f2 b0b0b 10101 2
+2 0 10101 0 101010 f8f8f8 57*ffffff c6c6c6
+10101 6*0 838383 157*ffffff afafaf 111111 0 10101
+15*0 333333 d7d7d7 fefefe ffffff fefefe 3a3a3a 6*0
+10101 d5d5d5 ffffff ffffff ffffff fefefe 53*ffffff 969696
+10101 6*0 b6b6b6 158*ffffff dadada 3f3f3f 10101 0
+0 10101 10*0 a0a0a 7d7d7d f7f7f7 4*ffffff 737373
+7*0 a5a5a5 57*ffffff 686868 6*0 10101 e4e4e4 159*ffffff
+fafafa 9e9e9e 202020 10*0 70707 595959 d8d8d8 fefefe
+fefefe ffffff fefefe ffffff ffffff aaaaaa 0 10101
+5*0 7d7d7d fefefe 56*ffffff 3d3d3d 0 0 0
+10101 0 0 151515 fdfdfd ffffff fefefe 159*ffffff
+f5f5f5 9e9e9e 3e3e3e 70707 10101 0 0 20202
+60606 2d2d2d 7c7c7c dadada fefefe 7*ffffff dedede 10101
+6*0 616161 56*ffffff fdfdfd 151515 4*0 10101 0
+3f3f3f 165*ffffff e6e6e6 bdbdbd ababab acacac c0c0c0 e5e5e5
+11*ffffff fafafa 141414 6*0 424242 56*ffffff e8e8e8 10101
+6*0 676767 183*ffffff 3e3e3e 6*0 232323 56*ffffff c4c4c4
+7*0 8e8e8e 183*ffffff 696969 6*0 90909 f9f9f9 55*ffffff
+a0a0a0 7*0 b4b4b4 167*ffffff fefefe 15*ffffff 909090 6*0
+10101 e5e5e5 55*ffffff 808080 6*0 10101 d8d8d8 ffffff
+fefefe 181*ffffff b9b9b9 7*0 c7c7c7 55*ffffff 626262 6*0
+50505 f3f3f3 183*ffffff dfdfdf 7*0 a9a9a9 55*ffffff 464646
+6*0 191919 181*ffffff fefefe ffffff ffffff f9f9f9 a0a0a
+6*0 8a8a8a 55*ffffff 2d2d2d 6*0 373737 181*ffffff fefefe
+ffffff ffffff fefefe 252525 6*0 6d6d6d ffffff ffffff
+fefefe 51*ffffff fcfcfc 171717 6*0 545454 185*ffffff 464646
+6*0 4f4f4f ffffff ffffff fefefe 51*ffffff f7f7f7 a0a0a
+10101 5*0 6e6e6e 185*ffffff 636363 6*0 313131 54*ffffff
+ececec 20202 6*0 858585 185*ffffff 7f7f7f 6*0 131313
+fdfdfd 53*ffffff e0e0e0 7*0 999999 185*ffffff 999999 4*0
+10101 0 20202 efefef 53*ffffff d7d7d7 4*0 10101
+0 0 aeaeae 185*ffffff b4b4b4 7*0 d4d4d4 53*ffffff
+cccccc 7*0 c1c1c1 185*ffffff cacaca 7*0 939393 53*ffffff
+c1c1c1 7*0 d0d0d0 183*ffffff fefefe ffffff c9c9c9 7*0
+1a1a1a b5b5b5 d8d8d8 c9c9c9 b5b5b5 a7a7a7 aeaeae b7b7b7
+c2c2c2 cccccc d6d6d6 dfdfdf ededed fdfdfd 40*ffffff c1c1c1
+6*0 10101 dcdcdc 185*ffffff 787878 0 0 0
+10101 5*0 10101 7*0 10101 20202 30303 181818
+3b3b3b 5f5f5f 878787 acacac d4d4d4 fdfdfd 34*ffffff c1c1c1
+6*0 30303 e6e6e6 174*ffffff fefefe 6*ffffff fdfdfd e8e8e8
+b1b1b1 616161 50505 9*0 10101 6*0 10101 8*0
+30303 4a4a4a c9c9c9 33*ffffff c1c1c1 0 0 10101
+0 0 0 50505 ededed 177*ffffff f7f7f7 c6c6c6
+858585 515151 212121 50505 30*0 30303 797979 fdfdfd
+ffffff ffffff ffffff fefefe 26*ffffff fefefe b2b2b2 6*0
+60606 f0f0f0 ffffff fefefe 172*ffffff f8f8f8 b0b0b0 5f5f5f
+1b1b1b 36*0 10101 b2b2b2 31*ffffff 7e7e7e 10101 5*0
+60606 f0f0f0 173*ffffff afafaf 272727 10101 0 0
+0 10101 5*0 10101 25*0 10101 0 0
+0 4a4a4a 9*ffffff fefefe 17*ffffff fefefe ffffff fbfbfb
+e3e3e3 202020 0 0 10101 0 0 10101
+0 969696 39*ffffff fefefe 132*ffffff cbcbcb 60606 4*0
+10101 36*0 484848 21*ffffff fefefe f8f8f8 dfdfdf bababa
+969696 747474 565656 353535 1c1c1c 90909 8*0 b0b0b
+898989 bfbfbf e1e1e1 f8f8f8 fefefe 7*ffffff fefefe 31*ffffff
+fefefe 127*ffffff 6e6e6e 4*0 10101 14*0 10101 7*0
+10101 6*0 10101 6*0 b0b0b c1c1c1 16*ffffff f6f6f6
+cfcfcf a0a0a0 7a7a7a 545454 2d2d2d d0d0d 10101 0
+0 10101 15*0 10101 e0e0e 2f2f2f 626262 969696
+c9c9c9 f4f4f4 35*ffffff fefefe 122*ffffff fefefe 4*ffffff 4b4b4b
+12*0 10101 8*0 131313 444444 717171 909090 a4a4a4
+afafaf aeaeae a5a5a5 999999 8a8a8a 7c7c7c 727272 656565
+565656 494949 3e3e3e 323232 424242 585858 777777 d7d7d7
+ffffff ffffff fefefe ffffff ffffff fefefe 8*ffffff f4f4f4
+a5a5a5 525252 171717 10101 13*0 10101 16*0 1d1d1d
+868686 e8e8e8 29*ffffff fefefe 6*ffffff fefefe 4*ffffff fefefe
+90*ffffff fefefe 28*ffffff 6c6c6c 0 10101 18*0 4a4a4a
+f1f1f1 32*ffffff f7f7f7 868686 131313 0 0 10101
+33*0 70707 6f6f6f fbfbfb 39*ffffff fefefe 84*ffffff fefefe
+7*ffffff fefefe ffffff ffffff fefefe 23*ffffff dfdfdf 151515
+5*0 20202 111111 363636 656565 959595 9f9f9f 373737
+6*0 10101 a4a4a4 23*ffffff fefefe 8*ffffff fdfdfd 565656
+10101 22*0 10101 14*0 20202 10101 959595 26*ffffff
+fbfbfb b3b3b3 6c6c6c 595959 7b7b7b d7d7d7 ffffff fefefe
+93*ffffff eaeaea cecece d8d8d8 f8f8f8 22*ffffff fefefe 6*ffffff
+d5d5d5 525252 292929 4f4f4f 7d7d7d a9a9a9 d2d2d2 f2f2f2
+4*ffffff bababa 7*0 bebebe 7*ffffff fefefe 15*ffffff fefefe
+6*ffffff fefefe ffffff b6b6b6 10101 10101 4*0 10101
+9*0 10101 19*0 10101 4*0 383838 25*ffffff e5e5e5
+3f3f3f 10101 0 0 0 60606 707070 f4f4f4
+fefefe 90*ffffff cecece 3e3e3e 60606 10101 20202 131313
+666666 e0e0e0 29*ffffff fdfdfd 9*ffffff cecece 7*0 c2c2c2
+14*ffffff fefefe 17*ffffff 5f5f5f 0 0 0 10101
+37*0 383838 24*ffffff eeeeee 2e2e2e 10101 6*0 3f3f3f
+f3f3f3 89*ffffff cccccc 121212 6*0 252525 efefef 38*ffffff
+d1d1d1 7*0 c6c6c6 8*ffffff fefefe 19*ffffff fefefe ffffff
+ffffff ffffff 373737 14*0 10101 7*0 10101 10101
+15*0 10101 20202 a6a6a6 23*ffffff fefefe 595959 9*0
+7e7e7e 88*ffffff efefef 232323 6*0 10101 0 6d6d6d
+fefefe 37*ffffff d2d2d2 0 10101 0 0 10101
+0 0 c9c9c9 32*ffffff 464646 5*0 10101 0
+0 0 10101 0 60606 151515 2c2c2c 464646
+656565 818181 8d8d8d 929292 828282 1c1c1c 8*0 101010
+606060 646464 5c5c5c 4c4c4c 343434 212121 272727 282828
+212121 292929 949494 fefefe 23*ffffff c0c0c0 20202 10101
+8*0 121212 efefef ffffff ffffff fefefe 84*ffffff 747474
+9*0 80808 dddddd 33*ffffff fefefe ffffff ffffff ffffff
+d1d1d1 7*0 d6d6d6 32*ffffff bcbcbc e0e0e 40404 20202
+40404 90909 232323 464646 696969 8e8e8e b4b4b4 d4d4d4
+eaeaea f7f7f7 fdfdfd ffffff fefefe 4*ffffff dedede d0d0d
+6*0 10101 afafaf ffffff ffffff ffffff fefefe ffffff
+fafafa fcfcfc fbfbfb fbfbfb fbfbfb 25*ffffff 4c4c4c 10*0
+10101 9b9b9b 86*ffffff ececec c0c0c 10*0 757575 37*ffffff
+cbcbcb 7*0 e6e6e6 28*ffffff fefefe 4*ffffff f7f7f7 e1e1e1
+dadada e1e1e1 f4f4f4 16*ffffff 444444 6*0 20202 ebebeb
+34*ffffff e7e7e7 50505 11*0 4a4a4a 86*ffffff 979797 11*0
+1d1d1d fafafa 36*ffffff bdbdbd 6*0 50505 f6f6f6 51*ffffff
+fefefe ffffff ffffff 747474 6*0 20202 efefef 34*ffffff
+a7a7a7 12*0 f0f0f f8f8f8 85*ffffff 484848 11*0 10101
+cccccc 36*ffffff a5a5a5 6*0 121212 fdfdfd 45*ffffff fefefe
+8*ffffff a3a3a3 6*0 20202 ebebeb 34*ffffff 757575 12*0
+10101 d6d6d6 84*ffffff f8f8f8 d0d0d 0 10101 0
+0 10101 0 10101 0 0 10101 0
+0 8e8e8e 36*ffffff 8c8c8c 6*0 292929 55*ffffff d1d1d1
+4*0 10101 0 10101 d7d7d7 ffffff fefefe 7*ffffff
+fefefe 20*ffffff fefefe ffffff ffffff ffffff 4e4e4e 13*0
+bababa 84*ffffff d1d1d1 13*0 616161 36*ffffff 727272 6*0
+444444 55*ffffff f6f6f6 80808 6*0 bbbbbb 34*ffffff 303030
+13*0 a7a7a7 84*ffffff bbbbbb 10*0 10101 0 0
+404040 36*ffffff 5a5a5a 0 0 10101 0 0
+0 5d5d5d 55*ffffff fefefe 2a2a2a 6*0 989898 ffffff
+fefefe 30*ffffff fefefe fdfdfd 181818 9*0 10101 0
+10101 0 9e9e9e 84*ffffff b0b0b0 13*0 2a2a2a 34*ffffff
+fefefe ffffff 404040 6*0 747474 fefefe 55*ffffff 555555
+6*0 727272 33*ffffff fafafa b0b0b 13*0 9c9c9c 84*ffffff
+a7a7a7 13*0 202020 35*ffffff fefefe 222222 6*0 8e8e8e
+56*ffffff 7e7e7e 6*0 4b4b4b 33*ffffff f8f8f8 70707 13*0
+9e9e9e 84*ffffff a2a2a2 6*0 10101 6*0 232323 35*ffffff
+fafafa a0a0a 6*0 a6a6a6 56*ffffff a7a7a7 6*0 1e1e1e
+fefefe 32*ffffff f7f7f7 70707 9*0 10101 0 0
+0 a5a5a5 84*ffffff a5a5a5 9*0 10101 0 0
+0 323232 35*ffffff e5e5e5 10101 6*0 bcbcbc 53*ffffff
+fefefe ffffff ffffff d3d3d3 10101 5*0 20202 e8e8e8
+32*ffffff fbfbfb d0d0d 13*0 b4b4b4 84*ffffff afafaf 10*0
+10101 0 0 535353 25*ffffff fefefe 9*ffffff c7c7c7
+0 0 10101 10101 0 0 0 cecece
+56*ffffff f6f6f6 80808 6*0 b6b6b6 32*ffffff fefefe 232323
+13*0 c8c8c8 ffffff fefefe 82*ffffff c0c0c0 13*0 808080
+35*ffffff a5a5a5 6*0 10101 dfdfdf 53*ffffff fefefe ffffff
+fefefe ffffff 2c2c2c 6*0 7b7b7b 33*ffffff 4b4b4b 12*0
+50505 eeeeee 84*ffffff e3e3e3 10101 12*0 bababa 27*ffffff
+fefefe ffffff f9f9f9 f2f2f2 ebebeb eaeaea f4f4f4 e7e7e7
+474747 6*0 10101 d7d7d7 ffffff fefefe 55*ffffff 5c5c5c
+6*0 3f3f3f 32*ffffff fefefe 7f7f7f 9*0 10101 0
+0 2b2b2b 85*ffffff fdfdfd 1a1a1a 7*0 10101 0
+0 0 c0c0c f1f1f1 27*ffffff f5f5f5 575757 171717
+101010 a0a0a 90909 121212 b0b0b 8*0 4d4d4d f4f4f4
+56*ffffff 8a8a8a 6*0 90909 f0f0f0 6*ffffff fefefe 25*ffffff
+c7c7c7 10101 11*0 6f6f6f 86*ffffff 5b5b5b 11*0 505050
+28*ffffff 727272 10101 4*0 10101 10*0 151515 4a4a4a
+767676 ababab dadada f8f8f8 51*ffffff bababa 7*0 b3b3b3
+32*ffffff fcfcfc 202020 0 0 10101 7*0 10101
+c3c3c3 51*ffffff fefefe 34*ffffff b0b0b0 10101 10*0 ababab
+27*ffffff f6f6f6 121212 20*0 30303 1c1c1c 4f4f4f 878787
+c9c9c9 fbfbfb 6*ffffff fefefe 40*ffffff e9e9e9 50505 4*0
+10101 0 686868 14*ffffff fefefe 18*ffffff 878787 9*0
+10101 383838 fdfdfd 45*ffffff fefefe 40*ffffff fafafa 242424
+0 0 0 10101 5*0 252525 f8f8f8 27*ffffff
+f3f3f3 c0c0c 10101 0 0 0 10101 9*0
+10101 4*0 10101 4*0 10101 202020 7a7a7a dddddd
+fefefe 44*ffffff fefefe 282828 0 0 10101 0
+0 0 1c1c1c f8f8f8 27*ffffff fefefe ffffff ffffff
+fefefe ffffff eeeeee 181818 0 0 10101 5*0
+70707 c8c8c8 43*ffffff fefefe f7f7f7 f5f5f5 fcfcfc 4*ffffff
+fefefe 8*ffffff fefefe 27*ffffff b6b6b6 40404 7*0 10101
+a3a3a3 27*ffffff fefefe ffffff 696969 4*0 10101 22*0
+90909 626262 dedede 4*ffffff fefefe 39*ffffff 5c5c5c 4*0
+10101 0 0 909090 efefef cfcfcf a1a1a1 7d7d7d
+595959 474747 5a5a5a 717171 9a9a9a fafafa 23*ffffff c1c1c1
+121212 10101 5*0 30303 969696 fefefe fefefe ffffff
+ffffff fefefe 36*ffffff f6f6f6 aeaeae 5d5d5d 272727 d0d0d
+a0a0a 1a1a1a 404040 7b7b7b c8c8c8 fbfbfb 37*ffffff fefefe
+8c8c8c 30303 5*0 10101 575757 fcfcfc 28*ffffff fdfdfd
+f5f5f5 535353 30303 0 0 10101 24*0 c0c0c
+7e7e7e f5f5f5 ffffff ffffff fefefe 39*ffffff 606060 8*0
+70707 10101 7*0 848484 ffffff ffffff fefefe 21*ffffff
+dadada 515151 60606 0 0 20202 262626 a4a4a4
+fefefe 4*ffffff fefefe 34*ffffff fbfbfb 9f9f9f 212121 8*0
+10101 313131 aaaaaa fdfdfd 36*ffffff fefefe a0a0a0 121212
+0 0 0 10101 585858 f5f5f5 31*ffffff fdfdfd
+c6c6c6 666666 141414 19*0 10101 7*0 303030 e4e4e4
+ffffff ffffff fefefe 33*ffffff fefefe ffffff ffffff ffffff
+e3e3e3 151515 17*0 323232 25*ffffff fefefe e0e0e0 b7b7b7
+b8b8b8 d9d9d9 fafafa 40*ffffff e8e8e8 494949 20202 4*0
+10101 5*0 10101 10101 4c4c4c e6e6e6 fefefe 36*ffffff
+e7e7e7 9a9a9a 757575 828282 c0c0c0 fcfcfc 33*ffffff fefefe
+fefefe f0f0f0 969696 60606 25*0 10101 848484 38*ffffff
+eeeeee 9c9c9c 212121 18*0 252525 16*ffffff fefefe fefefe
+17*ffffff fefefe 34*ffffff e6e6e6 272727 8*0 10101 6*0
+202020 d7d7d7 fefefe ffffff ffffff fefefe 36*ffffff fefefe
+38*ffffff 494949 5*0 10101 20*0 777777 32*ffffff fefefe
+ffffff ffffff fcfcfc c2c2c2 616161 121212 5*0 10101
+4*0 10101 9*0 676767 67*ffffff fffeff fffeff fcfcfc
+434343 10101 9*0 10000 10000 0 0 2
+2 10103 28282a f0f0f0 78*ffffff 4f4f4f 7*0 101010
+a3a3a3 b9b9b9 a3a3a3 919191 7c7c7c 676767 4e4e4e 222222
+50505 0 10101 6*0 30303 b9b9b9 28*ffffff fefefe
+4*ffffff e7e7e7 888888 282828 10101 5*0 10101 12*0
+10101 0 131313 757575 f3f3f3 65*ffffff fffffd fffffd
+ffffff ffffff 9f9d9e 20001 0 0 2 2
+0 0 20001 40203 90804 50402 10100 10101
+4*0 100 100 737373 77*ffffff fcfcfc 1d1d1d 6*0
+20202 a9a9a9 7*ffffff fefefe ededed c4c4c4 969696 6b6b6b
+555555 494949 404040 434343 6e6e6e c7c7c7 32*ffffff ebebeb
+757575 111111 15*0 10101 5*0 222222 8c8c8c ebebeb
+70*ffffff fdfdfd 303030 10101 0 0 0 30000
+f0b00 574a13 a18a22 ccae2a dcbc2d d1b331 9f882a 443500
+70200 5*0 f0f0d eeeeec feffff feffff 74*ffffff d5d5d5
+20202 5*0 10101 222222 fbfbfb ffffff fefefe 11*ffffff
+fefefe 34*ffffff fbfbfb 9a9a9a 141414 0 0 10101
+17*0 30303 4c4c4c b1b1b1 fafafa 9*ffffff fefefe 57*ffffff
+feffff feffff ffffff ffffff ffffff d8d8d8 20202 0
+100 0 10100 261b00 c8ad38 ecc72e edc92a 4*eec827
+e7c641 907f2d 120900 30100 2 0 0 2
+a4a4a6 76*ffffff 8f8f8f 7*0 6b6b6b ffffff fefefe 46*ffffff
+eaeaea 515151 10101 10101 17*0 10101 0 10101
+7c7c7c fefefe ffffff ffffff fefefe 8*ffffff fefefe 62*ffffff
+999999 0 0 0 40100 110400 ad9742 e7c73e
+eec827 eec827 efc928 eec827 eec827 eec827 ecc72e e7c73e
+917919 90300 10101 0 0 0 626262 74*ffffff
+fefefe ffffff 434343 0 0 0 10101 0
+0 0 b3b3b3 47*ffffff f8f8f8 353535 22*0 20202
+dddddd 74*ffffff fffffd 6b6b69 0 0 0 70100
+503d00 e3c650 e9c634 eec827 edc726 6*eec827 e3c648 433601
+40000 20100 0 0 333333 fffeff fffeff 73*ffffff
+e7e7e7 80808 6*0 e0e0e f1f1f1 ffffff fefefe 15*ffffff
+fefefe 29*ffffff b4b4b4 24*0 c5c5c5 73*ffffff fefefe ffffff
+4e4e4e 0 0 0 a0100 957d1d e8c640 ebc82e
+ecc927 7*eec827 e5c743 816f27 a0100 30100 0 0
+1e1e1e fffffd fffffd 73*ffffff 999999 5*0 10101 0
+525252 48*ffffff 808080 10*0 50505 2e2e2e 737373 939393
+7e7e7e 343434 20202 0 0 0 10101 0
+0 0 686868 75*ffffff 464646 0 0 0
+a0200 b69b30 ebc733 ecc82a eec825 7*eec827 e7c740 a38e3b
+d0100 40100 0 0 1e1e1e 75*ffffff 424242 4*0
+10101 0 0 a5a5a5 21*ffffff fefefe 26*ffffff a3a3a3
+10101 6*0 161616 595959 a0a0a0 e0e0e0 ffffff ffffff
+fefefe ffffff fdfdfd 969696 60606 6*0 101010 f2f2f2
+74*ffffff 515151 0 0 0 a0100 9e8622 e8c73a
+ecc72e 8*eec827 e7c740 a7933d d0200 40100 0 0
+2e2e2e ffffff ffffff fefefe 71*ffffff dddddd 40404 6*0
+c0c0c eeeeee 48*ffffff fbfbfb 747474 70707 10101 10101
+141414 585858 aaaaaa f1f1f1 fdfdfd 7*ffffff fefefe 686868
+6*0 10101 969696 74*ffffff 6b6b6b 0 0 0
+80200 554200 e3c650 eac735 eec827 edc726 eec827 ecc927
+ecc927 eec827 eec827 eec827 e5c745 695a17 70100 30000
+0 0 4d4d4d 74*ffffff 828282 7*0 4e4e4e 51*ffffff
+e5e5e5 b8b8b8 cccccc fafafa 12*ffffff d6d6d6 30303 6*0
+282828 fbfbfb 68*ffffff fffeff fffeff ffffff ffffff ffffff
+969696 0 0 2 50100 f0300 a28d3a e8c640
+efc727 5*eec827 ecc82c eac833 b39b2f 120800 10000 0
+0 20001 7f7d7e 73*ffffff fbfbfb 222222 7*0 a3a3a3
+67*ffffff fdfdfd 474747 7*0 ababab 73*ffffff d3d3d3 10101
+0 10101 0 10000 130a00 7d6910 dcbe3c ebc731
+efc727 ecc927 edc728 edc728 e2bf3d 867326 170e00 50100
+0 0 0 10101 c7c7c7 72*ffffff fefefe bababa
+10101 6*0 a0a0a ededed 65*ffffff fefefe ffffff ffffff
+b5b5b5 10101 6*0 2f2f2f fafafa 72*ffffff fdfdfd 393939
+5*0 20100 130d00 54480e 837021 947f24 857321 554917
+171100 30000 2 2 2 0 10101 373737
+fdfdfd ffffff ffffff fffffd fffffd 68*ffffff fefefe 505050
+7*0 505050 69*ffffff fcfcfc 272727 7*0 9d9d9d 69*ffffff
+fffffd ffffff ffffff ffffff bebebe 30303 0 10101
+0 0 10000 10000 2 2 4*0 2
+2 0 0 0 20202 bababa ffffff fffffd
+fffffd 70*ffffff e0e0e0 50505 7*0 a4a4a4 58*ffffff fefefe
+11*ffffff 949494 10101 6*0 1c1c1c f1f1f1 71*ffffff fefefe
+ffffff 828282 10101 0 0 0 10002 10002
+0 0 0 10101 0 0 100 100
+0 0 0 6a6a6a fefefe 62*ffffff fefefe ffffff
+fefefe e3e3e3 c7c7c7 e4e4e4 fdfdfd 4*ffffff 757575 7*0
+a0a0a f1f1f1 56*ffffff fefefe 13*ffffff f3f3f3 181818 5*0
+10101 0 808080 73*ffffff fdfdfd 888888 90909 14*0
+535353 f8f8f8 64*ffffff f7f7f7 626262 60606 0 60606
+353535 808080 c7c7c7 e3e3e3 989898 80808 10101 6*0
+535353 72*ffffff 848484 0 10101 5*0 e0e0e e3e3e3
+7*ffffff fefefe eaeaea b4b4b4 949494 adadad fbfbfb fefefe
+59*ffffff fefefe d7d7d7 5a5a5a 90909 10*0 161616 959595
+fbfbfb fefefe 63*ffffff fefefe 989898 6*0 20202 50505
+10101 10101 0 10101 5*0 a9a9a9 72*ffffff ebebeb
+111111 5*0 10101 0 626262 fefefe 5*ffffff d2d2d2
+555555 b0b0b 0 0 0 6e6e6e 63*ffffff e0e0e0
+898989 3e3e3e d0d0d 4*0 40404 303030 898989 ebebeb
+ffffff fefefe 65*ffffff 626262 0 0 0 10101
+5*0 10101 6*0 20202 f0f0f0 4*ffffff fefefe 68*ffffff
+757575 7*0 30303 919191 fcfcfc fefefe ffffff e5e5e5
+676767 80808 0 0 10101 0 0 90909
+eaeaea 64*ffffff fdfdfd f1f1f1 cccccc adadad a6a6a6 bcbcbc
+e4e4e4 fcfcfc 69*ffffff 6f6f6f 16*0 10101 d8d8d8 ffffff
+fefefe 69*ffffff fefefe ffffff e1e1e1 90909 0 10101
+6*0 313131 6c6c6c 5e5e5e f0f0f 6*0 10101 0
+c0c0c0 76*ffffff fefefe 64*ffffff bbbbbb 10101 6*0 10101
+9*0 3f3f3f eeeeee 6*ffffff fefefe 60*ffffff fefefe 5*ffffff
+696969 13*0 10101 5*0 10101 c7c7c7 141*ffffff fdfdfd
+575757 17*0 232323 b7b7b7 fefefe 71*ffffff e8e8e8 131313
+0 0 10101 15*0 575757 fdfdfd 59*ffffff fefefe
+14*ffffff fefefe 65*ffffff fefefe ffffff f5f5f5 585858 10101
+10*0 10101 5*0 20202 5f5f5f e8e8e8 64*ffffff fefefe
+6*ffffff 6b6b6b 0 0 0 10101 4*0 10101
+8*0 414141 f1f1f1 75*ffffff fefefe 68*ffffff fcfcfc 9e9e9e
+111111 14*0 10101 0 0 1a1a1a a7a7a7 fefefe
+69*ffffff 848484 15*0 50505 737373 f7f7f7 65*ffffff fefefe
+81*ffffff c9c9c9 10101 17*0 10101 4f4f4f e0e0e0 67*ffffff
+fefefe 464646 7*0 10101 10101 5*0 1b1b1b bbbbbb
+ffffff fefefe 147*ffffff ededed 30303 19*0 121212 999999
+fcfcfc 64*ffffff fdfdfd 939393 20202 9*0 10101 0
+0 0 2e2e2e e3e3e3 150*ffffff 8a8a8a 4*0 10101
+13*0 10101 0 0 10101 454545 dcdcdc 5*ffffff
+fefefe 56*ffffff f6f6f6 6d6d6d 20202 7*0 10101 6*0
+b2b2b2 150*ffffff dcdcdc d0d0d 23*0 121212 a1a1a1 fefefe
+59*ffffff e5e5e5 404040 10101 15*0 4d4d4d f6f6f6 148*ffffff
+fafafa 3f3f3f 9*0 1f1f1f 505050 484848 b0b0b 12*0
+20202 616161 f2f2f2 57*ffffff c1c1c1 1c1c1c 18*0 4b4b4b
+f3f3f3 ffffff ffffff fefefe 143*ffffff fefefe 7e7e7e 10101
+8*0 383838 eeeeee ffffff ffffff e0e0e0 676767 70707
+10*0 10101 0 313131 dcdcdc fefefe 53*ffffff fefefe
+909090 80808 20*0 434343 f1f1f1 145*ffffff b3b3b3 50505
+0 10101 6*0 f0f0f dbdbdb 4*ffffff fefefe cccccc
+3c3c3c 10101 0 0 0 10101 6*0 10101
+181818 c4c4c4 52*ffffff ededed 585858 10101 9*0 10101
+10*0 10101 10101 383838 eaeaea fefefe 142*ffffff d2d2d2
+111111 8*0 10101 9f9f9f ffffff ffffff ffffff fefefe
+ffffff ffffff ffffff fcfcfc ababab 292929 10101 10*0
+c0c0c d4d4d4 47*ffffff fefefe ffffff ffffff cfcfcf 282828
+10*0 40404 686868 c4c4c4 a4a4a4 1b1b1b 4*0 10101
+5*0 2e2e2e e2e2e2 141*ffffff e5e5e5 252525 9*0 595959
+fefefe ffffff fefefe 7*ffffff f5f5f5 898989 f0f0f 10*0
+585858 48*ffffff fdfdfd 989898 a0a0a 10101 8*0 10101
+3b3b3b cecece fefefe ffffff ffffff d8d8d8 1d1d1d 0
+0 0 10101 6*0 202020 d3d3d3 139*ffffff ececec
+323232 9*0 272727 efefef 11*ffffff fefefe e5e5e5 606060
+50505 8*0 161616 fafafa 46*ffffff fafafa 696969 10101
+9*0 a0a0a 8d8d8d fafafa 5*ffffff d4d4d4 191919 10*0
+151515 bfbfbf 137*ffffff ebebeb 373737 9*0 b0b0b cdcdcd
+15*ffffff c5c5c5 393939 7*0 90909 f5f5f5 45*ffffff f7f7f7
+535353 10101 9*0 303030 d1d1d1 6*ffffff fefefe fdfdfd
+d4d4d4 191919 4*0 10101 4*0 10101 a0a0a a7a7a7
+fefefe 134*ffffff e0e0e0 2d2d2d 9*0 30303 9f9f9f 17*ffffff
+fbfbfb a3a3a3 252525 10101 4*0 1c1c1c fcfcfc 44*ffffff
+fafafa 565656 9*0 10101 646464 f3f3f3 ffffff ffffff
+fefefe ffffff ffffff ffffff fefefe ffffff ffffff ffffff
+d2d2d2 191919 6*0 10101 0 10101 0 40404
+818181 fcfcfc 132*ffffff cecece 1f1f1f 10*0 6f6f6f fefefe
+19*ffffff f5f5f5 9d9d9d 303030 10101 0 0 6e6e6e
+44*ffffff fefefe 737373 8*0 10101 b0b0b 9c9c9c fdfdfd
+12*ffffff d2d2d2 1b1b1b 10*0 10101 5a5a5a f3f3f3 5*ffffff
+fefefe 121*ffffff fefefe ffffff fefefe b4b4b4 101010 4*0
+10101 0 0 10101 0 0 464646 f8f8f8
+21*ffffff fefefe fbfbfb c9c9c9 7c7c7c 868686 f5f5f5 44*ffffff
+a9a9a9 20202 10101 7*0 1e1e1e c8c8c8 9*ffffff fefefe
+5*ffffff d4d4d4 1c1c1c 11*0 333333 d9d9d9 127*ffffff fdfdfd
+8f8f8f 60606 10*0 272727 eaeaea ffffff ffffff ffffff
+fefefe 67*ffffff e8e8e8 161616 8*0 3c3c3c e4e4e4 17*ffffff
+d6d6d6 1e1e1e 10*0 10101 131313 a9a9a9 fefefe 124*ffffff
+f6f6f6 656565 20202 6*0 10101 0 0 0
+1c1c1c dadada 72*ffffff 6f6f6f 10101 0 0 10101
+0 0 0 10101 656565 f6f6f6 19*ffffff dbdbdb
+232323 10101 10*0 20202 616161 ededed fefefe 121*ffffff
+d7d7d7 363636 10101 10101 9*0 181818 d7d7d7 73*ffffff
+343434 10101 5*0 70707 939393 fdfdfd 14*ffffff fefefe
+6*ffffff e1e1e1 2c2c2c 12*0 212121 b7b7b7 7*ffffff fefefe
+104*ffffff fefefe 6*ffffff fdfdfd 989898 f0f0f 0 0
+0 10101 7*0 161616 d0d0d0 74*ffffff 333333 5*0
+181818 bdbdbd 24*ffffff ececec 404040 9*0 10101 0
+0 20202 5f5f5f e7e7e7 4*ffffff fefefe 111*ffffff d8d8d8
+434343 10101 11*0 181818 d1d1d1 fefefe 74*ffffff 434343
+4*0 313131 dcdcdc 26*ffffff f5f5f5 5b5b5b 10101 8*0
+10101 0 0 0 161616 999999 fbfbfb ffffff
+fefefe 4*ffffff fefefe ffffff ffffff fefefe 102*ffffff f5f5f5
+818181 d0d0d 12*0 191919 cfcfcf 76*ffffff 939393 10101
+0 20202 585858 f3f3f3 18*ffffff fefefe 9*ffffff fdfdfd
+818181 50505 8*0 10101 0 0 0 10101
+323232 b9b9b9 fcfcfc 10*ffffff fefefe 97*ffffff fafafa a8a8a8
+232323 10101 12*0 1b1b1b d3d3d3 77*ffffff fafafa b9b9b9
+8f8f8f c0c0c0 fdfdfd 10*ffffff fefefe 20*ffffff aaaaaa e0e0e
+13*0 20202 464646 c2c2c2 fefefe 5*ffffff fefefe 94*ffffff
+fefefe 4*ffffff bbbbbb 383838 4*0 10101 9*0 202020
+d7d7d7 115*ffffff cfcfcf 272727 10*0 10101 0 10101
+0 20202 3e3e3e adadad f6f6f6 100*ffffff fbfbfb bababa
+3f3f3f 20202 14*0 2b2b2b e0e0e0 fefefe 116*ffffff ececec
+505050 9*0 10101 6*0 1f1f1f 797979 d5d5d5 fefefe
+95*ffffff f7f7f7 a8a8a8 373737 20202 15*0 393939 e9e9e9
+87*ffffff fefefe 20*ffffff fefefe 5*ffffff fefefe ffffff ffffff
+fefefe ffffff fcfcfc 898989 70707 0 10101 14*0
+50505 3f3f3f 9f9f9f f0f0f0 90*ffffff fefefe e3e3e3 838383
+202020 10101 10*0 10101 4*0 10101 595959 f4f4f4
+121*ffffff fefefe c4c4c4 262626 10101 14*0 10101 0
+0 111111 616161 bfbfbf fafafa 12*ffffff fefefe 44*ffffff
+fefefe fefefe ffffff fefefe 20*ffffff fefefe ffffff ffffff
+ffffff f3f3f3 aeaeae 505050 80808 8*0 10101 7*0
+10101 90909 8d8d8d fdfdfd 124*ffffff efefef 656565 30303
+10*0 10101 4*0 10101 0 0 10101 262626
+7e7e7e d8d8d8 fdfdfd 23*ffffff fefefe 9*ffffff fefefe 39*ffffff
+fefefe 5*ffffff f5f5f5 b6b6b6 626262 171717 19*0 262626
+c6c6c6 127*ffffff fefefe b7b7b7 242424 10101 10*0 10101
+8*0 20202 333333 838383 cbcbcb f7f7f7 8*ffffff fefefe
+ffffff ffffff ffffff fefefe 18*ffffff fefefe 29*ffffff fefefe
+5*ffffff fefefe 4*ffffff fafafa d6d6d6 989898 525252 111111
+10101 19*0 40404 686868 f1f1f1 130*ffffff f1f1f1 7a7a7a
+90909 13*0 10101 7*0 20202 1b1b1b 575757 969696
+d5d5d5 fbfbfb 53*ffffff fefefe 6*ffffff fefefe 4*ffffff f2f2f2
+b5b5b5 707070 262626 30303 8*0 10101 13*0 252525
+bbbbbb fefefe 133*ffffff dedede 5f5f5f 70707 24*0 131313
+484848 7c7c7c afafaf dcdcdc f6f6f6 11*ffffff fefefe 11*ffffff
+fefefe 31*ffffff f3f3f3 d4d4d4 a4a4a4 6e6e6e 343434 70707
+10101 23*0 e0e0e 818181 f6f6f6 137*ffffff d3d3d3 5b5b5b
+50505 26*0 30303 161616 383838 5e5e5e 7f7f7f 9f9f9f
+bebebe dedede f5f5f5 fefefe 40*ffffff fdfdfd f1f1f1 d1d1d1
+acacac 868686 5e5e5e 353535 101010 20202 9*0 10101
+0 0 10101 8*0 10101 0 0 10101
+0 60606 646464 dfdfdf 140*ffffff fefefe d8d8d8 616161
+a0a0a 12*0 10101 5*0 10101 11*0 10101 20202
+90909 202020 383838 535353 6d6d6d 878787 9d9d9d b2b2b2
+c7c7c7 d6d6d6 e5e5e5 f0f0f0 f5f5f5 f9f9f9 fdfdfd 15*ffffff
+fefefe fcfcfc f6f6f6 f1f1f1 e7e7e7 d4d4d4 c2c2c2 a7a7a7
+8e8e8e 727272 545454 353535 1a1a1a 60606 10101 13*0
+10101 16*0 a0a0a 636363 dadada ffffff fefefe 130*ffffff
+fefefe 10*ffffff fefefe ffffff dedede 727272 101010 0
+0 0 10101 21*0 10101 7*0 10101 5*0
+10101 50505 a0a0a 131313 1b1b1b 252525 2f2f2f 393939
+424242 484848 4d4d4d 525252 535353 535353 545454 535353
+525252 4c4c4c 484848 404040 353535 2b2b2b 202020 151515
+d0d0d 50505 10101 30*0 10101 6*0 121212 727272
+dedede 149*ffffff ececec 8d8d8d 252525 10101 8*0 10101
+11*0 10101 76*0 10101 272727 8f8f8f ededed 153*ffffff
+f8f8f8 b1b1b1 4d4d4d 80808 14*0 10101 5*0 10101
+4*0 10101 5*0 10101 53*0 10101 10101 0
+0 0 10101 0 0 90909 525252 b6b6b6
+fafafa 157*ffffff fefefe e1e1e1 8a8a8a 323232 30303 87*0
+30303 2f2f2f 898989 e1e1e1 fefefe 161*ffffff fefefe fefefe
+dadada 939393 4d4d4d 151515 10101 9*0 10101 9*0
+10101 60*0 50505 333333 808080 d2d2d2 fdfdfd ffffff
+ffffff fefefe 149*ffffff fefefe 16*ffffff f3f3f3 c8c8c8 8c8c8c
+505050 1a1a1a 20202 0 10101 70*0 10101 141414
+535353 9a9a9a dddddd fdfdfd 164*ffffff fefefe 11*ffffff fdfdfd
+e1e1e1 aaaaaa 7a7a7a 4a4a4a 1f1f1f 80808 0 0
+0 10101 53*0 10101 5*0 60606 222222 565656
+8f8f8f cdcdcd f9f9f9 ffffff fefefe 159*ffffff fefefe 23*ffffff
+fbfbfb e7e7e7 c5c5c5 9d9d9d 777777 555555 363636 181818
+30303 51*0 10101 1e1e1e 555555 8a8a8a b7b7b7 e1e1e1
+fbfbfb 195*ffffff fefefe fcfcfc f0f0f0 d3d3d3 b1b1b1 919191
+707070 515151 323232 151515 70707 10101 35*0 10101
+80808 1a1a1a 3b3b3b 626262 8a8a8a b6b6b6 e6e6e6 fcfcfc
+209*ffffff f8f8f8 e6e6e6 cbcbcb b1b1b1 979797 808080 6a6a6a
+545454 414141 323232 212121 171717 e0e0e 70707 10101
+13*0 50505 d0d0d 171717 232323 353535 494949 5f5f5f
+797979 949494 b4b4b4 d1d1d1 e9e9e9 fbfbfb 224*ffffff fefefe
+fcfcfc fafafa f7f7f7 f1f1f1 ebebeb e5e5e5 dedede d7d7d7
+d3d3d3 d0d0d0 cecece cccccc cdcdcd d0d0d0 d6d6d6 dadada
+e1e1e1 eaeaea efefef f6f6f6 f9f9f9 fcfcfc fefefe ffffff
+fefefe 226*ffffff fefefe 5*ffffff fefefe 251*ffffff fefefe 23*ffffff
+fefefe 247*ffffff fefefe 17*ffffff fefefe 222*ffffff fefefe 254*ffffff
+fefefe 8*ffffff fefefe 245*ffffff fefefe 135*ffffff
+</a>
+      <a name="dataWidth" val="24"/>
+    </comp>
+    <comp lib="4" loc="(400,960)" name="Counter">
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="max" val="0x3"/>
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="4" loc="(470,190)" name="Counter">
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="max" val="0x1ff"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="4" loc="(480,550)" name="Counter">
+      <a name="appearance" val="logisim_evolution"/>
+      <a name="max" val="0x3ff"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="4" loc="(680,900)" name="Counter">
+      <a name="appearance" val="logisim_evolution"/>
+    </comp>
+    <comp lib="8" loc="(1269,568)" name="Text">
+      <a name="halign" val="left"/>
+      <a name="text" val="Connect on Real Circuit"/>
+    </comp>
+    <comp loc="(910,660)" name="VDectector"/>
+    <comp loc="(920,300)" name="HDetector"/>
+    <wire from="(1000,370)" to="(1000,380)"/>
+    <wire from="(1010,340)" to="(1140,340)"/>
+    <wire from="(1010,680)" to="(1020,680)"/>
+    <wire from="(1020,370)" to="(1020,380)"/>
+    <wire from="(1020,380)" to="(1020,430)"/>
+    <wire from="(1020,380)" to="(1080,380)"/>
+    <wire from="(1020,430)" to="(1040,430)"/>
+    <wire from="(1020,700)" to="(1020,720)"/>
+    <wire from="(1040,240)" to="(1050,240)"/>
+    <wire from="(1040,290)" to="(1050,290)"/>
+    <wire from="(1050,240)" to="(1050,260)"/>
+    <wire from="(1050,270)" to="(1050,290)"/>
+    <wire from="(1050,290)" to="(1060,290)"/>
+    <wire from="(1050,590)" to="(1050,670)"/>
+    <wire from="(1050,590)" to="(1080,590)"/>
+    <wire from="(1050,670)" to="(1050,690)"/>
+    <wire from="(1050,670)" to="(1220,670)"/>
+    <wire from="(1050,690)" to="(1070,690)"/>
+    <wire from="(1050,720)" to="(1050,740)"/>
+    <wire from="(1050,720)" to="(1120,720)"/>
+    <wire from="(1050,740)" to="(1070,740)"/>
+    <wire from="(1060,240)" to="(1060,290)"/>
+    <wire from="(1060,240)" to="(1110,240)"/>
+    <wire from="(1060,620)" to="(1060,640)"/>
+    <wire from="(1060,620)" to="(1130,620)"/>
+    <wire from="(1060,640)" to="(1080,640)"/>
+    <wire from="(1060,710)" to="(1060,730)"/>
+    <wire from="(1060,710)" to="(1070,710)"/>
+    <wire from="(1060,730)" to="(1120,730)"/>
+    <wire from="(1070,440)" to="(1090,440)"/>
+    <wire from="(1070,470)" to="(1070,490)"/>
+    <wire from="(1070,470)" to="(1140,470)"/>
+    <wire from="(1070,490)" to="(1090,490)"/>
+    <wire from="(1070,610)" to="(1070,630)"/>
+    <wire from="(1070,610)" to="(1080,610)"/>
+    <wire from="(1070,630)" to="(1130,630)"/>
+    <wire from="(1080,380)" to="(1080,390)"/>
+    <wire from="(1080,460)" to="(1080,480)"/>
+    <wire from="(1080,460)" to="(1090,460)"/>
+    <wire from="(1080,480)" to="(1140,480)"/>
+    <wire from="(110,50)" to="(150,50)"/>
+    <wire from="(110,80)" to="(150,80)"/>
+    <wire from="(1110,700)" to="(1120,700)"/>
+    <wire from="(1110,750)" to="(1120,750)"/>
+    <wire from="(1120,600)" to="(1130,600)"/>
+    <wire from="(1120,650)" to="(1130,650)"/>
+    <wire from="(1120,700)" to="(1120,720)"/>
+    <wire from="(1120,700)" to="(1160,700)"/>
+    <wire from="(1120,730)" to="(1120,750)"/>
+    <wire from="(1130,450)" to="(1140,450)"/>
+    <wire from="(1130,500)" to="(1140,500)"/>
+    <wire from="(1130,600)" to="(1130,620)"/>
+    <wire from="(1130,630)" to="(1130,650)"/>
+    <wire from="(1130,650)" to="(1140,650)"/>
+    <wire from="(1140,280)" to="(1140,340)"/>
+    <wire from="(1140,450)" to="(1140,470)"/>
+    <wire from="(1140,450)" to="(1180,450)"/>
+    <wire from="(1140,480)" to="(1140,500)"/>
+    <wire from="(1140,570)" to="(1140,600)"/>
+    <wire from="(1140,600)" to="(1190,600)"/>
+    <wire from="(1140,620)" to="(1140,650)"/>
+    <wire from="(1140,620)" to="(1190,620)"/>
+    <wire from="(1170,220)" to="(1230,220)"/>
+    <wire from="(1220,660)" to="(1220,670)"/>
+    <wire from="(1250,600)" to="(1270,600)"/>
+    <wire from="(1360,600)" to="(1380,600)"/>
+    <wire from="(260,1300)" to="(320,1300)"/>
+    <wire from="(320,1250)" to="(320,1300)"/>
+    <wire from="(320,1250)" to="(350,1250)"/>
+    <wire from="(320,910)" to="(350,910)"/>
+    <wire from="(340,110)" to="(500,110)"/>
+    <wire from="(340,1140)" to="(610,1140)"/>
+    <wire from="(340,50)" to="(380,50)"/>
+    <wire from="(340,80)" to="(380,80)"/>
+    <wire from="(340,930)" to="(340,1140)"/>
+    <wire from="(340,930)" to="(350,930)"/>
+    <wire from="(380,560)" to="(430,560)"/>
+    <wire from="(380,920)" to="(400,920)"/>
+    <wire from="(390,1040)" to="(400,1040)"/>
+    <wire from="(390,200)" to="(420,200)"/>
+    <wire from="(390,220)" to="(390,510)"/>
+    <wire from="(390,220)" to="(420,220)"/>
+    <wire from="(390,510)" to="(390,630)"/>
+    <wire from="(390,510)" to="(920,510)"/>
+    <wire from="(390,630)" to="(390,1040)"/>
+    <wire from="(390,630)" to="(480,630)"/>
+    <wire from="(400,580)" to="(400,870)"/>
+    <wire from="(400,580)" to="(430,580)"/>
+    <wire from="(400,870)" to="(600,870)"/>
+    <wire from="(400,920)" to="(400,980)"/>
+    <wire from="(450,210)" to="(470,210)"/>
+    <wire from="(460,570)" to="(480,570)"/>
+    <wire from="(590,1300)" to="(610,1300)"/>
+    <wire from="(590,930)" to="(610,930)"/>
+    <wire from="(600,1060)" to="(620,1060)"/>
+    <wire from="(600,1070)" to="(600,1090)"/>
+    <wire from="(600,1090)" to="(600,1100)"/>
+    <wire from="(600,1090)" to="(650,1090)"/>
+    <wire from="(600,870)" to="(600,910)"/>
+    <wire from="(600,870)" to="(910,870)"/>
+    <wire from="(600,910)" to="(610,910)"/>
+    <wire from="(610,1130)" to="(610,1140)"/>
+    <wire from="(620,1080)" to="(620,1100)"/>
+    <wire from="(640,920)" to="(680,920)"/>
+    <wire from="(650,980)" to="(650,1090)"/>
+    <wire from="(650,980)" to="(680,980)"/>
+    <wire from="(660,300)" to="(680,300)"/>
+    <wire from="(670,660)" to="(690,660)"/>
+    <wire from="(680,220)" to="(680,300)"/>
+    <wire from="(680,220)" to="(880,220)"/>
+    <wire from="(680,300)" to="(700,300)"/>
+    <wire from="(690,570)" to="(690,660)"/>
+    <wire from="(690,570)" to="(940,570)"/>
+    <wire from="(870,1010)" to="(880,1010)"/>
+    <wire from="(880,1010)" to="(880,1050)"/>
+    <wire from="(880,1010)" to="(890,1010)"/>
+    <wire from="(880,1050)" to="(890,1050)"/>
+    <wire from="(910,220)" to="(1110,220)"/>
+    <wire from="(910,660)" to="(1080,660)"/>
+    <wire from="(910,680)" to="(940,680)"/>
+    <wire from="(910,700)" to="(920,700)"/>
+    <wire from="(910,720)" to="(1020,720)"/>
+    <wire from="(910,740)" to="(910,870)"/>
+    <wire from="(920,300)" to="(1000,300)"/>
+    <wire from="(920,340)" to="(940,340)"/>
+    <wire from="(920,360)" to="(950,360)"/>
+    <wire from="(920,380)" to="(1000,380)"/>
+    <wire from="(920,380)" to="(920,510)"/>
+    <wire from="(920,700)" to="(920,760)"/>
+    <wire from="(920,760)" to="(1070,760)"/>
+    <wire from="(940,340)" to="(940,510)"/>
+    <wire from="(940,510)" to="(1090,510)"/>
+    <wire from="(950,360)" to="(950,450)"/>
+    <wire from="(950,450)" to="(1040,450)"/>
+    <wire from="(960,230)" to="(1000,230)"/>
+    <wire from="(960,230)" to="(960,340)"/>
+    <wire from="(960,340)" to="(1010,340)"/>
+    <wire from="(970,570)" to="(1140,570)"/>
+    <wire from="(980,260)" to="(1050,260)"/>
+    <wire from="(980,260)" to="(980,280)"/>
+    <wire from="(980,280)" to="(1000,280)"/>
+    <wire from="(990,250)" to="(1000,250)"/>
+    <wire from="(990,250)" to="(990,270)"/>
+    <wire from="(990,270)" to="(1050,270)"/>
+  </circuit>
+  <circuit name="HDetector">
+    <a name="appearance" val="logisim_evolution"/>
+    <a name="circuit" val="HDetector"/>
+    <a name="circuitnamedboxfixedsize" val="true"/>
+    <a name="simulationFrequency" val="4000.0"/>
+    <comp lib="0" loc="(180,70)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="0" loc="(210,170)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="0" loc="(210,280)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="0" loc="(210,400)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="0" loc="(210,520)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="0" loc="(210,630)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="0" loc="(240,170)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="9"/>
+      <a name="incoming" val="9"/>
+    </comp>
+    <comp lib="0" loc="(240,280)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="9"/>
+      <a name="incoming" val="9"/>
+    </comp>
+    <comp lib="0" loc="(240,400)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="9"/>
+      <a name="incoming" val="9"/>
+    </comp>
+    <comp lib="0" loc="(240,520)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="9"/>
+      <a name="incoming" val="9"/>
+    </comp>
+    <comp lib="0" loc="(240,630)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="9"/>
+      <a name="incoming" val="9"/>
+    </comp>
+    <comp lib="0" loc="(250,70)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="0" loc="(400,170)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="Detector_256"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="1" loc="(400,310)" name="NOT Gate">
+    <comp lib="0" loc="(400,280)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="Detector_320"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(400,400)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="HSYNC1"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(400,520)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="HSYNC2"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(400,630)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="HEND"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="1" loc="(240,170)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="1" loc="(240,280)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="1" loc="(240,400)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="1" loc="(240,520)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="1" loc="(240,630)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="9"/>
+    </comp>
+    <comp lib="1" loc="(300,210)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
-    <comp lib="1" loc="(400,350)" name="NOT Gate">
+    <comp lib="1" loc="(300,300)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
-    <comp lib="1" loc="(410,320)" name="NOT Gate">
+    <comp lib="1" loc="(300,320)" name="NOT Gate">
       <a name="size" val="20"/>
     </comp>
-    <comp lib="1" loc="(550,270)" name="NOR Gate"/>
-    <comp lib="1" loc="(550,340)" name="NOR Gate"/>
-    <comp lib="1" loc="(550,410)" name="NOR Gate"/>
-    <comp lib="1" loc="(550,490)" name="NOR Gate"/>
-    <comp lib="1" loc="(670,290)" name="AND Gate"/>
-    <comp lib="1" loc="(670,440)" name="AND Gate"/>
-    <comp lib="1" loc="(800,350)" name="AND Gate"/>
-    <wire from="(310,340)" to="(350,340)"/>
-    <wire from="(370,300)" to="(470,300)"/>
-    <wire from="(370,310)" to="(380,310)"/>
-    <wire from="(370,320)" to="(390,320)"/>
-    <wire from="(370,330)" to="(480,330)"/>
-    <wire from="(370,340)" to="(470,340)"/>
-    <wire from="(370,350)" to="(380,350)"/>
-    <wire from="(370,360)" to="(450,360)"/>
-    <wire from="(370,370)" to="(440,370)"/>
-    <wire from="(400,310)" to="(480,310)"/>
-    <wire from="(400,350)" to="(460,350)"/>
-    <wire from="(410,320)" to="(490,320)"/>
-    <wire from="(440,370)" to="(440,510)"/>
-    <wire from="(440,510)" to="(490,510)"/>
-    <wire from="(450,360)" to="(450,470)"/>
-    <wire from="(450,470)" to="(490,470)"/>
-    <wire from="(460,350)" to="(460,430)"/>
-    <wire from="(460,430)" to="(490,430)"/>
-    <wire from="(470,250)" to="(470,300)"/>
-    <wire from="(470,250)" to="(490,250)"/>
-    <wire from="(470,340)" to="(470,390)"/>
-    <wire from="(470,390)" to="(490,390)"/>
-    <wire from="(480,290)" to="(480,310)"/>
-    <wire from="(480,290)" to="(490,290)"/>
-    <wire from="(480,330)" to="(480,360)"/>
-    <wire from="(480,360)" to="(490,360)"/>
-    <wire from="(550,270)" to="(620,270)"/>
-    <wire from="(550,340)" to="(610,340)"/>
-    <wire from="(550,410)" to="(610,410)"/>
-    <wire from="(550,490)" to="(610,490)"/>
-    <wire from="(610,310)" to="(610,340)"/>
-    <wire from="(610,310)" to="(620,310)"/>
-    <wire from="(610,410)" to="(610,420)"/>
-    <wire from="(610,420)" to="(620,420)"/>
-    <wire from="(610,460)" to="(610,490)"/>
-    <wire from="(610,460)" to="(620,460)"/>
-    <wire from="(620,270)" to="(620,280)"/>
-    <wire from="(670,290)" to="(730,290)"/>
-    <wire from="(670,440)" to="(730,440)"/>
-    <wire from="(730,290)" to="(730,330)"/>
-    <wire from="(730,330)" to="(750,330)"/>
-    <wire from="(730,370)" to="(730,440)"/>
-    <wire from="(730,370)" to="(750,370)"/>
-    <wire from="(800,350)" to="(840,350)"/>
+    <comp lib="1" loc="(300,390)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,420)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,440)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,510)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,520)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,530)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,540)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,560)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,630)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,660)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,670)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(370,170)" name="AND Gate">
+      <a name="inputs" val="9"/>
+    </comp>
+    <comp lib="1" loc="(370,280)" name="AND Gate">
+      <a name="inputs" val="9"/>
+    </comp>
+    <comp lib="1" loc="(370,400)" name="AND Gate">
+      <a name="inputs" val="9"/>
+    </comp>
+    <comp lib="1" loc="(370,520)" name="AND Gate">
+      <a name="inputs" val="9"/>
+    </comp>
+    <comp lib="1" loc="(370,630)" name="AND Gate">
+      <a name="inputs" val="9"/>
+    </comp>
+    <wire from="(180,70)" to="(250,70)"/>
+    <wire from="(210,170)" to="(220,170)"/>
+    <wire from="(210,280)" to="(220,280)"/>
+    <wire from="(210,400)" to="(220,400)"/>
+    <wire from="(210,520)" to="(220,520)"/>
+    <wire from="(210,630)" to="(220,630)"/>
+    <wire from="(260,130)" to="(320,130)"/>
+    <wire from="(260,140)" to="(320,140)"/>
+    <wire from="(260,150)" to="(320,150)"/>
+    <wire from="(260,160)" to="(320,160)"/>
+    <wire from="(260,170)" to="(320,170)"/>
+    <wire from="(260,180)" to="(320,180)"/>
+    <wire from="(260,190)" to="(320,190)"/>
+    <wire from="(260,200)" to="(320,200)"/>
+    <wire from="(260,210)" to="(280,210)"/>
+    <wire from="(260,240)" to="(320,240)"/>
+    <wire from="(260,250)" to="(320,250)"/>
+    <wire from="(260,260)" to="(320,260)"/>
+    <wire from="(260,270)" to="(320,270)"/>
+    <wire from="(260,280)" to="(320,280)"/>
+    <wire from="(260,290)" to="(320,290)"/>
+    <wire from="(260,300)" to="(280,300)"/>
+    <wire from="(260,310)" to="(320,310)"/>
+    <wire from="(260,320)" to="(280,320)"/>
+    <wire from="(260,360)" to="(320,360)"/>
+    <wire from="(260,370)" to="(320,370)"/>
+    <wire from="(260,380)" to="(320,380)"/>
+    <wire from="(260,390)" to="(280,390)"/>
+    <wire from="(260,400)" to="(320,400)"/>
+    <wire from="(260,410)" to="(320,410)"/>
+    <wire from="(260,420)" to="(280,420)"/>
+    <wire from="(260,430)" to="(320,430)"/>
+    <wire from="(260,440)" to="(280,440)"/>
+    <wire from="(260,480)" to="(320,480)"/>
+    <wire from="(260,490)" to="(320,490)"/>
+    <wire from="(260,500)" to="(320,500)"/>
+    <wire from="(260,510)" to="(280,510)"/>
+    <wire from="(260,520)" to="(280,520)"/>
+    <wire from="(260,530)" to="(280,530)"/>
+    <wire from="(260,540)" to="(280,540)"/>
+    <wire from="(260,550)" to="(320,550)"/>
+    <wire from="(260,560)" to="(280,560)"/>
+    <wire from="(260,590)" to="(320,590)"/>
+    <wire from="(260,600)" to="(320,600)"/>
+    <wire from="(260,610)" to="(320,610)"/>
+    <wire from="(260,620)" to="(320,620)"/>
+    <wire from="(260,630)" to="(280,630)"/>
+    <wire from="(260,640)" to="(320,640)"/>
+    <wire from="(260,650)" to="(320,650)"/>
+    <wire from="(260,660)" to="(280,660)"/>
+    <wire from="(260,670)" to="(280,670)"/>
+    <wire from="(300,210)" to="(320,210)"/>
+    <wire from="(300,300)" to="(320,300)"/>
+    <wire from="(300,320)" to="(320,320)"/>
+    <wire from="(300,390)" to="(320,390)"/>
+    <wire from="(300,420)" to="(320,420)"/>
+    <wire from="(300,440)" to="(320,440)"/>
+    <wire from="(300,510)" to="(320,510)"/>
+    <wire from="(300,520)" to="(320,520)"/>
+    <wire from="(300,530)" to="(320,530)"/>
+    <wire from="(300,540)" to="(320,540)"/>
+    <wire from="(300,560)" to="(320,560)"/>
+    <wire from="(300,630)" to="(320,630)"/>
+    <wire from="(300,660)" to="(320,660)"/>
+    <wire from="(300,670)" to="(320,670)"/>
+    <wire from="(370,170)" to="(400,170)"/>
+    <wire from="(370,280)" to="(400,280)"/>
+    <wire from="(370,400)" to="(400,400)"/>
+    <wire from="(370,520)" to="(400,520)"/>
+    <wire from="(370,630)" to="(400,630)"/>
+  </circuit>
+  <circuit name="VDectector">
+    <a name="appearance" val="logisim_evolution"/>
+    <a name="circuit" val="VDectector"/>
+    <a name="circuitnamedboxfixedsize" val="true"/>
+    <a name="simulationFrequency" val="4000.0"/>
+    <comp lib="0" loc="(180,70)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="0" loc="(200,200)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="0" loc="(200,330)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="0" loc="(200,470)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="0" loc="(200,620)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="0" loc="(200,770)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="0" loc="(230,200)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="10"/>
+      <a name="incoming" val="10"/>
+    </comp>
+    <comp lib="0" loc="(230,330)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="10"/>
+      <a name="incoming" val="10"/>
+    </comp>
+    <comp lib="0" loc="(230,470)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="10"/>
+      <a name="incoming" val="10"/>
+    </comp>
+    <comp lib="0" loc="(230,620)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="10"/>
+      <a name="incoming" val="10"/>
+    </comp>
+    <comp lib="0" loc="(230,770)" name="Splitter">
+      <a name="appear" val="center"/>
+      <a name="fanout" val="10"/>
+      <a name="incoming" val="10"/>
+    </comp>
+    <comp lib="0" loc="(250,70)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="inpt"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="0" loc="(390,470)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="VSYNC1"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(410,200)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="Detector_256"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(410,330)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="Detector_480"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(410,620)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="VSYNC2"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(410,770)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="label" val="VEND"/>
+      <a name="output" val="true"/>
+    </comp>
+    <comp lib="1" loc="(230,200)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="1" loc="(230,330)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="1" loc="(230,470)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="1" loc="(230,620)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="1" loc="(230,770)" name="NOT Gate">
+      <a name="size" val="20"/>
+      <a name="width" val="10"/>
+    </comp>
+    <comp lib="1" loc="(270,330)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,430)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,450)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,470)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,480)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,590)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,600)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,620)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,720)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,740)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,750)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(270,820)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(280,240)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(280,250)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(280,370)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(280,510)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(280,660)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(290,230)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(290,360)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(290,500)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(290,650)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,350)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(300,640)" name="NOT Gate">
+      <a name="size" val="20"/>
+    </comp>
+    <comp lib="1" loc="(360,200)" name="AND Gate">
+      <a name="inputs" val="10"/>
+    </comp>
+    <comp lib="1" loc="(360,330)" name="AND Gate">
+      <a name="inputs" val="10"/>
+    </comp>
+    <comp lib="1" loc="(360,470)" name="AND Gate">
+      <a name="inputs" val="10"/>
+    </comp>
+    <comp lib="1" loc="(360,620)" name="AND Gate">
+      <a name="inputs" val="10"/>
+    </comp>
+    <comp lib="1" loc="(360,770)" name="AND Gate">
+      <a name="inputs" val="10"/>
+    </comp>
+    <wire from="(180,70)" to="(250,70)"/>
+    <wire from="(200,200)" to="(210,200)"/>
+    <wire from="(200,330)" to="(210,330)"/>
+    <wire from="(200,470)" to="(210,470)"/>
+    <wire from="(200,620)" to="(210,620)"/>
+    <wire from="(200,770)" to="(210,770)"/>
+    <wire from="(250,150)" to="(310,150)"/>
+    <wire from="(250,160)" to="(310,160)"/>
+    <wire from="(250,170)" to="(310,170)"/>
+    <wire from="(250,180)" to="(310,180)"/>
+    <wire from="(250,190)" to="(310,190)"/>
+    <wire from="(250,200)" to="(290,200)"/>
+    <wire from="(250,210)" to="(280,210)"/>
+    <wire from="(250,220)" to="(270,220)"/>
+    <wire from="(250,230)" to="(260,230)"/>
+    <wire from="(250,240)" to="(250,250)"/>
+    <wire from="(250,250)" to="(260,250)"/>
+    <wire from="(250,280)" to="(310,280)"/>
+    <wire from="(250,290)" to="(310,290)"/>
+    <wire from="(250,300)" to="(310,300)"/>
+    <wire from="(250,310)" to="(310,310)"/>
+    <wire from="(250,320)" to="(310,320)"/>
+    <wire from="(250,340)" to="(280,340)"/>
+    <wire from="(250,350)" to="(270,350)"/>
+    <wire from="(250,360)" to="(260,360)"/>
+    <wire from="(250,370)" to="(250,380)"/>
+    <wire from="(250,380)" to="(310,380)"/>
+    <wire from="(250,420)" to="(310,420)"/>
+    <wire from="(250,440)" to="(310,440)"/>
+    <wire from="(250,460)" to="(310,460)"/>
+    <wire from="(250,490)" to="(270,490)"/>
+    <wire from="(250,500)" to="(260,500)"/>
+    <wire from="(250,510)" to="(250,520)"/>
+    <wire from="(250,520)" to="(310,520)"/>
+    <wire from="(250,570)" to="(310,570)"/>
+    <wire from="(250,580)" to="(310,580)"/>
+    <wire from="(250,610)" to="(310,610)"/>
+    <wire from="(250,630)" to="(280,630)"/>
+    <wire from="(250,640)" to="(270,640)"/>
+    <wire from="(250,650)" to="(260,650)"/>
+    <wire from="(250,660)" to="(250,670)"/>
+    <wire from="(250,670)" to="(310,670)"/>
+    <wire from="(250,730)" to="(310,730)"/>
+    <wire from="(250,760)" to="(310,760)"/>
+    <wire from="(250,770)" to="(290,770)"/>
+    <wire from="(250,780)" to="(280,780)"/>
+    <wire from="(250,790)" to="(270,790)"/>
+    <wire from="(250,800)" to="(260,800)"/>
+    <wire from="(250,810)" to="(250,820)"/>
+    <wire from="(260,230)" to="(260,240)"/>
+    <wire from="(260,360)" to="(260,370)"/>
+    <wire from="(260,500)" to="(260,510)"/>
+    <wire from="(260,650)" to="(260,660)"/>
+    <wire from="(260,800)" to="(260,810)"/>
+    <wire from="(260,810)" to="(310,810)"/>
+    <wire from="(270,220)" to="(270,230)"/>
+    <wire from="(270,330)" to="(290,330)"/>
+    <wire from="(270,350)" to="(270,360)"/>
+    <wire from="(270,430)" to="(310,430)"/>
+    <wire from="(270,450)" to="(310,450)"/>
+    <wire from="(270,470)" to="(290,470)"/>
+    <wire from="(270,480)" to="(280,480)"/>
+    <wire from="(270,490)" to="(270,500)"/>
+    <wire from="(270,590)" to="(310,590)"/>
+    <wire from="(270,600)" to="(310,600)"/>
+    <wire from="(270,620)" to="(290,620)"/>
+    <wire from="(270,640)" to="(270,650)"/>
+    <wire from="(270,720)" to="(310,720)"/>
+    <wire from="(270,740)" to="(310,740)"/>
+    <wire from="(270,750)" to="(310,750)"/>
+    <wire from="(270,790)" to="(270,800)"/>
+    <wire from="(270,800)" to="(310,800)"/>
+    <wire from="(270,820)" to="(310,820)"/>
+    <wire from="(280,210)" to="(280,220)"/>
+    <wire from="(280,220)" to="(310,220)"/>
+    <wire from="(280,240)" to="(310,240)"/>
+    <wire from="(280,250)" to="(310,250)"/>
+    <wire from="(280,340)" to="(280,350)"/>
+    <wire from="(280,370)" to="(310,370)"/>
+    <wire from="(280,480)" to="(280,490)"/>
+    <wire from="(280,490)" to="(310,490)"/>
+    <wire from="(280,510)" to="(310,510)"/>
+    <wire from="(280,630)" to="(280,640)"/>
+    <wire from="(280,660)" to="(310,660)"/>
+    <wire from="(280,780)" to="(280,790)"/>
+    <wire from="(280,790)" to="(310,790)"/>
+    <wire from="(290,200)" to="(290,210)"/>
+    <wire from="(290,210)" to="(310,210)"/>
+    <wire from="(290,230)" to="(310,230)"/>
+    <wire from="(290,330)" to="(290,340)"/>
+    <wire from="(290,340)" to="(310,340)"/>
+    <wire from="(290,360)" to="(310,360)"/>
+    <wire from="(290,470)" to="(290,480)"/>
+    <wire from="(290,480)" to="(310,480)"/>
+    <wire from="(290,500)" to="(310,500)"/>
+    <wire from="(290,620)" to="(290,630)"/>
+    <wire from="(290,630)" to="(310,630)"/>
+    <wire from="(290,650)" to="(310,650)"/>
+    <wire from="(290,770)" to="(290,780)"/>
+    <wire from="(290,780)" to="(310,780)"/>
+    <wire from="(300,350)" to="(310,350)"/>
+    <wire from="(300,640)" to="(310,640)"/>
+    <wire from="(360,200)" to="(410,200)"/>
+    <wire from="(360,330)" to="(410,330)"/>
+    <wire from="(360,470)" to="(390,470)"/>
+    <wire from="(360,620)" to="(410,620)"/>
+    <wire from="(360,770)" to="(410,770)"/>
   </circuit>
 </project>

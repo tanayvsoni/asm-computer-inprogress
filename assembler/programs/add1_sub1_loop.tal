@@ -1,3 +1,9 @@
+/*
+dfsd
+dfdfsd
+fdf
+*/
+
 
 .org $4000
 
@@ -12,14 +18,11 @@ sub_Loop:
 	sta 0         
 	beq add_Loop      
 	jmp sub_Loop       
-	
+
 jump_location:
-	.dw $4025
+	inc 2
+	rti
 
 irq:
 	.org $fffd
-	jmp (jump_location)
-
-	.org $4025
-	inc 2
-	rti
+	jmp jump_location
