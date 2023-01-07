@@ -1,7 +1,7 @@
 from PIL import Image
 from numpy import asarray
 
-numpydata = asarray(Image.open('hello-kitty.jpg'))
+numpydata = asarray(Image.open('test.jpg'))
 
 with open('hk.txt','w') as file:
     for i in range(len(numpydata)):

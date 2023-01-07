@@ -274,18 +274,18 @@ def main():
         [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|CMP|YOX1|ES1|ES2, MI|COA|CE|II|EP],                                                     # 060 - absolute     ; oper
         
         # DEC # Decrement Memory by One                                                                                                                        # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                                                                   # 061 - zeropage     ; oper
-        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                                           # 062 - zeropage,X   ; oper,X
-        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                                           # 063 - zeropage,Y   ; oper,Y
-        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                                                    # 064 - absolute     ; oper
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                     # 065 - absolute,X   ; oper,X
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|DEC, EO|RI, MI|COA|CE|II|EP],                     # 066 - absolute,Y   ; oper,Y
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, MI|COA|EO|RI, CE|II|EP],                                                                   # 061 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, MI|COA|EO|RI, CE|II|EP],                                           # 062 - zeropage,X   ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|DEC, MI|COA|EO|RI, CE|II|EP],                                           # 063 - zeropage,Y   ; oper,Y
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|DEC, MI|COA|EO|RI, CE|II|EP],                                                    # 064 - absolute     ; oper
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|DEC, MI|COA|EO|RI, CE|II|EP],                     # 065 - absolute,X   ; oper,X
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|DEC, MI|COA|EO|RI, CE|II|EP],                     # 066 - absolute,Y   ; oper,Y
         
         # DEX # Decrement Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|XOX2|EI|DEC, EO|XI, MI|COA|CE|II|EP],                                                                                                             # 067 - implied     ; 
+        [FEC|XOX2|EI|DEC, MI|COA|EO|XI, CE|II|EP],                                                                                                             # 067 - implied     ; 
         
         # DEY # Decrement Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|YOX2|EI|DEC, EO|XI, MI|COA|CE|II|EP],                                                                                                             # 068 - implied      ; 
+        [FEC|YOX2|EI|DEC, MI|COA|EO|XI, CE|II|EP],                                                                                                             # 068 - implied      ; 
         
         # EOR # Exclusive-OR Memory with Accumulator                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|XOR|EI|ES2, MI|COA|EO|AI, CE|II|EP],                                                                                                 # 069 - immediate    ; #oper
@@ -301,25 +301,25 @@ def main():
         [MI|COA|CE|FEC|RO|TRLI|RTR|ECLK, MI|TRO|RO|ECLK|EI|ES1|YOX1|ES2|ADD|CTR, EO|TRLI|ECLK|TRHI|CTR, MI|TRO|RO|XOR|ECLK|EI|ES2, MI|COA|CE|II|EO|AI|EP],     # 079 - (indirect),Y ; (oper),Y
         
         # INC # Increment Memory by One                                                                                                                        # OPC - ADDRESSING   ; ASSEMBLER
-        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                                                                   # 080 - zeropage     ; oper
-        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                                           # 081 - zeropage,X   ; oper,X
-        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                                           # 082 - zeropage,Y   ; oper,Y
-        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                                                    # 083 - absolute     ; oper
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                     # 084 - absolute,X   ; oper,X
-        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA|CE|II|EP],                     # 085 - absolute,Y   ; oper,Y
+        [MI|COA|CE|FEC|RO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, EO|RI, MI|COA, CE|II|EP],                                                                      # 080 - zeropage     ; oper
+        [MI|COA|CE|FEC|RO|EI|ES1|XOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, MI|COA|EO|RI, CE|II|EP],                                           # 081 - zeropage,X   ; oper,X
+        [MI|COA|CE|FEC|RO|EI|ES1|YOX1|ES2|ADD, EO|TRLI|ECLK|RTR, MI|TRO|RO|ECLK|EI|ES2|INC, MI|COA|EO|RI, CE|II|EP],                                           # 082 - zeropage,Y   ; oper,Y
+        [MI|COA|CE|RO|TRLI, MI|COA|CE|FEC|RO|TRHI|ECLK, MI|TRO|RO|ECLK|EI|ES2|INC, MI|COA|EO|RI, CE|II|EP],                                                    # 083 - absolute     ; oper
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|XOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|INC, MI|COA|CE|EO|RI, II|EP],                     # 084 - absolute,X   ; oper,X
+        [MI|COA|CE|RO|EI|ES1|ES2|ADD|CTR|YOX1, MI|COA|CE|FEC|RO|EO|TRLI|TRHI|ECLK|CTR, MI|TRO|RO|ECLK|EI|ES2|INC, MI|COA|CE|EO|RI, II|EP],                     # 085 - absolute,Y   ; oper,Y
         
         # INX # Increment Index X by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|XOX2|EI|INC, EO|XI, MI|COA|CE|II|EP],                                                                                                             # 086 - implied      ; 
+        [FEC|XOX2|EI|INC, MI|COA|EO|XI, CE|II|EP],                                                                                                             # 086 - implied      ; 
         
         # INY # Increment Index Y by One                                                                                                                       # OPC - ADDRESSING   ; ASSEMBLER
-        [FEC|YOX2|EI|INC, EO|YI, MI|COA|CE|II|EP],                                                                                                             # 087 - implied      ; 
+        [FEC|YOX2|EI|INC, MI|COA|EO|YI, CE|II|EP],                                                                                                             # 087 - implied      ; 
         
         # JMP # Jump to new location                                                                                                                           # OPC - ADDRESSING   ; ASSEMBLER
         [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, MI|COA|RCC|FEC, MI|COA|CE|II|EP],                                                                       # 088 - absolute     ; oper
         [RO|CIDL, MI|COA|RO|CIDH|RCC, MI|COA|BR|RCC|J, RCC|CE|RO|CIDL, MI|COA|RCC|RO|CIDH,  MI|COA|BR|RCC|J, MI|COA|RCC|FEC, MI|COA|CE|II|EP],                 # 089 - indirect     ; (oper)
         
         # JSR # Jump to new location Saving Return Address                                                                                                     # OPC - ADDRESSING   ; ASSEMBLER
-        [RO|CIDL, MI|COA|CE|RO|CIDH, MI|SPAO|CODH|RI|SPE, MI|SPAO|CODL|RI|SPE, MI|COA|BR|J, MI|COA|CE|FEC|BR, CE|II|EP],                                       # 090 - absolute     ; oper
+        [RO|CIDL, MI|COA|CE|RO|CIDH, MI|SPAO|CODH|RI|SPE|CSB, MI|SPAO|CODL|RI|SPE|CSB, MI|COA|BR|J, MI|COA|CE|FEC|BR, CE|II|EP],                               # 090 - absolute     ; oper
         
         # LDA # Load Accumulator with Memory                                                                                                                   # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|AI, MI|COA|LD, CE|II|EP],                                                                                                            # 091 - immediate    ; #oper
@@ -404,7 +404,7 @@ def main():
         [DSP|SPE|ECLK, MI|SPAO|RO|SRDI|DSP|SPE|FI|ECLK, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, J, MI|COA|CE|IE|EP|CI],                                      # 148 - implied      ;
         
         # RTS # Return from Subroutine                                                                                                                         # OPC - ADDRESSING   ; ASSEMBLER
-        [DSP|SPE, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, MI|COA|J|BR, MI|COA|CE|FEC|BR, CE|II|EP],                                                          # 149 - implied      ;        
+        [DSP|SPE|ECLK, MI|SPAO|RO|SRDI|DSP|SPE|FI|ECLK, MI|SPAO|RO|CIDL|DSP|SPE, MI|SPAO|RO|CIDH, J, MI|COA|CE|EP|CI],                                         # 149 - implied      ;        
         
         # SUB # Subtract Memory from Accumulator with Borrow                                                                                                   # OPC - ADDRESSING   ; ASSEMBLER
         [MI|COA|CE|FEC|RO|SU|EI|ES2|FI, MI|COA|EO|AI, CE|II|EP],                                                                                               # 150 - immediate    ; #oper
