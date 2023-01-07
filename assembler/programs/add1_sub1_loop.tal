@@ -1,15 +1,8 @@
-/*
-dfsd
-dfdfsd
-fdf
-*/
-
-
 .org $4000
 
 add_Loop: 
 	adc #1            ;   test
-	bcs sub_Loop       
+	bcs sub_Loop     
 	sta 0             
 	jmp add_Loop       
 
@@ -19,10 +12,26 @@ sub_Loop:
 	beq add_Loop      
 	jmp sub_Loop       
 
-jump_location:
+interrupt:
 	inc 2
+	jsr print
 	rti
 
+print:
+    lda msg,X
+    beq stop
+    inx 
+    out
+    jmp print
+
+stop:
+	rts
+
+msg:
+	.tx "Hello"
+	.db 0
+
+.org $fffd
 irq:
-	.org $fffd
-	jmp jump_location
+	jmp interrupt
+

@@ -13,17 +13,6 @@ stop:
     hlt
 
 message:
-    .tx "Shannon is the most amazing person in the whole world"
+    .tx "hello world"
     .db 0
-    
-/*Interupt Handler*/
-
-interrupt:
-    inc 0
-    rti
-
-.org $fffd
-irq:
-    jmp interrupt
-
 
