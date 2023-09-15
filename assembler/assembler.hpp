@@ -2,10 +2,6 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <fstream>
-#include <sstream>
-
-using namespace std;
 
 enum TokenType {
     // Extra
@@ -13,7 +9,8 @@ enum TokenType {
     INLINE_COMMENTS,
     BLOCK_COMMENTS,
     COMMA,
-    QUOTATION,
+    DQUOTATION,
+    SQUOTATION,
 
     // Instructions
     INSTR,
@@ -35,16 +32,16 @@ enum TokenType {
     MUL,
     
     // Organization
-    ORG,
+    DECLARATIVE,
     LABELS,
-    TEXT,
-    DB,
 };    
 
-
 struct Token {
-    TokenType   type;
-    string      substring;
+    TokenType        type;
+    std::string      substring;
 };
+
+std::vector<Token> lexer(const std::string& input);
+
 
 

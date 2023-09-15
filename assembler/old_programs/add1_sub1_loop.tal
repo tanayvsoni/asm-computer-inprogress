@@ -1,5 +1,11 @@
 .org $4000
 
+/*
+
+THIS IS MY TEST
+
+*/
+
 add_Loop: 
 	adc #1            ;   test
 	bcs sub_Loop     
@@ -28,7 +34,8 @@ stop:
 	rts
 
 msg:
-	.tx "Hello"
+	.tx    "Hello World"
+	.db    'c'
 	.db 0
 
 .org $fffd

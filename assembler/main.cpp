@@ -1,6 +1,11 @@
 #include "assembler.hpp"
+
 #include <iostream>
+#include <map>
 #include <string>
+#include <vector>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -28,10 +33,10 @@ int main(int argc, char* argv[]){
 
     inputFile.close();
 
-    cout << "File Contents:" << endl;
-    cout << fileContents;
+    //cout << "File Contents:" << endl;
+    //cout << fileContents;
          
-
+    lexer(fileContents);
 
     return 0;
 }
