@@ -5,10 +5,8 @@
 
 enum TokenType {
     // Extra
-    WHITESPACE,
-    INLINE_COMMENTS,
-    BLOCK_COMMENTS,
     COMMA,
+    WHITESPACE,
     DQUOTATION,
     SQUOTATION,
 

@@ -14,7 +14,7 @@ add_Loop:
 
 sub_Loop:
 	sbc #1          
-	sta 0         
+	sta %0         
 	beq add_Loop      
 	jmp sub_Loop       
 
