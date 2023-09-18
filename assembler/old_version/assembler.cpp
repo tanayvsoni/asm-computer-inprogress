@@ -24,6 +24,7 @@ static void whiteSpaceStore(vector<Token>& tokens, string input, int& i) {
             token = {WHITESPACE, substring};
             tokens.push_back(token);
             substring.clear();
+            //i++;
             break;
         }
         i++;
@@ -40,10 +41,9 @@ static void storeSingleValues(vector<Token>& tokens, string input, const char c,
             i++;
         }
 
-        if (isWhiteSpace(input[i])) whiteSpaceStore(tokens, input, i);
-
         token = {DECLARATIVE, substring};
         tokens.push_back(token);
+        whiteSpaceStore(tokens, input, i);
     }  
 }
 
@@ -58,11 +58,20 @@ static void storeStringChar(vector<Token>& tokens, string input, const char c, i
             i++;
         }
 
-        token = {SQUOTATION, substring};
+        if (c == '\'') token = {SQUOTATION, substring};
+        if (c == '\"') token = {DQUOTATION, substring};
         tokens.push_back(token);
         substring.clear();
         i++;
     } 
+}
+
+string extractMatchingSubstring(const string& input, const vector<string>& substrings) {
+    for (const string& substring : substrings) {
+        size_t foundPos = input.find(substring);
+        if (foundPos != string::npos) return substring;
+    }
+    return "";
 }
 
 vector<Token> lexer(const string &input) {
@@ -70,6 +79,19 @@ vector<Token> lexer(const string &input) {
 
     Token token;
     string substring;
+
+    // Get all labels
+    vector<string> label_list;
+    for (size_t i = 0; i < input.size(); i++) {
+        substring += input[i];
+
+        if (input[i + 1] == ':') {
+            label_list.push_back(substring);
+            i++;
+        }
+
+        if (input[i] == '\n') substring.clear();
+    }
 
     for (int i = 0; i < int(input.size()); i++) {
 
@@ -97,27 +119,36 @@ vector<Token> lexer(const string &input) {
         // Filter Declaritives
         storeSingleValues(tokens, input, '.', i);
 
-        // Label Start
-        if (!isWhiteSpace(input[i])){
-            for (int j = i; j < int(input.size()); j++) {
+        // Label Labels
+        if (!isWhiteSpace(input[i])) {
+            for (size_t j = i; j < input.size(); j++) {
                 substring += input[j];
 
                 if (input[j + 1] == ':') {
                     token = {LABELS, substring};
-                    tokens.push_back(token);
+                    tokens.push_back(token);  
                     substring.clear();
-                    i = j + 2;
-                    //break;
+                    i = int(j + 1);
+                    break;
                 }
 
                 if (input[j] == '\n') {
-                    substring.clear();
-                    break;
+                    string temp = extractMatchingSubstring(substring, label_list);
+                    if (!temp.empty()) {
+                        token = {LABELS, temp};
+                        tokens.push_back(token);
+                        substring.clear();
+                        i = int(j);
+                        break;
+                    } else {
+                        substring.clear();
+                        break;
+                    }
+
                 }
             }
-            //continue;
         }
-        
+
         // Store Hex values
         storeSingleValues(tokens, input, '$', i);
     
@@ -126,14 +157,14 @@ vector<Token> lexer(const string &input) {
 
         // Store Immediate values
         storeSingleValues(tokens, input, '#', i);
-    
-    
+
     }
 
 
 
     for (const Token& token : tokens) {
-        cout << "TokenType: " << token.type << ", Value: " << token.substring << endl;
+        if (token.type == 1) cout << "TokenType: " << token.type << ", Value: " << endl;
+        else cout << "TokenType: " << token.type << ", Value: " << token.substring << endl;
     }
 
 

@@ -39,7 +39,11 @@ struct Token {
     std::string      substring;
 };
 
-std::vector<Token> lexer(const std::string& input);
+struct Instrcution {
+    std::string name;
+    int opcode;
+    int addressing_mode;
+}
 
 
 

@@ -36,7 +36,7 @@ int main(int argc, char* argv[]){
     //cout << "File Contents:" << endl;
     //cout << fileContents;
          
-    lexer(fileContents);
+    //lexer(fileContents);
 
     return 0;
 }
