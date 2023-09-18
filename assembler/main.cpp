@@ -1,31 +1,28 @@
 #include "assembler.hpp"
 
 #include <iostream>
-#include <map>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <fstream>
 
-using namespace std;
-
 int main(int argc, char* argv[]){
     if (argc != 2) {
-        cerr << "Usage: ./assembler <filename>" << endl;
+        std::cerr << "Usage: ./assembler <filename>" << std::endl;
         return 1;
     }
 
-    string filename = argv[1];
+    std::string filename = argv[1];
 
-    ifstream inputFile(filename);
+    std::ifstream inputFile(filename);
 
     if(!inputFile.is_open()) {
-        cerr << "Error: Unable to open file '" << filename << "'" << endl;
+        std::cerr << "Error: Unable to open file '" << filename << "'" << std::endl;
         return 1;
     }
 
-    string fileContents;
-    string line;
+    std::string fileContents;
+    std::string line;
 
     while(getline(inputFile, line)) {
         fileContents += line + '\n';
