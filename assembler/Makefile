@@ -5,12 +5,13 @@
 CXX = g++
 CXXFLAGS = -Wall -O2
 TARGET = assembler
-SRCS = assembler.cpp main.cpp
+SRCS = assembler.cpp instructions.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)
-HEADERS = assembler.hpp
+HEADERS = assembler.hpp instructions.hpp
 
 # Targets
 all: $(TARGET)
+	rm -f $(OBJS)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)

@@ -20,8 +20,10 @@ enum Address_Mode {
     B_indirect_B_Y,
 };
 
-struct Instrcution {
+struct Instruction {
     std::string name;
     int opcode;
     Address_Mode addr_mode;
 };
+
+std::vector<Instruction> get_instr();

@@ -1,4 +1,5 @@
 #include "assembler.hpp"
+#include "instructions.hpp"
 
 #include <iostream>
 #include <string>
@@ -34,6 +35,8 @@ int main(int argc, char* argv[]){
     //cout << fileContents;
          
     //lexer(fileContents);
+
+    get_instr();
 
     return 0;
 }

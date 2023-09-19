@@ -6,8 +6,17 @@
 
 #include "instructions.hpp"
 
-std::vector<Instrcution> get_instr() {
-    std::vector<Instrcution> instructions;
+static void printInstructions(const std::vector<Instruction>& instructions) {
+    for (const Instruction& instr : instructions) {
+        std::cout << "Name: " << instr.name << std::endl;
+        std::cout << "Opcode: " << instr.opcode << std::endl;
+        std::cout << "Address Mode: " << static_cast<int>(instr.addr_mode) << std::endl;
+        std::cout << "--------------------------" << std::endl;
+    }
+}
+
+std::vector<Instruction> get_instr() {
+    std::vector<Instruction> instructions;
     std::ifstream file("instructions.csv");
 
     if (!file.is_open()) {
@@ -32,4 +41,8 @@ std::vector<Instrcution> get_instr() {
             std::cerr << "Error: Invalid line in CSV file: " << line << std::endl;
         }
     }
+
+    printInstructions(instructions);
+
+    return instructions;
 }
