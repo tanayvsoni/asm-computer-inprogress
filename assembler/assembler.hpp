@@ -3,38 +3,17 @@
 #include <vector>
 
 enum TokenType {
-
-
-    /*
-    // Extra
-    COMMA,
+    // Whitespace
     WHITESPACE,
-    DQUOTATION,
-    SQUOTATION,
 
-    // Instructions
-    INSTR,
-    REG,
-    NUM,
-    VAR,
-    
-    // Types
-    HEX,
-    BINARY,
+    // Single-Character Tokens
+    LEFT_PAREN, RIGHT_PAREN, COMMA,
 
-    // Addressing
-    HASHTAG,
-    BRACKET,
+    // Literals
+    IDENTIFIER, STRING, CHAR, NUMBER,
 
-    // Math
-    PLUS,
-    SUB,
-    MUL,
-    
-    // Organization
-    DECLARATIVE,
-    LABELS,
-    */
+    // Keywords
+    INSTRUCTION, PREPROCESS,
 };    
 
 struct Token {
@@ -42,4 +21,5 @@ struct Token {
     std::string      substring;
 };
 
+std::vector<Token> lexer(std::string text);
 

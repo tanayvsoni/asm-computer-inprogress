@@ -3,7 +3,7 @@
 
 # Variables
 CXX = g++
-CXXFLAGS = -Wall -O2
+CXXFLAGS = -Wall -O2 -Wno-unused-function
 TARGET = assembler
 SRCS = assembler.cpp instructions.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)

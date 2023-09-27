@@ -31,12 +31,15 @@ int main(int argc, char* argv[]){
 
     inputFile.close();
 
+    lexer(fileContents);
+    std::vector<Instruction> instruction_list  = get_instr();
+
     //cout << "File Contents:" << endl;
     //cout << fileContents;
          
     //lexer(fileContents);
 
-    get_instr();
+    
 
     return 0;
 }

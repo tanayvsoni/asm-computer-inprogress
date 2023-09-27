@@ -65,6 +65,10 @@
         "format": "cpp",
         "iomanip": "cpp",
         "span": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "hash_map": "cpp",
+        "cfenv": "cpp",
+        "bitset": "cpp",
+        "regex": "cpp"
     }
 }

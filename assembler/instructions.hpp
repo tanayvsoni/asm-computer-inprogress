@@ -2,28 +2,10 @@
 #include <string>
 #include <vector>
 
-enum Address_Mode {
-    accumulator,
-    implied,
-    immediate,
-    zeropage,
-    zeropage_X,
-    zeropage_Y,
-    absolute,
-    absolute_X,
-    absolute_Y,
-    relative,
-    indirect,
-    B_indirect_X_B,
-    B_indirect_Y_B,
-    B_indirect_B_X,
-    B_indirect_B_Y,
-};
-
 struct Instruction {
     std::string name;
     int opcode;
-    Address_Mode addr_mode;
+    std::string addr_mode;
 };
 
 std::vector<Instruction> get_instr();
