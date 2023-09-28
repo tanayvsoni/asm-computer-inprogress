@@ -1,11 +1,11 @@
-#include "assembler.hpp"
-#include "instructions.hpp"
-
 #include <iostream>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <fstream>
+
+#include "lexer.hpp"
+#include "instructions.hpp"
 
 int main(int argc, char* argv[]){
     if (argc != 2) {
@@ -31,8 +31,10 @@ int main(int argc, char* argv[]){
 
     inputFile.close();
 
-    lexer(fileContents);
     std::vector<Instruction> instruction_list  = get_instr();
+    lexer(fileContents, instruction_list);
+    
+    
 
     //cout << "File Contents:" << endl;
     //cout << fileContents;

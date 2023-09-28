@@ -6,6 +6,8 @@ THIS IS MY TEST
 
 */
 
+var = 645
+
 add_Loop: 
 	adc #1            ;   test
 	bcs sub_Loop     
@@ -13,8 +15,8 @@ add_Loop:
 	jmp add_Loop       
 
 sub_Loop:
-	sbc #1          
-	sta %0         
+	sub #1          
+	sta %0        
 	beq add_Loop      
 	jmp sub_Loop       
 
@@ -24,11 +26,11 @@ interrupt:
 	rti
 
 print:
-    lda msg,X
+    lda msg,rX
     beq stop
     inx 
     out
-    jmp print
+    jmp (print)
 
 stop:
 	rts

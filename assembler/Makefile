@@ -3,11 +3,11 @@
 
 # Variables
 CXX = g++
-CXXFLAGS = -Wall -O2 -Wno-unused-function
+CXXFLAGS = -std=c++20 -Wall -O2 -Wno-unused-function
 TARGET = assembler
-SRCS = assembler.cpp instructions.cpp main.cpp
+SRCS = functions.cpp lexer.cpp instructions.cpp  main.cpp 
 OBJS = $(SRCS:.cpp=.o)
-HEADERS = assembler.hpp instructions.hpp
+HEADERS = functions.hpp lexer.hpp instructions.hpp 
 
 # Targets
 all: $(TARGET)

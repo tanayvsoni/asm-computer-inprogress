@@ -1,3 +1,6 @@
+#ifndef INSTRUCTIONS_HPP
+#define INSTRUCTIONS_HPP
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,3 +12,7 @@ struct Instruction {
 };
 
 std::vector<Instruction> get_instr();
+
+#endif // INSTRUCTIONS_HPP
+
+
