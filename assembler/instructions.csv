@@ -87,7 +87,7 @@ INC|85|absolute,Y
 INX|86|implied
 INY|87|implied
 JMP|88|absolute
-JMP|89|indirect
+JMP|89|(indirect)
 JSR|90|absolute
 LDA|91|immediate
 LDA|92|zeropage

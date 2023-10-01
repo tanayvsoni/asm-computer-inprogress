@@ -9,13 +9,13 @@
 
 enum TokenType {
     // Whitespace
-    WHITESPACE,
+    WHITESPACE, NEWLINE,
 
     // Single-Character Tokens
     PAREN, COMMA,
 
     // Literals
-    IDENTIFIER, LABEL, STRING, CHAR, NUMBER, REG, IMMEDIATE, BINARY, HEX, EQUAL,
+    IDENTIFIER_DECLARE, IDENTIFIER, LABEL_DECLARE, LABEL_USED, STRING, CHAR, NUMBER, REG, IMMEDIATE, BINARY, HEX, EQUAL, NEGATIVE,
 
     // Keywords
     INSTRUCTION, PREPROCESS,
@@ -26,7 +26,7 @@ struct Token {
     std::string      substring;
 };
 
-std::vector<Token> lexer(std::string text, const std::vector<Instruction> instruction_list);
+std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instruction_list);
 
 #endif
 

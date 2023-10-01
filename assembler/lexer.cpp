@@ -4,8 +4,8 @@
 #include <regex>
 
 #include "lexer.hpp"
-#include "instructions.hpp"
 #include "functions.hpp"
+#include "instructions.hpp"
 
 static std::string removeComments(std::string text) {
     std::string result;
@@ -64,13 +64,21 @@ static void printTokens(const std::vector<Token>& token_list) {
             case TokenType::PREPROCESS:
                 typeStr = "Preprocessor";
                 break;
+
+            case TokenType::NEWLINE:
+                typeStr = "Newline";
+                break;
                 
             case TokenType::WHITESPACE:
                 typeStr = "Whitespace";
                 break;
             
-            case TokenType::LABEL:
-                typeStr = "Label";
+            case TokenType::LABEL_DECLARE:
+                typeStr = "Label Declare";
+                break;
+
+            case TokenType::LABEL_USED:
+                typeStr = "Label Used";
                 break;
             
             case TokenType::COMMA:
@@ -97,9 +105,14 @@ static void printTokens(const std::vector<Token>& token_list) {
                 typeStr = "Hex";
                 break;
             
+            case TokenType::NEGATIVE:
+                typeStr = "Negative";
+                break;
+
             case TokenType::NUMBER:
                 typeStr = "Number";
                 break;
+
 
             case TokenType::INSTRUCTION:
                 typeStr = "Instruction";
@@ -109,16 +122,20 @@ static void printTokens(const std::vector<Token>& token_list) {
                 typeStr = "Identifier";
                 break;
             
+            case TokenType::IDENTIFIER_DECLARE:
+                typeStr = "Identifier Declare";
+                break;
+            
             case TokenType::EQUAL:
                 typeStr = "Equal";
                 break;
         }
-        if (typeStr == "Whitespace") continue;
+        if (typeStr == "Whitespace" || typeStr == "Newline") continue;
         else std::cout << "Type: " << typeStr << ", Value: " << token.substring << std::endl;
     }
 }
 
-static std::string getInstr_String(const std::vector<Instruction> instruction_list) {
+static std::string getInstr_String(const std::vector<Instruction>& instruction_list) {
     std::string temp =  "";
     std::string output;
 
@@ -133,14 +150,14 @@ static std::string getInstr_String(const std::vector<Instruction> instruction_li
     return output;
 }
 
-static bool isLabel(const std::vector<Token> token_list, const Token curr_token) {
+static bool isLabel(const std::vector<Token>& token_list, const Token curr_token) {
     for (size_t i = 0; i < token_list.size(); i++) {
-        if (token_list[i].type == TokenType::LABEL && curr_token.substring == token_list[i].substring) return true;
+        if (token_list[i].type == TokenType::LABEL_DECLARE && curr_token.substring == token_list[i].substring) return true;
     }
     return false;
 }
 
-std::vector<Token> lexer(std::string text, const std::vector<Instruction> instruction_list) {
+std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instruction_list) {
     text = removeComments(text);
     std::string instruction_string = getInstr_String(instruction_list);
 
@@ -152,22 +169,24 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction> instru
     std::string string_regex = "(\"((?:\\\\.|[^\"\\\\])*)\")";
     std::string char_regex = "(\'((?:\\\\.|[^\'\\\\])*)\')";
     std::string preprocessor_regex = "(\\.(?!\\s)(\\w+))";
-    std::string whitespace_regex = "([ \n\t]+)";
+    std::string newline_regex = "([\\n]+)";
+    std::string whitespace_regex = "([ \t]+)";
     std::string label_regex = "(^([a-zA-Z_]\\w*):)";
     std::string comma_regex = "(,)";
     std::string reg_regex = "(r[XY])";
     std::string paren_regex = "(\\(|\\))";
-    std::string immediate_regex = "(#(\\d+))";
+    std::string immediate_regex = "(#)";
     std::string binary_regex = "(%(\\d+))";
     std::string hex_regex = "(\\$(?!\\s)([a-zA-Z0-9]+))";
+    std::string negative_regex = "(-(\\d+))";
     std::string number_regex = "(\\d+)";
     std::string instruction_regex =  "(\\b(" + instruction_string + ")\\b)";
     std::string identifier_regex = "(\\w+)";
     std::string equal_regex = "(=)";
 
-    std::regex token_regex(string_regex + "|" + char_regex + "|" + preprocessor_regex + "|" + whitespace_regex + "|" + label_regex + "|" + 
+    std::regex token_regex(string_regex + "|" + char_regex + "|" + preprocessor_regex + "|" + newline_regex + "|" + whitespace_regex + "|" + label_regex + "|" + 
                            comma_regex + "|" + reg_regex + "|" + paren_regex + "|" + immediate_regex + "|" + binary_regex + "|" + hex_regex + "|" + 
-                           number_regex + "|" + instruction_regex + "|" + identifier_regex + "|" + equal_regex,
+                           negative_regex + "|" + number_regex + "|" + instruction_regex + "|" + identifier_regex + "|" + equal_regex,
                            std::regex::multiline);
 
     // Tokenize the input text
@@ -194,21 +213,25 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction> instru
         } else if (std::regex_match(match.str(), std::regex(preprocessor_regex))) {
             token.type = TokenType::PREPROCESS;
             token.substring.erase(0, 1);
+            token.substring = toLowerCase(token.substring);
+        
+        } else if (std::regex_match(match.str(), std::regex(newline_regex))) { token.type = TokenType::NEWLINE;
+
         } else if (std::regex_match(match.str(), std::regex(whitespace_regex))) { token.type = TokenType::WHITESPACE;
 
         } else if (std::regex_match(match.str(), std::regex(label_regex))) {
-            token.type = TokenType::LABEL;
+            token.type = TokenType::LABEL_DECLARE;
             token.substring.pop_back();
 
         } else if (std::regex_match(match.str(), std::regex(comma_regex))) { token.type = TokenType::COMMA;
 
-        } else if (std::regex_match(match.str(), std::regex(reg_regex))) { token.type = TokenType::REG;
+        } else if (std::regex_match(match.str(), std::regex(reg_regex))) { 
+            token.type = TokenType::REG;
+            token.substring.erase(0, 1);
 
         } else if (std::regex_match(match.str(), std::regex(paren_regex))) { token.type = TokenType::PAREN;
 
-        } else if (std::regex_match(match.str(), std::regex(immediate_regex))) { 
-            token.type = TokenType::IMMEDIATE;      
-            token.substring.erase(0, 1);
+        } else if (std::regex_match(match.str(), std::regex(immediate_regex))) { token.type = TokenType::IMMEDIATE;      
 
         } else if (std::regex_match(match.str(), std::regex(binary_regex))) { 
             token.type = TokenType::BINARY;      
@@ -217,6 +240,8 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction> instru
         } else if (std::regex_match(match.str(), std::regex(hex_regex))) { 
             token.type = TokenType::HEX;      
             token.substring.erase(0, 1);
+        
+        } else if (std::regex_match(match.str(), std::regex(negative_regex))) {  token.type = TokenType::NEGATIVE; 
 
         } else if (std::regex_match(match.str(), std::regex(number_regex))) {  token.type = TokenType::NUMBER;  
 
@@ -229,14 +254,19 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction> instru
         } else if (std::regex_match(match.str(), std::regex(equal_regex))) {  token.type = TokenType::EQUAL;  
         }
 
-        token_list.push_back(token);
+        if (token.type != TokenType::WHITESPACE) token_list.push_back(token);
         ++it;
         
     }
 
     for (size_t i = 0; i < token_list.size(); i++) {
         if (token_list[i].type == TokenType::IDENTIFIER && isLabel(token_list, token_list[i]))
-            token_list[i].type = TokenType::LABEL;
+            token_list[i].type = TokenType::LABEL_USED;
+    }
+
+    for (size_t i = 0; i < token_list.size(); i++) {
+        if (token_list[i].type == TokenType::IDENTIFIER && token_list[i + 1].type == TokenType::EQUAL)
+            token_list[i].type = TokenType::IDENTIFIER_DECLARE;
     }
 
     printTokens(token_list);

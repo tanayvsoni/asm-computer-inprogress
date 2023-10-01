@@ -5,9 +5,9 @@
 CXX = g++
 CXXFLAGS = -std=c++20 -Wall -O2 -Wno-unused-function
 TARGET = assembler
-SRCS = functions.cpp lexer.cpp instructions.cpp  main.cpp 
+SRCS = parser.cpp functions.cpp lexer.cpp instructions.cpp  main.cpp 
 OBJS = $(SRCS:.cpp=.o)
-HEADERS = functions.hpp lexer.hpp instructions.hpp 
+HEADERS = parser.hpp functions.hpp lexer.hpp instructions.hpp 
 
 # Targets
 all: $(TARGET)
