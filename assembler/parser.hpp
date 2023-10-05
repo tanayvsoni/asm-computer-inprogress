@@ -13,7 +13,6 @@ struct ParsedInstruction {
     int argumentValue;
     std::string label_val = "";
     int address = 0;
-    int size = 1;
 };
 
 struct Labels {

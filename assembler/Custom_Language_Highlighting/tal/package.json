@@ -1,0 +1,25 @@
+{
+  "name": "tal",
+  "displayName": "TAL",
+  "description": "6502-Computer Programming Language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.83.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "tal",
+      "aliases": ["TAL Programming Language", "tal"],
+      "extensions": [".tal"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "tal",
+      "scopeName": "source.tpl",
+      "path": "./syntaxes/tal.tmLanguage.json"
+    }]
+  }
+}

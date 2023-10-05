@@ -52,7 +52,6 @@ static void handle_preprocess(size_t& i, const std::vector<Token>& tokens, Parse
         }
 
     } else if (preprocess_name == "db") {
-        pToken.size = 1;
         pToken.instr.addr_mode = "";
         pToken.label_val = "";
 
@@ -81,7 +80,6 @@ static void handle_preprocess(size_t& i, const std::vector<Token>& tokens, Parse
         pToken.instr.addr_mode = "";
         pToken.label_val = "";
 
-        pToken.size = 1;
         for (size_t j = 0; j < tokens[i].substring.size(); j++) {
             pToken.argumentValue = static_cast<int>(tokens[i].substring[j]);
             pToken.instr.name = "W";
@@ -102,15 +100,11 @@ static void handle_preprocess(size_t& i, const std::vector<Token>& tokens, Parse
 }
 
 static void handle_abs(size_t& i, const std::vector<Token>& tokens, ParsedInstruction& pToken) {
-    pToken.size = 3;
-
     if (tokens[i+1].type == TokenType::COMMA) pToken.instr.addr_mode = "absolute," + tokens[i+2].substring;
     else pToken.instr.addr_mode = "absolute";
 }
 
 static void handle_zp(size_t& i, const std::vector<Token>& tokens, ParsedInstruction& pToken) {
-    pToken.size = 2;
-
     if (tokens[i+1].type == TokenType::COMMA) pToken.instr.addr_mode = "zeropage," + tokens[i+1].substring;
     else pToken.instr.addr_mode = "zeropage";
 }
@@ -130,7 +124,6 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
 
     // Implied
     if (tokens[i].type == TokenType::NEWLINE) {
-        pToken.size = 1;
         pToken.instr.addr_mode = "implied";
         pToken.label_val = "";
         parsed_list.push_back(pToken);
@@ -140,7 +133,6 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
     // Immediate
     else if (tokens[i].type == TokenType::IMMEDIATE) {
         i++;
-        pToken.size = 2;
         pToken.argumentValue = handle_value(tokens[i]);
 
         if (pToken.argumentValue > 0xFF) {
@@ -193,14 +185,12 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                 if (tokens[i].type == TokenType::LABEL_USED) {
                     pToken.label_val = tokens[i].substring;
                     pToken.instr.addr_mode = "(indirect)";
-                    pToken.size = 3;
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 2;
                 } else {
                     pToken.argumentValue = handle_value(tokens[i]);
                     pToken.instr.addr_mode = "(indirect)";
-                    pToken.size = 3;
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 2;
@@ -218,14 +208,12 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                 if (tokens[i].type == TokenType::LABEL_USED) {
                     pToken.label_val = tokens[i].substring;
                     pToken.instr.addr_mode = "(indirect)," + reg;
-                    pToken.size = 3;
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 3;
                 } else {
                     pToken.argumentValue = handle_value(tokens[i]);
                     pToken.instr.addr_mode = "(indirect)," + reg;
-                    pToken.size = 3;
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 3;
@@ -243,14 +231,12 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                  if (tokens[i].type == TokenType::LABEL_USED) {
                     pToken.label_val = tokens[i].substring;
                     pToken.instr.addr_mode = "(indirect," + reg + ")";
-                    pToken.size = 3;
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 3;
                 } else {
                     pToken.argumentValue = handle_value(tokens[i]);
                     pToken.instr.addr_mode = "(indirect," + reg + ")";
-                    pToken.size = 3;
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 3;
