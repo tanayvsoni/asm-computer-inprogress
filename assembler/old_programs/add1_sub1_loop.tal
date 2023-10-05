@@ -19,7 +19,7 @@ sub_Loop:
 	sub #1          
 	sta %0        
 	beq add_Loop      
-	jmp sub_Loop       
+	jmp sub_Loop
 
 interrupt:
 	inc -2

@@ -3,30 +3,139 @@
 	"name": "TAL Programming Language",
 	"patterns": [
 		{
-			"include": "#keywords"
+			"include": "#blockComments"
 		},
+
+		{
+			"include": "#inlineComments"
+		},
+
 		{
 			"include": "#strings"
+		},
+
+		{
+			"include": "#char"
+		},
+
+		{
+			"include": "#preprocess"
+		},
+
+		{
+			"include": "#label_declare"
+		},
+
+		{
+			"include": "#immediate"
+		},
+
+		{
+			"include": "#symbols"
+		},
+
+		{
+			"include": "#numbers"
+		},
+
+		{
+			"include": "#instr"
+		},
+		
+		{
+			"include": "#register"
+		},
+
+		{
+			"include": "#vars_labels"
 		}
+
 	],
 	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.tal",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+
+		"blockComments": {
+			"name": "comment.block.tal",
+			"begin": "\/\\*",
+			"end": "\\*\/"
 		},
+
+		"inlineComments": {
+			"name": "comment.line.tal",
+			"begin": ";",
+			"end": "\\n"
+		},
+
+		"preprocess": {
+			"name": "meta.preprocessor.tal",
+			"begin": "(?<=\\.)",
+			"end": "\\s"
+		},
+
+		"label_declare": {
+			"match": "(^\\w+):",
+   			"captures": {
+        	"1": { "name": "keyword.control.tal" }
+    		}
+		},
+
+		"immediate": {
+			"name": "meta.preprocessor.tal",
+			"match": "#"
+		},
+
+		"symbols": {
+			"name": "entity.name.namespace.tal",
+			"match": "\\$|%"
+		},
+
+		"numbers": {
+			"name": "constant.numeric.tal",
+    		"match": "(?<=\\$)[a-zA-Z0-9]+|\\d+"
+		},
+
+		"instr": {
+			"match": "\\b([nN][oO][pP]|[aA][dD][cC]|[aA][nN][dD]|[aA][sS][lL]|[bB][cC][cC]|[bB][cC][sS]|[bB][eE][qQ]|[bB][iI][tT]|[bB][mM][iI]|[bB][nN][eE]|[bB][pP][lL]|[bB][rR][kK]|[bB][vV][cC]|[bB][vV][sS]|[cC][lL][cC]|[cC][lL][iI]|[cC][lL][vV]|[cC][mM][pP]|[cC][pP][xX]|[cC][pP][yY]|[dD][eE][cC]|[dD][eE][xX]|[dD][eE][yY]|[eE][oO][rR]|[iI][nN][cC]|[iI][nN][xX]|[iI][nN][yY]|[jJ][mM][pP]|[jJ][sS][rR]|[lL][dD][aA]|[lL][dD][xX]|[lL][dD][yY]|[lL][sS][rR]|[oO][rR][aA]|[pP][hH][aA]|[pP][hH][pP]|[pP][lL][aA]|[pP][lL][pP]|[rR][oO][lL]|[rR][oO][rR]|[rR][tT][iI]|[rR][tT][sS]|[sS][uU][bB]|[sS][eE][cC]|[sS][eE][iI]|[sS][tT][aA]|[sS][tT][xX]|[sS][tT][yY]|[tT][aA][xX]|[tT][aA][yY]|[tT][sS][xX]|[tT][sS][aA]|[tT][xX][sS]|[tT][yY][aA]|[hH][lL][tT]|[oO][uU][tT])\\b",
+			"captures": {
+				"1": { "name": "entity.name.function.tal" }
+			}
+		},
+
 		"strings": {
 			"name": "string.quoted.double.tal",
 			"begin": "\"",
 			"end": "\"",
+
 			"patterns": [
 				{
 					"name": "constant.character.escape.tal",
 					"match": "\\\\."
 				}
 			]
+		},
+
+		"char": {
+			"name": "string.quoted.single.tal",
+			"begin": "'",
+			"end": "'",
+			
+			"patterns": [
+				{
+					"name": "constant.character.escape.tal",
+					"match": "\\\\."
+				}
+			]
+		},
+
+		"register": {
+			"name": "entity.name.namespace.tal",
+			"match": "(rX)|(rY)"
+		},
+
+		"vars_labels": {
+			"name": "variable.name",
+			"match": "\\b[a-zA-Z0-9_]+\\b"
 		}
+
 	},
 	"scopeName": "source.tpl"
 }
