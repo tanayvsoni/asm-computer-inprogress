@@ -39,7 +39,7 @@ stop:
 msg:
 	.tx    "Hello World"
 	.db    'c' $F 3 %0110
-	.db $F
+	.db 	$F
 
 .org $fffd
 irq:

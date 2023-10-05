@@ -84,7 +84,7 @@
 		},
 
 		"symbols": {
-			"name": "entity.name.namespace.tal",
+			"name": "constant.numeric.tal",
 			"match": "\\$|%"
 		},
 
