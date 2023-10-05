@@ -351,7 +351,7 @@ std::vector<ParsedInstruction> parse(std::vector<Token>& tokens) {
     for (ParsedInstruction& pToken : parsed_list) replaceLabel(pToken, label_list);
     
 
-    print_parsed_tokens(parsed_list);
+    //print_parsed_tokens(parsed_list);
 
     return parsed_list;
 }

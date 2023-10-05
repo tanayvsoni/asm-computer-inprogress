@@ -3,7 +3,7 @@
 ldx #0
 
 print:
-    lda message,X
+    lda message,rX
     beq stop
     inx 
     out

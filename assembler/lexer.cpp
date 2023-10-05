@@ -269,7 +269,7 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instr
             token_list[i].type = TokenType::IDENTIFIER_DECLARE;
     }
 
-    printTokens(token_list);
+    //printTokens(token_list);
 
     return token_list;
 }
