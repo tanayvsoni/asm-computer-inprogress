@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <cstdint>
 
 #include "instructions.hpp"
 
@@ -28,7 +29,7 @@ std::vector<std::string> address_modes  = {
 static void printInstructions(const std::vector<Instruction>& instructions) {
     for (const Instruction& instr : instructions) {
         std::cout << "Name: " << instr.name << std::endl;
-        std::cout << "Opcode: " << instr.opcode << std::endl;
+        std::cout << "Opcode: " << static_cast<int>(instr.opcode) << std::endl;
         std::cout << "Address Mode: " << instr.addr_mode << std::endl;
         std::cout << "--------------------------" << std::endl;
     }
@@ -66,9 +67,11 @@ std::vector<Instruction> get_instr() {
             ) {
 
             addr_mode.erase(std::remove(addr_mode.begin(), addr_mode.end(), '|'), addr_mode.end());     // Remove '|' Char
-            instructions.push_back({name, opcode, addr_mode});
+            instructions.push_back({name, static_cast<uint8_t>(opcode), addr_mode});
         }
     }
+
+    //printInstructions(instructions);
 
     return instructions;
 }

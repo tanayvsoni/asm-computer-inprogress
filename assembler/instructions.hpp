@@ -4,10 +4,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 struct Instruction {
     std::string name;
-    int opcode;
+    uint8_t opcode;
     std::string addr_mode;
 };
 

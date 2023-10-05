@@ -9,9 +9,10 @@
 #include "lexer.hpp"
 
 static void print_parsed_tokens(const std::vector<ParsedInstruction>& parsed_list) {
-    for (size_t i = 0; i < parsed_list.size(); i++) {
-        std::cout << "Address Value: " << parsed_list[i].address << " Name: " << parsed_list[i].instr.name
-         << " Arg Value: " << parsed_list[i].argumentValue << " Addressing Mode: " << parsed_list[i].instr.addr_mode << " Label Value: " << parsed_list[i].label_val << std::endl;
+    for (const ParsedInstruction& pToken :  parsed_list) {
+        std::cout << "Address Value: " << pToken.address << "|Name: " << pToken.instr.name << "|Mode: " << pToken.instr.addr_mode;
+        if (pToken.instr.addr_mode == "Implied") std::cout << std::endl;
+        else std::cout << "|Arg Value: " << pToken.argumentValue << std::endl;
     }
 }
 
@@ -103,7 +104,7 @@ static void handle_preprocess(size_t& i, const std::vector<Token>& tokens, Parse
 static void handle_abs(size_t& i, const std::vector<Token>& tokens, ParsedInstruction& pToken) {
     pToken.size = 3;
 
-    if (tokens[i+1].type == TokenType::COMMA) pToken.instr.addr_mode = "absolute," + tokens[i+1].substring;
+    if (tokens[i+1].type == TokenType::COMMA) pToken.instr.addr_mode = "absolute," + tokens[i+2].substring;
     else pToken.instr.addr_mode = "absolute";
 }
 
@@ -114,29 +115,30 @@ static void handle_zp(size_t& i, const std::vector<Token>& tokens, ParsedInstruc
     else pToken.instr.addr_mode = "zeropage";
 }
 
-static void replaceLabel(const size_t& i, std::vector<Token>& tokens, const std::vector<Labels>& label_list) {
+static void replaceLabel(ParsedInstruction& pToken, const std::vector<Labels>& label_list) {
     for (const Labels& label : label_list) {
-        if (label.name == tokens[i].substring) {
-            tokens[i].substring = std::to_string(label.address);
-            tokens[i].type = TokenType::NUMBER;
-        } 
-            
+        if (label.name == pToken.label_val) {
+            pToken.argumentValue = label.address; 
+            break;
+        }    
     }
-    
 }
 
 static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstruction& pToken, std::vector<ParsedInstruction>& parsed_list) {
     pToken.instr.name = tokens[i].substring;
     i++;
 
+    // Implied
     if (tokens[i].type == TokenType::NEWLINE) {
         pToken.size = 1;
-        pToken.instr.addr_mode = "Implied";
+        pToken.instr.addr_mode = "implied";
         pToken.label_val = "";
         parsed_list.push_back(pToken);
         pToken.address += 1;
 
-    } else if (tokens[i].type == TokenType::IMMEDIATE) {
+    } 
+    // Immediate
+    else if (tokens[i].type == TokenType::IMMEDIATE) {
         i++;
         pToken.size = 2;
         pToken.argumentValue = handle_value(tokens[i]);
@@ -146,14 +148,15 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
             exit(1);
         }
 
-        pToken.instr.addr_mode = "Immediate";
+        pToken.instr.addr_mode = "immediate";
         pToken.label_val = "";
         parsed_list.push_back(pToken);
         pToken.address += 2;
 
-    } else if (tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || tokens[i].type == TokenType::HEX || tokens[i].type == TokenType::NEGATIVE) {
+    } 
+    // Absolutes or Zeropages No labels
+    else if (tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || tokens[i].type == TokenType::HEX || tokens[i].type == TokenType::NEGATIVE) {
 
-        //if (tokens[i].type == TokenType::LABEL_USED) replaceLabel(i, tokens, label_list);
         pToken.argumentValue = handle_value(tokens[i]);
         pToken.label_val = "";
 
@@ -170,13 +173,20 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
             exit(1);
         }
 
-    } else if (tokens[i].type == TokenType::LABEL_USED) {
+    } 
+    // Hand any labels for absolutes
+    else if (tokens[i].type == TokenType::LABEL_USED) {
+
         pToken.label_val = tokens[i].substring;
         handle_abs(i, tokens, pToken);
         parsed_list.push_back(pToken);
         pToken.address += 3;
-    } else if (tokens[i].type == TokenType::PAREN) {
+    } 
+    // Indirects
+    else if (tokens[i].type == TokenType::PAREN) {
         i++;
+
+        // (Indirect)
         if ((tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || 
             tokens[i].type == TokenType::HEX || tokens[i].type == TokenType::NEGATIVE || 
             tokens[i].type == TokenType::LABEL_USED) && tokens[i + 1].type == TokenType::PAREN && tokens[i + 2].type == TokenType::NEWLINE) {
@@ -187,17 +197,81 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 2;
+                } else {
+                    pToken.argumentValue = handle_value(tokens[i]);
+                    pToken.instr.addr_mode = "(indirect)";
+                    pToken.size = 3;
+                    parsed_list.push_back(pToken);
+                    pToken.address += 3;
+                    i += 2;
                 }
-        } else if ((tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || 
+        } 
+        // (Indirect),X or (Indirect),Y
+        else if ((tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || 
             tokens[i].type == TokenType::HEX || tokens[i].type == TokenType::NEGATIVE || 
-            tokens[i].type == TokenType::LABEL_USED) && tokens[i + 1].type == TokenType::PAREN && tokens[i + 2].type == TokenType::COMMA) {
+            tokens[i].type == TokenType::LABEL_USED) && tokens[i + 1].type == TokenType::PAREN && tokens[i + 2].type == TokenType::COMMA && tokens[i + 3].type == TokenType::REG) {
+                
+                std::string reg;
+                if (tokens[i + 3].substring == "X") reg = "X";   
+                else reg = "Y";
 
+                if (tokens[i].type == TokenType::LABEL_USED) {
+                    pToken.label_val = tokens[i].substring;
+                    pToken.instr.addr_mode = "(indirect)," + reg;
+                    pToken.size = 3;
+                    parsed_list.push_back(pToken);
+                    pToken.address += 3;
+                    i += 3;
+                } else {
+                    pToken.argumentValue = handle_value(tokens[i]);
+                    pToken.instr.addr_mode = "(indirect)," + reg;
+                    pToken.size = 3;
+                    parsed_list.push_back(pToken);
+                    pToken.address += 3;
+                    i += 3;
+                }
+        } 
+        // (Indirect,X) or (Indirect,Y)
+        else if ((tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || 
+            tokens[i].type == TokenType::HEX || tokens[i].type == TokenType::NEGATIVE || 
+            tokens[i].type == TokenType::LABEL_USED) && tokens[i + 1].type == TokenType::COMMA && tokens[i + 2].type == TokenType::REG, tokens[i + 3].type == TokenType::PAREN) {
+
+                std::string reg;
+                if (tokens[i + 2].substring == "X") reg = "X";   
+                else reg = "Y";
+
+                 if (tokens[i].type == TokenType::LABEL_USED) {
+                    pToken.label_val = tokens[i].substring;
+                    pToken.instr.addr_mode = "(indirect," + reg + ")";
+                    pToken.size = 3;
+                    parsed_list.push_back(pToken);
+                    pToken.address += 3;
+                    i += 3;
+                } else {
+                    pToken.argumentValue = handle_value(tokens[i]);
+                    pToken.instr.addr_mode = "(indirect," + reg + ")";
+                    pToken.size = 3;
+                    parsed_list.push_back(pToken);
+                    pToken.address += 3;
+                    i += 3;
+                }
         }
+        // Error
+        else {
+            std::cerr << "Error: Addressing Mode Error" << std::endl; 
+            exit(1);
+        }
+    }
+    // Error
+    else {
+        std::cerr << "Error: Addressing Mode Error" << std::endl; 
+        exit(1);
     }
 
 }
 
 std::vector<ParsedInstruction> parse(std::vector<Token>& tokens) {
+    
     for (const Token& token : tokens) {
         if (token.type != WHITESPACE && token.type != NEWLINE && token.substring != "org") {
             std::cerr << "Error: No starting address" << std::endl; 
@@ -210,15 +284,15 @@ std::vector<ParsedInstruction> parse(std::vector<Token>& tokens) {
     std::vector<Labels> label_list;
     std::vector<Vars> var_list;
 
-    Labels label;
-    Vars var;
 
     // First Pass for Labels
     for (size_t i = 0; i < tokens.size(); i++) {
         // Get the names of all labels
-        if(tokens[i].type == TokenType::LABEL_DECLARE)
+        if(tokens[i].type == TokenType::LABEL_DECLARE) {
+            Labels label;
             label.name = tokens[i].substring;
             label_list.push_back(label);
+        }
     }
 
     // Second Pass for Variables
@@ -238,6 +312,7 @@ std::vector<ParsedInstruction> parse(std::vector<Token>& tokens) {
 
             // If not declared, add it in
             if (!isInVarList) {
+                Vars var;
                 var.name = tokens[i].substring;
                 var.val = handle_value(tokens[i+2]);
                 var_list.push_back(var);
@@ -265,25 +340,30 @@ std::vector<ParsedInstruction> parse(std::vector<Token>& tokens) {
 
     // Third Pass
     for (size_t i = 0; i < tokens.size(); i++) {
+
         switch (tokens[i].type) {
             case TokenType::PREPROCESS:
                 handle_preprocess(i, tokens, parsed_token, parsed_list);
                 break;
 
             // Assgin each label with a address
-            case TokenType::LABEL_DECLARE:  
-                for (size_t j = 0; j < label_list.size(); j++) {
-                    if (label_list[j].name == tokens[i].substring) {
-                        label_list[j].address = parsed_token.address;
-                    }
+            case TokenType::LABEL_DECLARE:
+                for (Labels& label : label_list) {
+                    if (label.name == tokens[i].substring) label.address = parsed_token.address;
                 }
                 break;
 
             case TokenType::INSTRUCTION:
                 handle_instr(i, tokens, parsed_token, parsed_list);
                 break;
+            
+            default:
+                break;
         }
     }
+
+    for (ParsedInstruction& pToken : parsed_list) replaceLabel(pToken, label_list);
+    
 
     print_parsed_tokens(parsed_list);
 

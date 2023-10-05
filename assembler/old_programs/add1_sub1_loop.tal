@@ -44,5 +44,3 @@ msg:
 .org $fffd
 irq:
 	jmp interrupt
-
-
