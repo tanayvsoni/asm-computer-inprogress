@@ -49,7 +49,7 @@ std::vector<Instruction> get_instr() {
 
     if (!file.is_open()) {
         std::cerr << "Error: Could not open file instructions.csv" << std::endl;
-        return instructions; // Return an error code
+        exit(1); // Return an error code
     }
 
     std::string line;
