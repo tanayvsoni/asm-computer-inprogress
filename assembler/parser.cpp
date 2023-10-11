@@ -256,13 +256,31 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
 
 }
 
-std::vector<ParsedInstruction> parse(std::vector<Token>& tokens) {
+std::vector<ParsedInstruction> parse(std::vector<Token>& old_tokens, const std::vector<Instruction>& instruction_list) {
     
-    for (const Token& token : tokens) {
+    for (const Token& token : old_tokens) {
         if (token.type != WHITESPACE && token.type != NEWLINE && token.substring != "org") {
             std::cerr << "Error: No starting address" << std::endl; 
             exit(1);
         } else if (token.substring == "org") break;
+    }
+
+    std::vector<Token> tokens;
+
+    // Process all includes
+    for (size_t i = 0; i < old_tokens.size(); i++) {
+        if (i < old_tokens.size() - 1 && old_tokens[i].type == TokenType::INCLUDE && old_tokens[i + 1].type == TokenType::ARGUEMENT) {
+            std::string temp_name = old_tokens[i + 1].substring;
+            std::string temp_contents = get_contents(temp_name);
+            std::vector<Token> new_tokens = lexer(temp_contents, instruction_list);
+
+            for (Token token : new_tokens) tokens.push_back(token);
+
+        } else if (old_tokens[i].type == TokenType::INCLUDE) {
+            std::cerr << "Error: No Include Arguement" << std::endl; 
+            exit(1);
+
+        } else if (old_tokens[i].type != TokenType::ARGUEMENT) tokens.push_back(old_tokens[i]);
     }
 
     std::vector<ParsedInstruction> parsed_list;

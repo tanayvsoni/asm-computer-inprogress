@@ -95,6 +95,8 @@ CJ    = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_1001_00  # Clear JUMP
 CSB   = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_0000_10  # Counter Dec
 RCC   = 0b00_0000_000_0000_0000_0000_0000_00_00_00_0_0000_01  # Reverse Counter Clock
 
+import struct
+
 def createMicroCode(data):  
     """
     Creates the microcode for the computer
@@ -123,7 +125,6 @@ def substeps_CJ(substep, rom_data, address):
         case 3: rom_data[address] = MI|COA|RCC|FEC
         case 4: rom_data[address] = MI|COA|CE|II|EP
      
-
 def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
     """
     Adds in expections for conditional jumps
@@ -159,15 +160,25 @@ def conditionalJumps_Expections(flag, instr, substep, address, rom_data):
     elif (not VF) and (instr == 39): substeps_CJ(substep, rom_data, address)
     
     # BVS - Branch on Overflow Set 
-    elif VF and (instr == 40): substeps_CJ(substep, rom_data, address)
+    elif VF and (instr == 40): substeps_CJ(substep, rom_data, address)  
+
+def pack_40bit(number):
+    lower_bits = number & ((1 << 32) - 1)
+    upper_bits = number >> 32
+
+    packed_lower = struct.pack('I', lower_bits)
+    packed_upper = struct.pack('B', upper_bits)
+    return packed_lower + packed_upper
     
 def export(rom_data):            
     """
     Export Microcode into text file
     """     
-    with open('microcode.txt','w') as microcode:
-        for i in range(len(rom_data)):
-            microcode.write(f'{hex(rom_data[i])[2:]}\n')
+    
+    data = b''.join(map(pack_40bit, rom_data))
+    
+    with open('microcode','wb') as microcode:
+        microcode.write(data)
 
 def main():    
     # Instruction Data
@@ -476,5 +487,6 @@ def main():
     
     rom_data = createMicroCode(instructions_data)
     export(rom_data)
-    
-main()
+
+if __name__ == '__main__':    
+    main()

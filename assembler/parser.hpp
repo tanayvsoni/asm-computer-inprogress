@@ -25,6 +25,6 @@ struct Vars {
     int val;
 };
 
-std::vector<ParsedInstruction> parse(std::vector<Token>& tokens);
+std::vector<ParsedInstruction> parse(std::vector<Token>& tokens, const std::vector<Instruction>& instruction_list);
 
 #endif

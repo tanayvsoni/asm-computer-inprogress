@@ -60,6 +60,14 @@ static void printTokens(const std::vector<Token>& token_list) {
             case TokenType::CHAR:
                 typeStr = "Char";
                 break;
+            
+            case TokenType::INCLUDE:
+                typeStr = "Include ";
+                break;
+            
+            case TokenType::ARGUEMENT:
+                typeStr = "Arguement ";
+                break;
 
             case TokenType::PREPROCESS:
                 typeStr = "Preprocessor";
@@ -169,6 +177,8 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instr
     std::string string_regex = "(\"((?:\\\\.|[^\"\\\\])*)\")";
     std::string char_regex = "(\'((?:\\\\.|[^\'\\\\])*)\')";
     std::string preprocessor_regex = "(\\.(?!\\s)(\\w+))";
+    std::string include_regex = "(#[a-zA-Z]+)";    
+    std::string arguement_regex = "(<([^>]+)>)";
     std::string newline_regex = "([\\n]+)";
     std::string whitespace_regex = "([ \t]+)";
     std::string label_regex = "(^([a-zA-Z_]\\w*):)";
@@ -184,7 +194,7 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instr
     std::string identifier_regex = "(\\w+)";
     std::string equal_regex = "(=)";
 
-    std::regex token_regex(string_regex + "|" + char_regex + "|" + preprocessor_regex + "|" + newline_regex + "|" + whitespace_regex + "|" + label_regex + "|" + 
+    std::regex token_regex(string_regex + "|" + char_regex + "|" + include_regex + "|" + arguement_regex + "|" + preprocessor_regex + "|" + newline_regex + "|" + whitespace_regex + "|" + label_regex + "|" + 
                            comma_regex + "|" + reg_regex + "|" + paren_regex + "|" + immediate_regex + "|" + binary_regex + "|" + hex_regex + "|" + 
                            negative_regex + "|" + number_regex + "|" + instruction_regex + "|" + identifier_regex + "|" + equal_regex,
                            std::regex::multiline);
@@ -209,6 +219,13 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instr
             token.substring.erase(0, 1);
             token.substring.pop_back();
             replaceAll(token.substring, "\\\'", "\'");
+        
+        } else if (std::regex_match(match.str(), std::regex(include_regex))) { token.type = TokenType::INCLUDE;
+        
+        } else if (std::regex_match(match.str(), std::regex(arguement_regex))) { 
+            token.type = TokenType::ARGUEMENT;
+            token.substring.erase(0, 1);
+            token.substring.pop_back();
 
         } else if (std::regex_match(match.str(), std::regex(preprocessor_regex))) {
             token.type = TokenType::PREPROCESS;
@@ -271,5 +288,5 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instr
 
     //printTokens(token_list);
 
-    return token_list;
+    return token_list ;
 }

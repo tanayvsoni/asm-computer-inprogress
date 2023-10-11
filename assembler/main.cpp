@@ -4,11 +4,11 @@
 #include <sstream>
 #include <fstream>
 #include <cstdint>
-#include <cstdio>
 
 #include "instructions.hpp"
 #include "lexer.hpp"
 #include "parser.hpp"
+#include "functions.hpp"
 
 uint8_t get_opcode(const std::string& instr_name, const std::string& instr_mode, const std::vector<Instruction>& instruction_list) {
     for (const Instruction& instruction : instruction_list) {
@@ -81,24 +81,11 @@ int main(int argc, char* argv[]){
     }
 
     std::string filename = argv[1];
-
-    std::ifstream inputFile(filename);
-
-    if(!inputFile.is_open()) {
-        std::cerr << "Error: Unable to open file '" << filename << "'" << std::endl;
-        return 1;
-    }
-
-    std::string fileContents;
-    std::string line;
-
-    while(getline(inputFile, line)) fileContents += line + '\n';
-
-    inputFile.close();
+    std::string fileContents = get_contents(filename);
 
     std::vector<Instruction> instruction_list  = get_instr();
     std::vector<Token> tokens = lexer(fileContents, instruction_list);
-    std::vector<ParsedInstruction> parsed_tokens = parse(tokens);
+    std::vector<ParsedInstruction> parsed_tokens = parse(tokens, instruction_list);
     code_gen(parsed_tokens, instruction_list, filename);
 
     

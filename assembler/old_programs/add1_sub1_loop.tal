@@ -1,6 +1,4 @@
-
-.ORG $4000
-
+.org $4000
 /*
 
 THIS IS MY TEST
@@ -25,7 +23,7 @@ interrupt:
 	inc -2
 	jsr print
 	rti
-
+	
 print:
     lda msg,rX
     beq stop

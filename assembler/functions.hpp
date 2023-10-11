@@ -8,6 +8,7 @@
 
 std::string toLowerCase(const std::string& input);
 std::string toUpperCase(const std::string& input);
+std::string get_contents(const std::string& filename);
 
 #endif
 
