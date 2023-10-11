@@ -194,8 +194,8 @@ std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instr
     std::string identifier_regex = "(\\w+)";
     std::string equal_regex = "(=)";
 
-    std::regex token_regex(string_regex + "|" + char_regex + "|" + include_regex + "|" + arguement_regex + "|" + preprocessor_regex + "|" + newline_regex + "|" + whitespace_regex + "|" + label_regex + "|" + 
-                           comma_regex + "|" + reg_regex + "|" + paren_regex + "|" + immediate_regex + "|" + binary_regex + "|" + hex_regex + "|" + 
+    std::regex token_regex(string_regex + "|" + char_regex + "|" + include_regex + "|" + arguement_regex + "|" + preprocessor_regex + "|" + newline_regex + "|" + whitespace_regex + "|" + 
+                           label_regex + "|" + comma_regex + "|" + reg_regex + "|" + paren_regex + "|" + immediate_regex + "|" + binary_regex + "|" + hex_regex + "|" + 
                            negative_regex + "|" + number_regex + "|" + instruction_regex + "|" + identifier_regex + "|" + equal_regex,
                            std::regex::multiline);
 
