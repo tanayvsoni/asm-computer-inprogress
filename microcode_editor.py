@@ -177,7 +177,7 @@ def export(rom_data):
     
     data = b''.join(map(pack_40bit, rom_data))
     
-    with open('microcode','wb') as microcode:
+    with open('microcode.bin','wb') as microcode:
         microcode.write(data)
 
 def main():    
