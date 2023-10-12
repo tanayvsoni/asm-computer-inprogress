@@ -182,13 +182,16 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
         if ((tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || 
             tokens[i].type == TokenType::HEX || tokens[i].type == TokenType::NEGATIVE || 
             tokens[i].type == TokenType::LABEL_USED) && tokens[i + 1].type == TokenType::PAREN && tokens[i + 2].type == TokenType::NEWLINE) {
+                // Has Label
                 if (tokens[i].type == TokenType::LABEL_USED) {
                     pToken.label_val = tokens[i].substring;
                     pToken.instr.addr_mode = "(indirect)";
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 2;
-                } else {
+                } 
+                // No Label
+                else {
                     pToken.argumentValue = handle_value(tokens[i]);
                     pToken.instr.addr_mode = "(indirect)";
                     parsed_list.push_back(pToken);
@@ -196,6 +199,7 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                     i += 2;
                 }
         } 
+        
         // (Indirect),X or (Indirect),Y
         else if ((tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || 
             tokens[i].type == TokenType::HEX || tokens[i].type == TokenType::NEGATIVE || 
@@ -204,14 +208,17 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                 std::string reg;
                 if (tokens[i + 3].substring == "X") reg = "X";   
                 else reg = "Y";
-
+                
+                // Has Label
                 if (tokens[i].type == TokenType::LABEL_USED) {
                     pToken.label_val = tokens[i].substring;
                     pToken.instr.addr_mode = "(indirect)," + reg;
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 3;
-                } else {
+                } 
+                // No Label
+                else {
                     pToken.argumentValue = handle_value(tokens[i]);
                     pToken.instr.addr_mode = "(indirect)," + reg;
                     parsed_list.push_back(pToken);
@@ -219,6 +226,7 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                     i += 3;
                 }
         } 
+        
         // (Indirect,X) or (Indirect,Y)
         else if ((tokens[i].type == TokenType::NUMBER || tokens[i].type == TokenType::BINARY || 
             tokens[i].type == TokenType::HEX || tokens[i].type == TokenType::NEGATIVE || 
@@ -228,13 +236,16 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                 if (tokens[i + 2].substring == "X") reg = "X";   
                 else reg = "Y";
 
+                // Has Label
                  if (tokens[i].type == TokenType::LABEL_USED) {
                     pToken.label_val = tokens[i].substring;
                     pToken.instr.addr_mode = "(indirect," + reg + ")";
                     parsed_list.push_back(pToken);
                     pToken.address += 3;
                     i += 3;
-                } else {
+                } 
+                // No Label
+                else {
                     pToken.argumentValue = handle_value(tokens[i]);
                     pToken.instr.addr_mode = "(indirect," + reg + ")";
                     parsed_list.push_back(pToken);
@@ -242,6 +253,7 @@ static void handle_instr(size_t& i, std::vector<Token>& tokens, ParsedInstructio
                     i += 3;
                 }
         }
+        
         // Error
         else {
             std::cerr << "Error: Addressing Mode Error" << std::endl; 
