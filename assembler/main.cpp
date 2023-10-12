@@ -1,14 +1,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <sstream>
 #include <fstream>
-#include <cstdint>
 
 #include "instructions.hpp"
 #include "lexer.hpp"
 #include "parser.hpp"
 #include "functions.hpp"
+
+#define OFFSET 0x4000
 
 uint8_t get_opcode(const std::string& instr_name, const std::string& instr_mode, const std::vector<Instruction>& instruction_list) {
     for (const Instruction& instruction : instruction_list) {
@@ -20,6 +20,7 @@ uint8_t get_opcode(const std::string& instr_name, const std::string& instr_mode,
 } 
 
 void code_gen(const std::vector<ParsedInstruction>& parsed_tokens, const std::vector<Instruction>& instruction_list, std::string& filename) { 
+
     filename.erase(filename.length() - 4);
     filename += ".bin";
 
@@ -28,12 +29,12 @@ void code_gen(const std::vector<ParsedInstruction>& parsed_tokens, const std::ve
 
     std::ofstream outfile(output_name, std::ios::binary);
 
-    char emptySpace[0xFFFF - 0x4000 + 1] = {0};
+    char emptySpace[0xFFFF - OFFSET + 1] = {0};
     outfile.write(emptySpace, sizeof(emptySpace));
 
     for (const ParsedInstruction& pToken : parsed_tokens) {
         uint8_t byteValue = 0;
-        int address = pToken.address - 0x4000;
+        int address = pToken.address - OFFSET;
 
         if (pToken.instr.name != "W") {
             byteValue = get_opcode(pToken.instr.name, pToken.instr.addr_mode, instruction_list);
@@ -41,22 +42,26 @@ void code_gen(const std::vector<ParsedInstruction>& parsed_tokens, const std::ve
             outfile.seekp(address, std::ios::beg);
             outfile.write(reinterpret_cast<char*>(&byteValue), 1);
 
+            // Zeropage
             if (pToken.argumentValue <= 0xFF) {
-                address = pToken.address+1 - 0x4000;
+                address = pToken.address+1 - OFFSET;
                 byteValue = static_cast<uint8_t>(pToken.argumentValue);
 
                 outfile.seekp(address, std::ios::beg);
                 outfile.write(reinterpret_cast<char*>(&byteValue), 1);
-            } else {
+            } 
+            
+            // Absolute
+            else {
                 // Store LSB
-                address = pToken.address+1 - 0x4000;
+                address = pToken.address+1 - OFFSET;
                 byteValue = static_cast<uint8_t>(pToken.argumentValue);
 
                 outfile.seekp(address, std::ios::beg);
                 outfile.write(reinterpret_cast<char*>(&byteValue), 1);
 
                 // Store MSB
-                address = pToken.address+2 - 0x4000;
+                address = pToken.address+2 - OFFSET;
                 byteValue = static_cast<uint8_t>(pToken.argumentValue >> 8);
 
                 outfile.seekp(address, std::ios::beg);
@@ -76,7 +81,7 @@ void code_gen(const std::vector<ParsedInstruction>& parsed_tokens, const std::ve
 
 int main(int argc, char* argv[]){
     if (argc != 2) {
-        std::cerr << "Usage: ./assembler <filename>" << std::endl;
+        std::cerr << "Usage: ./tal <filename>" << std::endl;
         return 1;
     }
 
