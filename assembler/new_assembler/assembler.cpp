@@ -1,18 +1,14 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cstdint>
+#include "assembler.hpp"
+#include "lexer.hpp"
 
-#include "main.hpp"
-
-const std::vector<Instruction> Assembler::m_instructionSet = createInstructionSet();
+const std::vector<Instruction> Assembler::_instructionSet = createInstructionSet();
 
 Assembler::Assembler(const std::string& sourcePath, const std::string& outputPath)
-    : m_sourceFilePath(sourcePath), m_outputFilePath(outputPath) {
+    : _sourceFilePath(sourcePath), _outputFilePath(outputPath) {
 }
 
 void Assembler::assemble() {
-    Lexer lexer(m_sourceFilePath, m_instructionSet);
+    Lexer lexer(_sourceFilePath, _instructionSet);
 
     lexer.tokenize();
 }

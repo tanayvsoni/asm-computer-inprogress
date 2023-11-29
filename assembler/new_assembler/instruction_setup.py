@@ -45,7 +45,7 @@ def append_instructions_to_header(csv_filename, header_filename):
         file.writelines(lines)
 
 def main():
-    append_instructions_to_header("instructions.csv", "main.hpp")
+    append_instructions_to_header("instructions.csv", "assembler.hpp")
 
 if __name__ == '__main__':    
     main()

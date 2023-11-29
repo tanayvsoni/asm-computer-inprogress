@@ -1,8 +1,5 @@
-#include <iostream>
-#include <string>
-#include <vector>
-
 #include "main.hpp"
+#include "assembler.hpp"
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {

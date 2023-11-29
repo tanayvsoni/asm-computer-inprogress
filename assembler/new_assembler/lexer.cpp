@@ -3,4 +3,12 @@
 #include <vector>
 #include <cstdint>
 
-#include "main.hpp"
+#include "lexer.hpp"
+
+Lexer::Lexer(const std::string& sourcePath, const std::vector<Instruction>& instructionSet) 
+    : _sourceFilePath(sourcePath), _instructionSet(instructionSet) {
+}
+
+void Lexer::tokenize() {
+
+}
