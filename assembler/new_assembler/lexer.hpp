@@ -10,6 +10,9 @@ enum TokenType {
     // Preproccess
     PREPROCESS, INCLUDE, ARGUEMENT,
 
+    // Comment
+    COMMENT,
+
     // Single-Character Tokens
     PAREN, COMMA,
 
@@ -21,14 +24,18 @@ enum TokenType {
 };    
 
 struct Token {
-    TokenType        type;
     std::string      substring;
+    TokenType        type;
+    int              line;
 };
 
 class Lexer {
 private:
+    const std::string _sourceFilePath;
     const std::vector<Instruction> _instructionSet;
-    std::string _sourceFilePath;
+    int _lineNumber = 1;
+
+    std::string _getContents();
 
 public:
     Lexer(const std::string& sourcePath, const std::vector<Instruction>& instructionSet);

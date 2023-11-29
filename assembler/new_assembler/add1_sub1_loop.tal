@@ -5,11 +5,11 @@ THIS IS MY TEST
 
 */
 
-#include <old_programs/multiplication.tal>
+.include <old_programs/multiplication.tal>
 
 var = 0
 
-add_Loop: 
+add_Loop:
 	adc #1            ;   test
 	bcs sub_Loop     
 	sta var             
@@ -22,7 +22,7 @@ sub_Loop:
 	jmp sub_Loop
 
 interrupt:
-	inc -2
+	inc -2  
 	jsr print
 	rti
 	

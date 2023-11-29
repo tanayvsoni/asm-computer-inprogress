@@ -5,8 +5,10 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <fstream>
 
-#define OFFSET 0x4000
+#define OFFSET  0x4000
+#define ERROR   1
 
 struct Instruction {
     std::string name;

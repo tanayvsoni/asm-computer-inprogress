@@ -16,5 +16,7 @@ int main(int argc, char* argv[]) {
 
     Assembler assembler(sourcePath, outputPath);
 
+    assembler.assemble();
+
     return 0;
 }

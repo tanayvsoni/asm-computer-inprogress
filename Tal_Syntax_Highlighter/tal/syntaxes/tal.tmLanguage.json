@@ -11,10 +11,6 @@
 		},
 
 		{
-			"include": "#include"
-		},
-
-		{
 			"include": "#include_arg"
 		},
 
@@ -71,11 +67,6 @@
 			"name": "comment.line.tal",
 			"begin": ";",
 			"end": "\\n"
-		},
-
-		"include": {
-			"name": "keyword.control.tal",
-			"match": "#[a-zA-Z]+"
 		},
 
 		"include_arg": {
