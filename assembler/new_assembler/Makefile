@@ -3,7 +3,7 @@
 
 # Variables
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -O2 -g -Wno-unused-function
+CXXFLAGS = -std=c++20 -fno-exceptions -Wall -O3 -g -Wno-unused-function -Os
 TARGET = tal
 SRCS = parser.cpp lexer.cpp assembler.cpp main.cpp 
 OBJS = $(SRCS:.cpp=.o)

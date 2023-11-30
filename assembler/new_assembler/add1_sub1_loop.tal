@@ -22,7 +22,7 @@ sub_Loop:
 	jmp sub_Loop
 
 interrupt:
-	inc -2  
+	inc -223  
 	jsr print
 	rti
 	

@@ -10,17 +10,17 @@ enum TokenType {
     // Preproccess
     PREPROCESS, INCLUDE, ARGUEMENT,
 
+    // Keywords
+    INSTRUCTION,
+
     // Comment
     COMMENT,
 
     // Single-Character Tokens
-    PAREN, COMMA,
+    L_PAREN, R_PAREN, COMMA, IMMEDIATE, NEGATIVE, EQUAL,
 
     // Literals
-    IDENTIFIER_DECLARE, IDENTIFIER, LABEL_DECLARE, LABEL_USED, STRING, CHAR, NUMBER, REG, IMMEDIATE, BINARY, HEX, EQUAL, NEGATIVE,
-
-    // Keywords
-    INSTRUCTION,
+    IDENTIFIER, LABEL_DECLARE, STRING, CHAR, NUMBER, BINARY, HEX, REG,
 };    
 
 struct Token {
@@ -33,9 +33,12 @@ class Lexer {
 private:
     const std::string _sourceFilePath;
     const std::vector<Instruction> _instructionSet;
+    
     int _lineNumber = 1;
+    std::string _buf;
 
     std::string _getContents();
+    bool _isInInstructionSet();
 
 public:
     Lexer(const std::string& sourcePath, const std::vector<Instruction>& instructionSet);
