@@ -5,7 +5,7 @@ THIS IS MY TEST
 
 */
 
-.include <old_programs/multiplication.tal>
+;.include <multiplication.tal>
 
 var = 0
 

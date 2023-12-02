@@ -5,9 +5,9 @@
 CXX = g++
 CXXFLAGS = -std=c++20 -fno-exceptions -Wall -O3 -g -Wno-unused-function -Os
 TARGET = tal
-SRCS = parser.cpp lexer.cpp assembler.cpp main.cpp 
+SRCS = preprocessor.cpp parser.cpp lexer.cpp assembler.cpp main.cpp 
 OBJS = $(SRCS:.cpp=.o)
-HEADERS = parser.hpp lexer.hpp assembler.hpp main.hpp
+HEADERS = preprocessor.hpp parser.hpp lexer.hpp assembler.hpp main.hpp 
 PYTHON_SCRIPT = instruction_setup.py
 
 # Targets

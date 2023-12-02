@@ -11,42 +11,49 @@ enum TokenType {
     PREPROCESS, INCLUDE, ARGUEMENT,
 
     // Keywords
-    INSTRUCTION,
+    INSTRUCTION, REG,
 
     // Comment
     COMMENT,
 
     // Single-Character Tokens
-    L_PAREN, R_PAREN, COMMA, IMMEDIATE, NEGATIVE, EQUAL,
+    L_PAREN, R_PAREN, COMMA, IMMEDIATE, MINUS, EQUAL, PLUS, DIV, MUL,
 
     // Literals
-    IDENTIFIER, LABEL_DECLARE, STRING, CHAR, NUMBER, BINARY, HEX, REG,
+    IDENTIFIER, LABEL_DECLARE, STRING, CHAR, NUMBER, BINARY, HEX,
+
+    // End
+    END
 };    
 
 struct Token {
     std::string      substring;
     TokenType        type;
-    int              line;
 };
 
 class Lexer {
 private:
-    const std::string _sourceFilePath;
+    const std::string _sourceCode;
     const std::vector<Instruction> _instructionSet;
-    
-    int _lineNumber = 1;
+     
     std::string _buf;
+    long unsigned int _tokenNumber = 0;
 
-    std::string _getContents();
     bool _isInInstructionSet();
 
 public:
-    Lexer(const std::string& sourcePath, const std::vector<Instruction>& instructionSet);
+    Lexer(const std::string& sourceCode, const std::vector<Instruction>& instructionSet);  
 
-    std::vector<Token> TokenList;    
+    std::vector<Token> TokenList;   
 
     void tokenize();
     void print();
+    void reset();
+    
+    void eatToken(int i);
+    bool hasToken();
+    Token nextToken();
+
 };
 
 #endif

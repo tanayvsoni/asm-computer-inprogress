@@ -4,14 +4,24 @@
 #include "main.hpp"
 #include "lexer.hpp"
 
-class Parse {
+class Parser {
 private:
-    std::vector<ParsedInstruction>& m_parsedList;
-    Lexer m_lexer;
+    Lexer _lexer;
+    const std::vector<Instruction> _instructionSet;
+
+    struct _Symbol {
+        std::string name;
+        int value;
+    };
+
+    std::vector<_Symbol> _symbolTable;
+
+    void _processInclude();
 
 public:
-    Parse(Lexer lexer);
+    Parser(Lexer& lexer, const std::vector<Instruction>& instructionSet);
 
+    void parse();
 };
 
 #endif
