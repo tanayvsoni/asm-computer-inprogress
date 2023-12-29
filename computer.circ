@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project source="3.7.2" version="1.0">
-  This file is intended to be loaded by Logisim-evolution v3.7.2(https://github.com/logisim-evolution/).
+<project source="3.8.0" version="1.0">
+  This file is intended to be loaded by Logisim-evolution v3.8.0(https://github.com/logisim-evolution/).
 
   <lib desc="#Wiring" name="0">
     <tool name="Splitter">
@@ -79,7 +79,7 @@
   <circuit name="main">
     <a name="circuit" val="main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="512.0"/>
+    <a name="simulationFrequency" val="1024000.0"/>
     <comp lib="0" loc="(1020,1200)" name="Tunnel">
       <a name="facing" val="north"/>
       <a name="label" val="Reset"/>
@@ -2217,10 +2217,7 @@
       <a name="addrWidth" val="16"/>
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 16 8
-16384*0 66 0 60 e 40 20 d
-40 56 bc 58 2 40 bb 68
-65 6c 6c 6f 20 77 6f 72
-6c 64
+16384*0 6 ff 11
 </a>
       <a name="misaligned" val="true"/>
     </comp>
@@ -20760,50 +20757,50 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
       <a name="color" val="#ffa4ad"/>
       <a name="matrixcols" val="38"/>
     </comp>
-    <comp lib="8" loc="(1037,1737)" name="Text">
+    <comp lib="8" loc="(1035,1735)" name="Text">
       <a name="text" val="Status Register"/>
     </comp>
-    <comp lib="8" loc="(1061,1303)" name="Text">
+    <comp lib="8" loc="(1060,1300)" name="Text">
       <a name="text" val="Instruction Register"/>
     </comp>
-    <comp lib="8" loc="(1578,1237)" name="Text">
+    <comp lib="8" loc="(1575,1235)" name="Text">
       <a name="text" val="Accumulator"/>
     </comp>
-    <comp lib="8" loc="(1626,2326)" name="Text">
+    <comp lib="8" loc="(1625,2090)" name="Text">
+      <a name="text" val="Register Y"/>
+    </comp>
+    <comp lib="8" loc="(1625,2325)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Output Terminal"/>
     </comp>
-    <comp lib="8" loc="(1628,2092)" name="Text">
-      <a name="text" val="Register Y"/>
-    </comp>
-    <comp lib="8" loc="(1632,144)" name="Text">
+    <comp lib="8" loc="(1630,140)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="IRQ"/>
     </comp>
-    <comp lib="8" loc="(1650,827)" name="Text">
+    <comp lib="8" loc="(1650,825)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Transfer Register"/>
     </comp>
-    <comp lib="8" loc="(1655,1884)" name="Text">
+    <comp lib="8" loc="(1655,1880)" name="Text">
       <a name="text" val="Register X"/>
     </comp>
-    <comp lib="8" loc="(1780,608)" name="Text">
+    <comp lib="8" loc="(1780,605)" name="Text">
       <a name="text" val="Stack Pointer"/>
     </comp>
-    <comp lib="8" loc="(1922,204)" name="Text">
+    <comp lib="8" loc="(1920,200)" name="Text">
       <a name="text" val="Program Counter"/>
     </comp>
-    <comp lib="8" loc="(2445,2061)" name="Text">
+    <comp lib="8" loc="(2445,2060)" name="Text">
       <a name="text" val="Control Ward"/>
     </comp>
     <comp lib="8" loc="(430,1435)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Interupt Handler"/>
     </comp>
-    <comp lib="8" loc="(970,167)" name="Text">
+    <comp lib="8" loc="(970,165)" name="Text">
       <a name="text" val="Memory Address Register"/>
     </comp>
-    <comp lib="8" loc="(999,2225)" name="Text">
+    <comp lib="8" loc="(995,2225)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Sequencer"/>
     </comp>
@@ -22631,15 +22628,15 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <comp lib="3" loc="(1360,1000)" name="Subtractor"/>
     <comp lib="3" loc="(490,760)" name="Adder"/>
     <comp lib="3" loc="(490,910)" name="Subtractor"/>
-    <comp lib="8" loc="(162,166)" name="Text">
+    <comp lib="8" loc="(160,165)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Logical Operators"/>
     </comp>
-    <comp lib="8" loc="(363,1059)" name="Text">
+    <comp lib="8" loc="(360,1055)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Overflow Checker"/>
     </comp>
-    <comp lib="8" loc="(448,585)" name="Text">
+    <comp lib="8" loc="(445,585)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Two's Complement Adder/Subtractor"/>
     </comp>
@@ -22854,7 +22851,7 @@ e0001040 2000003000 35e1000000 c0018 0 30e1031040 24fe007c04 b00009044
     <comp lib="1" loc="(470,200)" name="AND Gate"/>
     <comp lib="1" loc="(470,350)" name="AND Gate"/>
     <comp lib="1" loc="(600,260)" name="AND Gate"/>
-    <comp lib="8" loc="(244,129)" name="Text">
+    <comp lib="8" loc="(240,125)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Zero Checker"/>
     </comp>
@@ -31780,7 +31777,7 @@ e2c9aa b7a382 a08b6e b4a183 a38e73 9c846c b29881
     <comp lib="4" loc="(680,900)" name="Counter">
       <a name="appearance" val="logisim_evolution"/>
     </comp>
-    <comp lib="8" loc="(1269,568)" name="Text">
+    <comp lib="8" loc="(1265,565)" name="Text">
       <a name="halign" val="left"/>
       <a name="text" val="Connect on Real Circuit"/>
     </comp>

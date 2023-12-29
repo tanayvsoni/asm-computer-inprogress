@@ -32,28 +32,26 @@ struct Token {
 };
 
 class Lexer {
-private:
-    const std::string _sourceCode;
-    const std::vector<Instruction> _instructionSet;
-     
-    std::string _buf;
-    long unsigned int _tokenNumber = 0;
-
-    bool _isInInstructionSet();
-
 public:
     Lexer(const std::string& sourceCode, const std::vector<Instruction>& instructionSet);  
 
-    std::vector<Token> TokenList;   
-
     void tokenize();
     void print();
-    void reset();
     
-    void eatToken(int i);
+    Token getNextToken();
     bool hasToken();
-    Token nextToken();
+    void resetTokenList();
 
+
+private:
+    const std::string _sourceCode;
+    const std::vector<Instruction> _instructionSet;
+    std::vector<Token> _tokenList; 
+     
+    std::string _buf;
+    long unsigned int _tokenIndex = 0;
+
+    bool _isInInstructionSet();
 };
 
 #endif

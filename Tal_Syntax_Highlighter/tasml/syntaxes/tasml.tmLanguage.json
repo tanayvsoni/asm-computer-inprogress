@@ -1,6 +1,6 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "TAL Programming Language",
+	"name": "TASML Programming Language",
 	"patterns": [
 		{
 			"include": "#blockComments"
@@ -58,25 +58,25 @@
 	"repository": {
 
 		"blockComments": {
-			"name": "comment.block.tal",
+			"name": "comment.block.tasml",
 			"begin": "\/\\*",
 			"end": "\\*\/"
 		},
 
 		"inlineComments": {
-			"name": "comment.line.tal",
+			"name": "comment.line.tasml",
 			"begin": ";",
 			"end": "\\n"
 		},
 
 		"include_arg": {
-			"name": "string.quoted.double.tal",
+			"name": "string.quoted.double.tasml",
 			"begin": "<",
 			"end": ">"
 		},
 
 		"preprocess": {
-			"name": "meta.preprocessor.tal",
+			"name": "meta.preprocessor.tasml",
 			"begin": "(?<=\\.)",
 			"end": "\\s"
 		},
@@ -84,60 +84,60 @@
 		"label_declare": {
 			"match": "(\\w+):",
    			"captures": {
-        	"1": { "name": "keyword.control.tal" }
+        	"1": { "name": "keyword.control.tasml" }
     		}
 		},
 
 		"immediate": {
-			"name": "meta.preprocessor.tal",
+			"name": "meta.preprocessor.tasml",
 			"match": "#"
 		},
 
 		"symbols": {
-			"name": "constant.numeric.tal",
+			"name": "constant.numeric.tasml",
 			"match": "\\$|%"
 		},
 
 		"numbers": {
-			"name": "constant.numeric.tal",
+			"name": "constant.numeric.tasml",
     		"match": "(?<=\\$)[a-zA-Z0-9]+|\\d+"
 		},
 
 		"instr": {
 			"match": "\\b([nN][oO][pP]|[aA][dD][cC]|[aA][nN][dD]|[aA][sS][lL]|[bB][cC][cC]|[bB][cC][sS]|[bB][eE][qQ]|[bB][iI][tT]|[bB][mM][iI]|[bB][nN][eE]|[bB][pP][lL]|[bB][rR][kK]|[bB][vV][cC]|[bB][vV][sS]|[cC][lL][cC]|[cC][lL][iI]|[cC][lL][vV]|[cC][mM][pP]|[cC][pP][xX]|[cC][pP][yY]|[dD][eE][cC]|[dD][eE][xX]|[dD][eE][yY]|[eE][oO][rR]|[iI][nN][cC]|[iI][nN][xX]|[iI][nN][yY]|[jJ][mM][pP]|[jJ][sS][rR]|[lL][dD][aA]|[lL][dD][xX]|[lL][dD][yY]|[lL][sS][rR]|[oO][rR][aA]|[pP][hH][aA]|[pP][hH][pP]|[pP][lL][aA]|[pP][lL][pP]|[rR][oO][lL]|[rR][oO][rR]|[rR][tT][iI]|[rR][tT][sS]|[sS][uU][bB]|[sS][eE][cC]|[sS][eE][iI]|[sS][tT][aA]|[sS][tT][xX]|[sS][tT][yY]|[tT][aA][xX]|[tT][aA][yY]|[tT][sS][xX]|[tT][sS][aA]|[tT][xX][sS]|[tT][yY][aA]|[hH][lL][tT]|[oO][uU][tT])\\b",
 			"captures": {
-				"1": { "name": "entity.name.function.tal" }
+				"1": { "name": "entity.name.function.tasml" }
 			}
 		},
 
 		"strings": {
-			"name": "string.quoted.double.tal",
+			"name": "string.quoted.double.tasml",
 			"begin": "\"",
 			"end": "\"",
 
 			"patterns": [
 				{
-					"name": "constant.character.escape.tal",
+					"name": "constant.character.escape.tasml",
 					"match": "\\\\."
 				}
 			]
 		},
 
 		"char": {
-			"name": "string.quoted.single.tal",
+			"name": "string.quoted.single.tasml",
 			"begin": "'",
 			"end": "'",
 			
 			"patterns": [
 				{
-					"name": "constant.character.escape.tal",
+					"name": "constant.character.escape.tasml",
 					"match": "\\\\."
 				}
 			]
 		},
 
 		"register": {
-			"name": "entity.name.namespace.tal",
+			"name": "entity.name.namespace.tasml",
 			"match": "(rX)|(rY)"
 		},
 

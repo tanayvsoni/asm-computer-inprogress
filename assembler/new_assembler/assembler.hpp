@@ -2,19 +2,21 @@
 #define ASSEMBLER_HPP
 
 #include "main.hpp"
+#include "lexer.hpp"
+#include "parser.hpp"
+#include "preprocessor.hpp"
 
 class Assembler {
-private:
-    static const std::vector<Instruction> _instructionSet;
-
-    const std::string _sourceFilePath;
-    const std::string _outputFilePath;
-
 public:
     Assembler(const std::string& sourcePath, const std::string& outputPath);
 
     void assemble();
 
+private:
+    static const std::vector<Instruction> _instructionSet;
+
+    const std::string _sourceFilePath;
+    const std::string _outputFilePath;
 };
 
 inline std::vector<Instruction> createInstructionSet() {

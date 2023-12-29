@@ -1,6 +1,6 @@
 {
-  "name": "tal",
-  "displayName": "TAL",
+  "name": "tasml",
+  "displayName": "tasml",
   "description": "6502-Computer Programming Language",
   "version": "0.0.1",
   "engines": {
@@ -11,15 +11,15 @@
   ],
   "contributes": {
     "languages": [{
-      "id": "tal",
-      "aliases": ["TAL Programming Language", "tal"],
-      "extensions": [".tal"],
+      "id": "tasml",
+      "aliases": ["tasml Programming Language", "tasml"],
+      "extensions": [".tasml"],
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{
-      "language": "tal",
+      "language": "tasml",
       "scopeName": "source.tpl",
-      "path": "./syntaxes/tal.tmLanguage.json"
+      "path": "./syntaxes/tasml.tmLanguage.json"
     }]
   }
 }

@@ -4,24 +4,29 @@
 #include "main.hpp"
 #include "lexer.hpp"
 
+struct ASTNode {
+    TokenType type;
+    std::string substring;
+    ASTNode* leftNode;
+    ASTNode* rightNode;
+};
+
 class Parser {
-private:
-    Lexer _lexer;
-    const std::vector<Instruction> _instructionSet;
-
-    struct _Symbol {
-        std::string name;
-        int value;
-    };
-
-    std::vector<_Symbol> _symbolTable;
-
-    void _processInclude();
-
 public:
     Parser(Lexer& lexer, const std::vector<Instruction>& instructionSet);
 
     void parse();
+    
+private:
+    Lexer _lexer;
+    const std::vector<Instruction> _instructionSet;
+
+    ASTNode _AST; 
+    
+    Token _nextToken = _lexer.getNextToken();
+    Token _currToken; 
+
+    void preprocess_statment();
 };
 
 #endif

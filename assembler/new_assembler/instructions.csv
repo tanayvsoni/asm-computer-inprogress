@@ -15,7 +15,7 @@ and|13|zeropage
 and|14|zeropage,X
 and|15|zeropage,Y
 and|16|absolute
-and|17|absolute,X
+and|17|absolute,X 
 and|18|absolute,Y
 and|19|(indirect,X)
 and|20|(indirect,Y)

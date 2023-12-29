@@ -1,7 +1,4 @@
 #include "assembler.hpp"
-#include "lexer.hpp"
-#include "parser.hpp"
-#include "preprocessor.hpp"
 
 const std::vector<Instruction> Assembler::_instructionSet = createInstructionSet();
 

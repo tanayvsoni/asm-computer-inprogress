@@ -1,41 +1,29 @@
 #include "lexer.hpp"
-#include "main.hpp"
 
 Lexer::Lexer(const std::string& sourceCode, const std::vector<Instruction>& instructionSet)
     : _sourceCode(sourceCode), _instructionSet(instructionSet) {
 }
 
 void Lexer::print() {
-    for (size_t i = 0; i < TokenList.size(); i++) {
+    for (size_t i = 0; i < _tokenList.size(); i++) {
         std::cout << 
-        " TOKEN TYPE: " << TokenList[i].type << 
-        " TOKEN STRING: " << TokenList[i].substring << 
+        " TOKEN TYPE: " << _tokenList[i].type << 
+        " TOKEN STRING: " << _tokenList[i].substring << 
         std::endl;
     }
 }
 
-void Lexer::reset() {
-    _tokenNumber = 0;
-}
-
-void Lexer::eatToken(int i) {
-    TokenList.erase(TokenList.begin() + i);
-    reset();
+void Lexer::resetTokenList() {
+    _tokenIndex = 0;
 }
 
 bool Lexer::hasToken() {
-    if (_tokenNumber < TokenList.size()) return true;
-
-    reset();
-    return false;
+    if (_tokenIndex >= _tokenList.size()) return false;
+    return true;
 }
 
-Token Lexer::nextToken() {
-    if(hasToken()) {
-        return TokenList[_tokenNumber++];
-    }
-
-    return {" ", END};
+Token Lexer::getNextToken() {
+    return _tokenList[_tokenIndex++];
 }
 
 bool Lexer::_isInInstructionSet() {
@@ -48,21 +36,21 @@ void Lexer::tokenize() {
 
     for (size_t i = 0; i < _sourceCode.length(); i++) {
 
-        if (i+1 < _sourceCode.length() && _sourceCode[i] == '/' && _sourceCode[i+1] == '*') {                      // Comment Block
+        if (i+1 < _sourceCode.length() && _sourceCode[i] == '/' && _sourceCode[i+1] == '*') {                    // Comment Block
             i += 2;
             while (i < _sourceCode.length() && !(_sourceCode[i] == '*' && _sourceCode[i+1] == '/')) {
                 //if (_sourceCode[i] == '\n') _lineNumber++;
                 i++;
             }
             i++;   
-            //TokenList.push_back({"Comment Block", TokenType::COMMENT, _lineNumber});
+            //_tokenList.push_back({"Comment Block", TokenType::COMMENT, _lineNumber});
         }
         else if (_sourceCode[i] == ';') {                                                                        // Comment
             while (_sourceCode[i] != '\n') i++;
             i--;
-            //TokenList.push_back({"Inline Comment", TokenType::COMMENT, _lineNumber});
+            //_tokenList.push_back({"Inline Comment", TokenType::COMMENT, _lineNumber});
         }
-        else if (_sourceCode[i] == '.' && std::isalpha(_sourceCode[i+1])) {                                       // Preprocessor
+        else if (_sourceCode[i] == '.' && std::isalpha(_sourceCode[i+1])) {                                      // Preprocessor
             _buf.clear();
 
             i++;
@@ -73,7 +61,7 @@ void Lexer::tokenize() {
             i--;
 
             if(_buf == "org" || _buf == "db" || _buf == "tx") {
-                TokenList.push_back({_buf, TokenType::PREPROCESS});
+                _tokenList.push_back({_buf, TokenType::PREPROCESS});
             }
 
         }
@@ -87,41 +75,41 @@ void Lexer::tokenize() {
             i--;
 
             if (_isInInstructionSet()) {                                                                        // Instruction
-                TokenList.push_back({_buf, TokenType::INSTRUCTION});
+                _tokenList.push_back({_buf, TokenType::INSTRUCTION});
             } else if (_sourceCode[i+1] == ':') {                                                                // Label Declaration
-                TokenList.push_back({_buf, TokenType::LABEL_DECLARE});
+                _tokenList.push_back({_buf, TokenType::LABEL_DECLARE});
             } else if (_buf == "rX" || _buf == "rY") {                                                          // Registers
-                TokenList.push_back({_buf.erase(0,1), TokenType::REG});
+                _tokenList.push_back({_buf.erase(0,1), TokenType::REG});
             } else {
-                TokenList.push_back({_buf, TokenType::IDENTIFIER});
+                _tokenList.push_back({_buf, TokenType::IDENTIFIER});
             }
         }
         else if (_sourceCode[i] == '=') {                                                                        // Equals
-            TokenList.push_back({"Equal", TokenType::EQUAL});
+            _tokenList.push_back({"Equal", TokenType::EQUAL});
         }
         else if (_sourceCode[i] == '#') {                                                                        // Immediate
-            TokenList.push_back({"Immediate", TokenType::IMMEDIATE});                              
+            _tokenList.push_back({"Immediate", TokenType::IMMEDIATE});                              
         }
         else if (_sourceCode[i] == '(') {                                                                        // Left Paren
-            TokenList.push_back({"Left Paren", TokenType::L_PAREN});                              
+            _tokenList.push_back({"Left Paren", TokenType::L_PAREN});                              
         }
         else if (_sourceCode[i] == ')') {                                                                        // Right Paren
-            TokenList.push_back({"Right Paren", TokenType::R_PAREN});                              
+            _tokenList.push_back({"Right Paren", TokenType::R_PAREN});                              
         }
         else if (_sourceCode[i] == '-') {                                                                        // Minus
-            TokenList.push_back({"Minus", TokenType::MINUS});                                
+            _tokenList.push_back({"Minus", TokenType::MINUS});                                
         }
         else if (_sourceCode[i] == '+') {                                                                        // Plus
-            TokenList.push_back({"Plus", TokenType::PLUS});                                
+            _tokenList.push_back({"Plus", TokenType::PLUS});                                
         }
         else if (_sourceCode[i] == '/') {                                                                        // Divide
-            TokenList.push_back({"Divide", TokenType::DIV});                                
+            _tokenList.push_back({"Divide", TokenType::DIV});                                
         }
         else if (_sourceCode[i] == '*') {                                                                        // Multiply
-            TokenList.push_back({"Multiply", TokenType::MUL});                                
+            _tokenList.push_back({"Multiply", TokenType::MUL});                                
         }
         else if (_sourceCode[i] == ',') {                                                                        // Comma
-            TokenList.push_back({"Comma", TokenType::COMMA});                                      
+            _tokenList.push_back({"Comma", TokenType::COMMA});                                      
         }
         else if (_sourceCode[i] == '<') {                                                                        // Include Arguements
             _buf.clear();
@@ -132,7 +120,7 @@ void Lexer::tokenize() {
                 i++;
             }
 
-            //TokenList.push_back({_buf, TokenType::ARGUEMENT});
+            //_tokenList.push_back({_buf, TokenType::ARGUEMENT});
         }
         else if (_sourceCode[i] == '\'') {                                                                       // Char
             _buf.clear();
@@ -147,7 +135,7 @@ void Lexer::tokenize() {
                 i++;
             }
 
-            TokenList.push_back({_buf, TokenType::CHAR});
+            _tokenList.push_back({_buf, TokenType::CHAR});
         }
         else if (_sourceCode[i] == '"') {                                                                        // String  
             _buf.clear();
@@ -162,7 +150,7 @@ void Lexer::tokenize() {
                 i++;
             }
 
-            TokenList.push_back({_buf, TokenType::STRING});
+            _tokenList.push_back({_buf, TokenType::STRING});
         }
         else if (_sourceCode[i] == '$') {                                                                        // Hex
             _buf.clear();
@@ -173,7 +161,7 @@ void Lexer::tokenize() {
                 i++;
             }
             i--;
-            TokenList.push_back({_buf, TokenType::HEX});
+            _tokenList.push_back({_buf, TokenType::HEX});
         }
         else if (_sourceCode[i] == '%') {                                                                        // Binary
             _buf.clear();
@@ -184,7 +172,7 @@ void Lexer::tokenize() {
                 i++;
             }
             i--;
-            TokenList.push_back({_buf, TokenType::BINARY});
+            _tokenList.push_back({_buf, TokenType::BINARY});
         }
         else if (std::isdigit(_sourceCode[i])) {                                                                 // Number
             _buf.clear();
@@ -194,15 +182,15 @@ void Lexer::tokenize() {
             }
             i--;
 
-            TokenList.push_back({_buf, TokenType::NUMBER});
+            _tokenList.push_back({_buf, TokenType::NUMBER});
         }
-        else if (std::isspace(_sourceCode[i]) && _sourceCode[i] != '\n') {                                        // Whitespace
+        else if (std::isspace(_sourceCode[i]) && _sourceCode[i] != '\n') {                                       // Whitespace
             while (i < _sourceCode.length() && std::isspace(_sourceCode[i]) && _sourceCode[i] != '\n') i++;
             i--;
-            //TokenList.push_back({"Whitespace", TokenType::WHITESPACE, _lineNumber});
+            //_tokenList.push_back({"Whitespace", TokenType::WHITESPACE, _lineNumber});
         }
         else if (_sourceCode[i] == '\n') {                                                                       // Newline
-            //TokenList.push_back({"Newline", TokenType::NEWLINE});
+            //_tokenList.push_back({"Newline", TokenType::NEWLINE});
         }
     
     }

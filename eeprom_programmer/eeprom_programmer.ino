@@ -81,7 +81,9 @@ void writeEEPROM(unsigned int address, byte data) {
   delay(2);
   
   digitalWrite(OE, HIGH);
-  delay(2000);
+  delay(1000);
+
+  ////////////////////////////////////////////
 
   setAddress(address);
 
@@ -101,6 +103,8 @@ void writeEEPROM(unsigned int address, byte data) {
   for (int pin = D01; pin <= D08; pin++) {
     pinMode(pin, INPUT_PULLUP);
   }
+
+  ////////////////////////////////////////////
 
   delay(1000);
   digitalWrite(OE, LOW);

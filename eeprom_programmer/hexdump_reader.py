@@ -39,8 +39,8 @@ def writeData():
         ser.write(b'W')
 
 def main():
-    hexdump()
-    # writeData()
+    # hexdump()
+    writeData()
 
 if __name__ == '__main__':
     main()

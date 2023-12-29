@@ -5,12 +5,12 @@ THIS IS MY TEST
 
 */
 
-;.include <multiplication.tal>
+; .include <multiplication.tal>
 
 var = 0
 
 add_Loop:
-	adc #1            ;   test
+	adc #1            ;  test
 	bcs sub_Loop     
 	sta var             
 	jmp add_Loop       
