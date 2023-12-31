@@ -8,13 +8,18 @@ Assembler::Assembler(const std::string &sourcePath, const std::string &outputPat
 
 void Assembler::assemble() {
 
-    Preprocessor process;
+    Preprocessor preprocessor;
     std::string sourceCode;
 
-    process.processFile(_sourceFilePath, sourceCode);
+    preprocessor.processFile(_sourceFilePath, sourceCode);
 
     Lexer lexer(sourceCode, _instructionSet);
 
     lexer.tokenize();
     lexer.print();
+
+    Parser parser(lexer, _instructionSet);
+    parser.parseProgram();
+    parser.printAST();
+
 }

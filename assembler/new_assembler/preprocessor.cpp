@@ -6,8 +6,8 @@ std::string Preprocessor::_extractIncludedFilePath(const std::string &line) {
     size_t start = line.find('<') + 1;
     size_t end = line.find('>');
     if (start == std::string::npos || end == std::string::npos || start >= end) {
-        std::cerr << "Invalid include directive format" << std::endl;
-        exit(ERROR);
+        std::cerr << "Error: invalid include directive format" << std::endl;
+        exit(ERROR::INCLUDE_ERROR);
     }
     return line.substr(start, end - start);
 }
@@ -16,8 +16,8 @@ void Preprocessor::processFile(const std::string& filePath, std::string& output)
     std::ifstream inputFile(filePath);
 
     if (!inputFile.is_open()) {
-        std::cerr << "Error: Unable to open file '" << filePath << "'" << std::endl;
-        exit(ERROR);
+        std::cerr << "Error: unable to open file '" << filePath << "'" << std::endl;
+        exit(ERROR::FILE_ERROR);
     }
 
     std::string line;

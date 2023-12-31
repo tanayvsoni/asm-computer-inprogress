@@ -13,7 +13,7 @@ void Lexer::print() {
     }
 }
 
-void Lexer::resetTokenList() {
+void Lexer::_resetTokenList() {
     _tokenIndex = 0;
 }
 
@@ -22,8 +22,14 @@ bool Lexer::hasToken() {
     return true;
 }
 
-Token Lexer::getNextToken() {
-    return _tokenList[_tokenIndex++];
+Token Lexer::peekNextToken() {
+    if (!hasToken()) _resetTokenList();
+    return _tokenList[_tokenIndex];
+}
+
+Token* Lexer::getToken() {
+    if (!hasToken()) _resetTokenList();
+    return &_tokenList[_tokenIndex++];
 }
 
 bool Lexer::_isInInstructionSet() {
@@ -61,7 +67,7 @@ void Lexer::tokenize() {
             i--;
 
             if(_buf == "org" || _buf == "db" || _buf == "tx") {
-                _tokenList.push_back({_buf, TokenType::PREPROCESS});
+                _tokenList.push_back({_buf, TokenType::DIRECTIVE});
             }
 
         }
@@ -85,42 +91,31 @@ void Lexer::tokenize() {
             }
         }
         else if (_sourceCode[i] == '=') {                                                                        // Equals
-            _tokenList.push_back({"Equal", TokenType::EQUAL});
+            _tokenList.push_back({"=", TokenType::EQUAL});
         }
         else if (_sourceCode[i] == '#') {                                                                        // Immediate
-            _tokenList.push_back({"Immediate", TokenType::IMMEDIATE});                              
+            _tokenList.push_back({"#", TokenType::IMMEDIATE});                              
         }
         else if (_sourceCode[i] == '(') {                                                                        // Left Paren
-            _tokenList.push_back({"Left Paren", TokenType::L_PAREN});                              
+            _tokenList.push_back({"(", TokenType::L_PAREN});                              
         }
         else if (_sourceCode[i] == ')') {                                                                        // Right Paren
-            _tokenList.push_back({"Right Paren", TokenType::R_PAREN});                              
+            _tokenList.push_back({")", TokenType::R_PAREN});                              
         }
         else if (_sourceCode[i] == '-') {                                                                        // Minus
-            _tokenList.push_back({"Minus", TokenType::MINUS});                                
+            _tokenList.push_back({"-", TokenType::MINUS});                                
         }
         else if (_sourceCode[i] == '+') {                                                                        // Plus
-            _tokenList.push_back({"Plus", TokenType::PLUS});                                
+            _tokenList.push_back({"+", TokenType::PLUS});                                
         }
         else if (_sourceCode[i] == '/') {                                                                        // Divide
-            _tokenList.push_back({"Divide", TokenType::DIV});                                
+            _tokenList.push_back({"/", TokenType::DIV});                                
         }
         else if (_sourceCode[i] == '*') {                                                                        // Multiply
-            _tokenList.push_back({"Multiply", TokenType::MUL});                                
+            _tokenList.push_back({"*", TokenType::MUL});                                
         }
         else if (_sourceCode[i] == ',') {                                                                        // Comma
-            _tokenList.push_back({"Comma", TokenType::COMMA});                                      
-        }
-        else if (_sourceCode[i] == '<') {                                                                        // Include Arguements
-            _buf.clear();
-            i++;
-
-            while (i < _sourceCode.length() && _sourceCode[i] != '>') {
-                _buf.push_back(_sourceCode[i]);
-                i++;
-            }
-
-            //_tokenList.push_back({_buf, TokenType::ARGUEMENT});
+            _tokenList.push_back({",", TokenType::COMMA});                                      
         }
         else if (_sourceCode[i] == '\'') {                                                                       // Char
             _buf.clear();
@@ -176,7 +171,13 @@ void Lexer::tokenize() {
         }
         else if (std::isdigit(_sourceCode[i])) {                                                                 // Number
             _buf.clear();
-            while (i < _sourceCode.length() && std::isdigit(_sourceCode[i])) {
+            while (i < _sourceCode.length() && (std::isdigit(_sourceCode[i]) || _sourceCode[i] == '.')) {
+                if (_sourceCode[i] == '.') {
+                    // Error handling for decimal point
+                    std::cerr << "Error: Unexpected decimal point in number." << std::endl;
+                    exit(ERROR::FLOAT_ERROR);
+                }
+
                 _buf.push_back(_sourceCode[i]);
                 i++;
             }

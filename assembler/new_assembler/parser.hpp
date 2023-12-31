@@ -5,28 +5,44 @@
 #include "lexer.hpp"
 
 struct ASTNode {
-    TokenType type;
-    std::string substring;
-    ASTNode* leftNode;
-    ASTNode* rightNode;
+    Token* data;
+    std::vector<ASTNode*> children;
+
+    ASTNode(Token* token) : data(token) {}
 };
 
 class Parser {
 public:
-    Parser(Lexer& lexer, const std::vector<Instruction>& instructionSet);
+    Parser(Lexer lexer, const std::vector<Instruction>& instructionSet);
 
-    void parse();
+    void parseProgram();
+    void printAST() { _printAST(_rootNode, 0); }
     
 private:
     Lexer _lexer;
     const std::vector<Instruction> _instructionSet;
+    void _printAST(ASTNode* node, int depth);
 
-    ASTNode _AST; 
-    
-    Token _nextToken = _lexer.getNextToken();
-    Token _currToken; 
+    ASTNode* _parseStatement();
 
-    void preprocess_statment();
+    ASTNode* _parseDirective();
+
+    ASTNode* _parseVariableAssignment();
+    ASTNode* _parseMathExpression();
+    ASTNode* _parseAdditionSubtraction();
+    ASTNode* _parseMultiplicationDivision();
+    ASTNode* _parsePrimary();
+
+    ASTNode* _parseInstruction();
+    ASTNode* _parseOperand();
+    ASTNode* _parseLabel();
+
+    Token* _currToken; 
+    Token _peekNextToken() { return _lexer.peekNextToken(); }
+    void _advanceToken() { _currToken = _hasToken() ? _lexer.getToken() : _currToken;  }
+    bool _hasToken() { return _lexer.hasToken(); }
+
+    ASTNode* _rootNode;
 };
 
 #endif

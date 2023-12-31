@@ -38,7 +38,7 @@ inline std::vector<Instruction> createInstructionSet() {
     instructionSet.push_back({"and", 14, "zeropage,X"});
     instructionSet.push_back({"and", 15, "zeropage,Y"});
     instructionSet.push_back({"and", 16, "absolute"});
-    instructionSet.push_back({"and", 17, "absolute,X"});
+    instructionSet.push_back({"and", 17, "absolute,X "});
     instructionSet.push_back({"and", 18, "absolute,Y"});
     instructionSet.push_back({"and", 19, "(indirect,X)"});
     instructionSet.push_back({"and", 20, "(indirect,Y)"});

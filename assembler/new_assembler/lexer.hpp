@@ -8,7 +8,7 @@ enum TokenType {
     WHITESPACE, NEWLINE,
 
     // Preproccess
-    PREPROCESS, INCLUDE, ARGUEMENT,
+    DIRECTIVE, INCLUDE, ARGUEMENT,
 
     // Keywords
     INSTRUCTION, REG,
@@ -22,8 +22,8 @@ enum TokenType {
     // Literals
     IDENTIFIER, LABEL_DECLARE, STRING, CHAR, NUMBER, BINARY, HEX,
 
-    // End
-    END
+    // Start
+    START
 };    
 
 struct Token {
@@ -38,10 +38,9 @@ public:
     void tokenize();
     void print();
     
-    Token getNextToken();
+    Token* getToken();
+    Token peekNextToken();
     bool hasToken();
-    void resetTokenList();
-
 
 private:
     const std::string _sourceCode;
@@ -52,6 +51,7 @@ private:
     long unsigned int _tokenIndex = 0;
 
     bool _isInInstructionSet();
+    void _resetTokenList();
 };
 
 #endif

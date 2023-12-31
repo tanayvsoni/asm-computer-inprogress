@@ -7,8 +7,12 @@
 #include <cstdint>
 #include <fstream>
 
-#define OFFSET  0x4000
-#define ERROR   1
+#define OFFSET          0x4000
+
+enum ERROR {
+    STARTADDR_ERROR, INCLUDE_ERROR, FILE_ERROR, ORG_ERROR, STRING_ERROR, ASSIGNMENT_ERROR,
+    FLOAT_ERROR, PAREN_ERROR, UNEXP_TOKEN_ERROR,
+};
 
 struct Instruction {
     std::string name;

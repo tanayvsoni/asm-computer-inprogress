@@ -1,0 +1,11 @@
+.org $4000
+
+.tx    "Hello World"
+.db    'c' $F 3 %0110
+.db 	$F
+
+var = 0
+
+lda 0,rX
+lda 0,rX
+adc #1
