@@ -38,7 +38,7 @@ public:
     void tokenize();
     void print();
     
-    Token* getToken();
+    std::shared_ptr<Token> getToken();
     Token peekNextToken();
     bool hasToken();
 

@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstdint>
 #include <fstream>
+#include <memory>
 
 #define OFFSET          0x4000
 

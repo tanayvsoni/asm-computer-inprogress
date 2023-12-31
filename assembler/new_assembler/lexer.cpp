@@ -27,9 +27,9 @@ Token Lexer::peekNextToken() {
     return _tokenList[_tokenIndex];
 }
 
-Token* Lexer::getToken() {
+std::shared_ptr<Token> Lexer::getToken() {
     if (!hasToken()) _resetTokenList();
-    return &_tokenList[_tokenIndex++];
+    return std::make_shared<Token>(_tokenList[_tokenIndex++]);
 }
 
 bool Lexer::_isInInstructionSet() {

@@ -3,13 +3,13 @@
 
 Parser::Parser(Lexer lexer, const std::vector<Instruction>& instructionSet) : _lexer(lexer), _instructionSet(instructionSet) {
     // Setup Root Node
-    _rootNode = new ASTNode(nullptr);
-    _rootNode->data = new Token;
-    _rootNode->data->type = TokenType::START;
-    _rootNode->data->substring = "PROGRAM ENTRY";
+    rootNode = std::make_unique<ASTNode>(nullptr);
+    rootNode->data = std::make_unique<Token>();
+    rootNode->data->type = TokenType::START;
+    rootNode->data->substring = "PROGRAM ENTRY";
 }
 
-void Parser::_printAST(ASTNode* node, int depth) {
+void Parser::_printAST(std::shared_ptr<ASTNode> node, int depth) {
     if (node == nullptr) {
         return;
     }
@@ -50,8 +50,8 @@ void Parser::_printAST(ASTNode* node, int depth) {
     std::cout << "\n" << indent << "}";
 }
 
-ASTNode* Parser::_parseOrg() {
-    ASTNode* orgNode = new ASTNode(_currToken);
+std::unique_ptr<ASTNode> Parser::_parseOrg() {
+    std::unique_ptr<ASTNode> orgNode = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
     _advanceToken();
     // Check for Errors
@@ -65,14 +65,14 @@ ASTNode* Parser::_parseOrg() {
         if (_peekNextToken().type == TokenType::ORG) break;
         _advanceToken();
         if (_currToken->type == TokenType::NEWLINE) continue;
-        orgNode->children.push_back(_parseStatement());
+        orgNode->children.push_back(std::move(_parseStatement()));
     }
 
     return orgNode;
 }
 
-ASTNode* Parser::_parseDirective() {
-    ASTNode* directiveNode = new ASTNode(_currToken);
+std::unique_ptr<ASTNode> Parser::_parseDirective() {
+    std::unique_ptr<ASTNode> directiveNode = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
     if (_currToken->substring == "db") {                                // Handle .db directive
         while (_hasToken()) {
@@ -83,8 +83,8 @@ ASTNode* Parser::_parseDirective() {
             }
             
             _advanceToken();
-            ASTNode* byteNode = new ASTNode(_currToken);
-            directiveNode->children.push_back(byteNode);
+            std::unique_ptr<ASTNode> byteNode = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
+            directiveNode->children.push_back(std::move(byteNode));
             
         }
     } 
@@ -97,73 +97,73 @@ ASTNode* Parser::_parseDirective() {
             exit(ERROR::STRING_ERROR);
         }
 
-        ASTNode* stringNode = new ASTNode(_currToken);
-        directiveNode->children.push_back(stringNode);
+        std::unique_ptr<ASTNode> stringNode = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
+        directiveNode->children.push_back(std::move(stringNode));
     }
 
     return directiveNode;
 }
 
-ASTNode* Parser::_parseVariableAssignment() {
-    ASTNode* varNode = new ASTNode(_currToken);  // Variable name
+std::unique_ptr<ASTNode> Parser::_parseVariableAssignment() {
+    std::unique_ptr<ASTNode> varNode = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));  // Variable name
     _advanceToken();
 
     if (_currToken->type != TokenType::EQUAL) {
         std::cerr << "Error: invalid variable assignment format" << std::endl;
         exit(ERROR::ASSIGNMENT_ERROR);
     }
-    ASTNode* assignmentNode = new ASTNode(_currToken);
+    std::unique_ptr<ASTNode> assignmentNode = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
     _advanceToken();
 
-    ASTNode* exprNode = _parseMathExpression();  // Parse the math expression
-    assignmentNode->children.push_back(exprNode);
-    varNode->children.push_back(assignmentNode);
+    std::unique_ptr<ASTNode> exprNode = _parseMathExpression();  // Parse the math expression
+    assignmentNode->children.push_back(std::move(exprNode));
+    varNode->children.push_back(std::move(assignmentNode));
 
     return varNode;
 }
 
-ASTNode* Parser::_parseMathExpression() {
+std::unique_ptr<ASTNode> Parser::_parseMathExpression() {
     return _parseAdditionSubtraction();
 }
 
-ASTNode* Parser::_parseAdditionSubtraction() {
-    ASTNode* left = _parseMultiplicationDivision();
+std::unique_ptr<ASTNode> Parser::_parseAdditionSubtraction() {
+    std::unique_ptr<ASTNode> left = _parseMultiplicationDivision();
 
     while (_currToken->type == TokenType::PLUS || _currToken->type == TokenType::MINUS) {
-        ASTNode* newParent = new ASTNode(_currToken);
+        std::unique_ptr<ASTNode> newParent = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
         _advanceToken();
-        ASTNode* right = _parseMultiplicationDivision();
-        newParent->children.push_back(left);  // The left-hand side becomes the left child
-        newParent->children.push_back(right); // The right-hand side becomes the right child
+        std::unique_ptr<ASTNode> right = _parseMultiplicationDivision();
+        newParent->children.push_back(std::move(left));  // The left-hand side becomes the left child
+        newParent->children.push_back(std::move(right)); // The right-hand side becomes the right child
 
-        left = newParent;
+        left = std::move(newParent); 
     }
 
     return left; // Return the root of the built subtree
 }
 
-ASTNode* Parser::_parseMultiplicationDivision() {
-    ASTNode* left = _parsePrimary();
+std::unique_ptr<ASTNode> Parser::_parseMultiplicationDivision() {
+    std::unique_ptr<ASTNode> left = _parsePrimary();
 
     while (_currToken->type == TokenType::MUL || _currToken->type == TokenType::DIV) {
-        ASTNode* newParent = new ASTNode(_currToken);
+        std::unique_ptr<ASTNode> newParent = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
         _advanceToken();
-        ASTNode* right = _parseMultiplicationDivision();
-        newParent->children.push_back(left);  // The left-hand side becomes the left child
-        newParent->children.push_back(right); // The right-hand side becomes the right child
+        std::unique_ptr<ASTNode> right = _parseMultiplicationDivision();
+        newParent->children.push_back(std::move(left));  // The left-hand side becomes the left child
+        newParent->children.push_back(std::move(right)); // The right-hand side becomes the right child
 
-        left = newParent;
+        left = std::move(newParent); 
     }
     return left; // Return the root of the built subtree
 }
 
-ASTNode* Parser::_parsePrimary() {
+std::unique_ptr<ASTNode> Parser::_parsePrimary() {
     // Handle primary expressions (numbers, parentheses, etc.)
     if (_currToken->type == TokenType::NUMBER || _currToken->type == TokenType::HEX || _currToken->type == TokenType::BINARY || _currToken->type == TokenType::CHAR) {
-        ASTNode* node = new ASTNode(_currToken);
+        std::unique_ptr<ASTNode> node = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
         // Only advance token if there if a math expression following number
         const Token& temp = _peekNextToken();
@@ -174,7 +174,7 @@ ASTNode* Parser::_parsePrimary() {
 
     } else if (_currToken->type == TokenType::L_PAREN) {
         _advanceToken();
-        ASTNode* node = _parseMathExpression();
+        std::unique_ptr<ASTNode> node = _parseMathExpression();
         if (_currToken->type != TokenType::R_PAREN) {
             std::cerr << "Error: parentheses error" << std::endl;
             exit(ERROR::PAREN_ERROR);
@@ -187,34 +187,34 @@ ASTNode* Parser::_parsePrimary() {
     }
 }
 
-ASTNode* Parser::_parseInstruction() {
-    ASTNode* instructionNode = new ASTNode(_currToken);
+std::unique_ptr<ASTNode> Parser::_parseInstruction() {
+    std::unique_ptr<ASTNode> instructionNode = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
     while (_hasToken() && _peekNextToken().type != TokenType::NEWLINE) {
         _advanceToken();
-        instructionNode->children.push_back(new ASTNode(_currToken));
+        instructionNode->children.push_back(std::move(std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken))));
     }
 
     return instructionNode;
 }
 
-ASTNode* Parser::_parseLabel() {
+std::unique_ptr<ASTNode> Parser::_parseLabel() {
 
     // Create a new label node
-    ASTNode* labelNode = new ASTNode(_currToken);
+    std::unique_ptr<ASTNode> labelNode = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
     // Parse subsequent instructions and add them as children to the label node
     while (_hasToken()) {
         if (_peekNextToken().type == TokenType::ORG) break;
         _advanceToken();
         if (_currToken->type == TokenType::NEWLINE) continue;
-        labelNode->children.push_back(_parseStatement());
+        labelNode->children.push_back(std::move(_parseStatement()));
     }
 
     return labelNode;
 }
 
-ASTNode* Parser::_parseStatement() {
+std::unique_ptr<ASTNode> Parser::_parseStatement() {
     switch (_currToken->type) {
         case TokenType::ORG:
             return _parseOrg();
@@ -236,6 +236,6 @@ void Parser::parseProgram() {
     while (_hasToken()) {
         _advanceToken();
         if (_currToken->type == TokenType::NEWLINE) continue;
-        _rootNode->children.push_back(_parseStatement());
+        rootNode->children.push_back(std::move(_parseStatement()));
     }
 }

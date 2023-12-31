@@ -5,11 +5,11 @@
 #include "lexer.hpp"
 
 struct ASTNode {
-    Token* data;
+    std::unique_ptr<Token> data;
     std::string value = "";
-    std::vector<ASTNode*> children;
+    std::vector<std::shared_ptr<ASTNode>> children;
 
-    ASTNode(Token* token) : data(token) {}
+    ASTNode(std::unique_ptr<Token> token) : data(std::move(token)) {}
 };
 
 class Parser {
@@ -17,36 +17,34 @@ public:
     Parser(Lexer lexer, const std::vector<Instruction>& instructionSet);
 
     void parseProgram();
-    void printAST() { _printAST(_rootNode, 0); }
+    void printAST() { _printAST(rootNode, 0); }
 
-    ASTNode* rootNode = _rootNode;
+    std::shared_ptr<ASTNode> rootNode;
     
 private:
     Lexer _lexer;
     const std::vector<Instruction> _instructionSet;
-    void _printAST(ASTNode* node, int depth);
+    void _printAST(std::shared_ptr<ASTNode> node, int depth);
 
-    ASTNode* _parseStatement();
+    std::unique_ptr<ASTNode> _parseStatement();
 
-    ASTNode* _parseOrg();
-    ASTNode* _parseDirective();
+    std::unique_ptr<ASTNode> _parseOrg();
+    std::unique_ptr<ASTNode> _parseDirective();
 
-    ASTNode* _parseVariableAssignment();
-    ASTNode* _parseMathExpression();
-    ASTNode* _parseAdditionSubtraction();
-    ASTNode* _parseMultiplicationDivision();
-    ASTNode* _parsePrimary();
+    std::unique_ptr<ASTNode> _parseVariableAssignment();
+    std::unique_ptr<ASTNode> _parseMathExpression();
+    std::unique_ptr<ASTNode> _parseAdditionSubtraction();
+    std::unique_ptr<ASTNode> _parseMultiplicationDivision();
+    std::unique_ptr<ASTNode> _parsePrimary();
 
-    ASTNode* _parseInstruction();
-    ASTNode* _parseOperand();
-    ASTNode* _parseLabel();
+    std::unique_ptr<ASTNode> _parseInstruction();
+    std::unique_ptr<ASTNode> _parseOperand();
+    std::unique_ptr<ASTNode> _parseLabel();
 
-    Token* _currToken; 
+    std::shared_ptr<Token> _currToken; 
     Token _peekNextToken() { return _lexer.peekNextToken(); }
     void _advanceToken() { _currToken = _hasToken() ? _lexer.getToken() : _currToken;  }
     bool _hasToken() { return _lexer.hasToken(); }
-
-    ASTNode* _rootNode;
 };
 
 #endif
