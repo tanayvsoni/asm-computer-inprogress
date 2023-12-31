@@ -14,7 +14,7 @@ struct ASTNode {
 
 class Parser {
 public:
-    Parser(Lexer lexer, const std::vector<Instruction>& instructionSet);
+    Parser(const Lexer& lexer, const std::vector<Instruction>& instructionSet);
 
     void parseProgram();
     void printAST() { _printAST(rootNode, 0); }
@@ -23,7 +23,7 @@ public:
     
 private:
     Lexer _lexer;
-    const std::vector<Instruction> _instructionSet;
+    const std::vector<Instruction>& _instructionSet;
     void _printAST(std::shared_ptr<ASTNode> node, int depth);
 
     std::unique_ptr<ASTNode> _parseStatement();

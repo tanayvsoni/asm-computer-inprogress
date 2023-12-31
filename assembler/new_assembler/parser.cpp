@@ -1,7 +1,7 @@
 #include "parser.hpp"
 #include "lexer.hpp"
 
-Parser::Parser(Lexer lexer, const std::vector<Instruction>& instructionSet) : _lexer(lexer), _instructionSet(instructionSet) {
+Parser::Parser(const Lexer& lexer, const std::vector<Instruction>& instructionSet) : _lexer(lexer), _instructionSet(instructionSet) {
     // Setup Root Node
     rootNode = std::make_unique<ASTNode>(nullptr);
     rootNode->data = std::make_unique<Token>();

@@ -43,8 +43,8 @@ public:
     bool hasToken();
 
 private:
-    const std::string _sourceCode;
-    const std::vector<Instruction> _instructionSet;
+    const std::string& _sourceCode;
+    const std::vector<Instruction>& _instructionSet;
     std::vector<Token> _tokenList; 
      
     std::string _buf;

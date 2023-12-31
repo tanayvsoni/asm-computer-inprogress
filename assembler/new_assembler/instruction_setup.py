@@ -7,7 +7,7 @@ def append_instructions_to_header(csv_filename, header_filename):
         instructions = [row for row in reader if row]
 
     # Generate C++ code for the instruction set
-    cpp_code = "\ninline std::vector<Instruction> createInstructionSet() {\n"
+    cpp_code = "\ninline const std::vector<Instruction> createInstructionSet() {\n"
     cpp_code += "    std::vector<Instruction> instructionSet;\n"
     for name, opcode, addr_mode in instructions:
         cpp_code += f"    instructionSet.push_back({{\"{name}\", {opcode}, \"{addr_mode}\"}});\n"
@@ -22,7 +22,7 @@ def append_instructions_to_header(csv_filename, header_filename):
     func_start = None
     func_end = None
     for i, line in enumerate(lines):
-        if 'inline std::vector<Instruction> createInstructionSet()' in line:
+        if 'inline const std::vector<Instruction> createInstructionSet()' in line:
             func_start = i
         if func_start is not None and line.strip() == '}' and func_end is None:
             func_end = i

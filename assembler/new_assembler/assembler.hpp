@@ -15,11 +15,11 @@ public:
 private:
     static const std::vector<Instruction> _instructionSet;
 
-    const std::string _sourceFilePath;
-    const std::string _outputFilePath;
+    const std::string& _sourceFilePath;
+    const std::string& _outputFilePath;
 };
 
-inline std::vector<Instruction> createInstructionSet() {
+inline const std::vector<Instruction> createInstructionSet() {
     std::vector<Instruction> instructionSet;
     instructionSet.push_back({"nop", 0, "implied"});
     instructionSet.push_back({"adc", 1, "immediate"});
@@ -212,5 +212,4 @@ inline std::vector<Instruction> createInstructionSet() {
     instructionSet.push_back({"out", 188, "implied"});
     return instructionSet;
 }
-
 #endif
