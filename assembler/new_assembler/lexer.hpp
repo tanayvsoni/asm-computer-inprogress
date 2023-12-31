@@ -8,7 +8,7 @@ enum TokenType {
     WHITESPACE, NEWLINE,
 
     // Preproccess
-    DIRECTIVE, INCLUDE, ARGUEMENT,
+    ORG, DIRECTIVE, INCLUDE, ARGUEMENT,
 
     // Keywords
     INSTRUCTION, REG,

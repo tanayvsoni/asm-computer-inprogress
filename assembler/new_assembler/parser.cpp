@@ -26,6 +26,13 @@ void Parser::_printAST(ASTNode* node, int depth) {
         std::cout << "\"" << node->data->substring << "\"";
     } else std::cout << "null";
 
+    // Value
+    
+    if (node->value != "") {
+        std::cout << ",\n" << contentIndent << "\"value\": ";
+        std::cout << "\"" << node->value << "\"";
+    }
+
     // Children
     if (!node->children.empty()) {
         std::cout << ",\n" << contentIndent << "\"child\": [";
@@ -43,22 +50,31 @@ void Parser::_printAST(ASTNode* node, int depth) {
     std::cout << "\n" << indent << "}";
 }
 
+ASTNode* Parser::_parseOrg() {
+    ASTNode* orgNode = new ASTNode(_currToken);
+
+    _advanceToken();
+    // Check for Errors
+    if (_currToken->type != TokenType::NUMBER && _currToken->type != TokenType::HEX && _currToken->type != TokenType::BINARY) {
+        std::cerr << "Error: invalid org directive format" << std::endl;
+        exit(ERROR::ORG_ERROR);
+    }
+    orgNode->value = _currToken->substring;
+
+    while (_hasToken()) {
+        if (_peekNextToken().type == TokenType::ORG) break;
+        _advanceToken();
+        if (_currToken->type == TokenType::NEWLINE) continue;
+        orgNode->children.push_back(_parseStatement());
+    }
+
+    return orgNode;
+}
+
 ASTNode* Parser::_parseDirective() {
     ASTNode* directiveNode = new ASTNode(_currToken);
 
-    if (_currToken->substring == "org") {                                // Handle .org directive
-        _advanceToken();
-
-        // Check for Errors
-        if (_currToken->type != TokenType::NUMBER && _currToken->type != TokenType::HEX && _currToken->type != TokenType::BINARY) {
-            std::cerr << "Error: invalid org directive format" << std::endl;
-            exit(ERROR::ORG_ERROR);
-        }
-
-        ASTNode* addressNode = new ASTNode(_currToken);
-        directiveNode->children.push_back(addressNode);
-    } 
-    else if (_currToken->substring == "db") {                            // Handle .db directive
+    if (_currToken->substring == "db") {                                // Handle .db directive
         while (_hasToken()) {
             const Token& nextToken = _peekNextToken();
 
@@ -174,29 +190,10 @@ ASTNode* Parser::_parsePrimary() {
 ASTNode* Parser::_parseInstruction() {
     ASTNode* instructionNode = new ASTNode(_currToken);
 
-    do {
-        switch (_peekNextToken().type) {
-            case TokenType::NUMBER:
-                _advanceToken();
-                instructionNode->children.push_back(new ASTNode(_currToken));
-                break;
-            case TokenType::COMMA:
-                _advanceToken();
-                instructionNode->children.push_back(new ASTNode(_currToken));
-                break;
-            case TokenType::REG:
-                _advanceToken();
-                instructionNode->children.push_back(new ASTNode(_currToken));
-                break;
-            case TokenType::IMMEDIATE:
-                _advanceToken();
-                instructionNode->children.push_back(new ASTNode(_currToken));
-                break;
-            default: 
-                return instructionNode;
-        }
+    while (_hasToken() && _peekNextToken().type != TokenType::NEWLINE) {
+        _advanceToken();
+        instructionNode->children.push_back(new ASTNode(_currToken));
     }
-    while (_hasToken() && _peekNextToken().type != TokenType::INSTRUCTION);   
 
     return instructionNode;
 }
@@ -205,12 +202,13 @@ ASTNode* Parser::_parseLabel() {
 
     // Create a new label node
     ASTNode* labelNode = new ASTNode(_currToken);
-    _advanceToken();
 
     // Parse subsequent instructions and add them as children to the label node
     while (_hasToken()) {
-        //ASTNode* instructionNode = _parseInstruction();
-        //labelNode->children.push_back(instructionNode);
+        if (_peekNextToken().type == TokenType::ORG) break;
+        _advanceToken();
+        if (_currToken->type == TokenType::NEWLINE) continue;
+        labelNode->children.push_back(_parseStatement());
     }
 
     return labelNode;
@@ -218,12 +216,16 @@ ASTNode* Parser::_parseLabel() {
 
 ASTNode* Parser::_parseStatement() {
     switch (_currToken->type) {
+        case TokenType::ORG:
+            return _parseOrg();
         case TokenType::DIRECTIVE:
             return _parseDirective();
         case TokenType::IDENTIFIER:
             return _parseVariableAssignment();
         case TokenType::INSTRUCTION:
             return _parseInstruction();
+        case TokenType::LABEL_DECLARE:
+            return _parseLabel();
         default:
             return nullptr;
     }
@@ -233,6 +235,7 @@ void Parser::parseProgram() {
 
     while (_hasToken()) {
         _advanceToken();
+        if (_currToken->type == TokenType::NEWLINE) continue;
         _rootNode->children.push_back(_parseStatement());
     }
 }

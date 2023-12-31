@@ -1,11 +1,46 @@
 .org $4000
+/*
 
-.tx    "Hello World"
-.db    'c' $F 3 %0110
-.db 	$F
+THIS IS MY TEST
+
+*/
+
+;.include <multiplication.tasml>
 
 var = 0
 
-lda 0,rX
-lda 0,rX
-adc #1
+add_Loop:
+	adc #1            ;  test
+	bcs sub_Loop     
+	sta var             
+	jmp add_Loop       
+
+sub_Loop:
+	sub #1      
+	sta %0        
+	beq add_Loop      
+	jmp sub_Loop
+
+interrupt:
+	inc -223  
+	jsr print
+	rti
+	
+print:
+    lda msg,rX
+    beq stop
+    inx 
+    out
+    jmp (print)
+
+stop:
+	rts
+
+msg:
+	.tx    "Hello World"
+	.db    'c' $F 3 %0110
+	.db 	$F
+
+.org $fffd
+irq:
+	jmp interrupt

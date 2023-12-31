@@ -6,6 +6,7 @@
 
 struct ASTNode {
     Token* data;
+    std::string value = "";
     std::vector<ASTNode*> children;
 
     ASTNode(Token* token) : data(token) {}
@@ -17,6 +18,8 @@ public:
 
     void parseProgram();
     void printAST() { _printAST(_rootNode, 0); }
+
+    ASTNode* rootNode = _rootNode;
     
 private:
     Lexer _lexer;
@@ -25,6 +28,7 @@ private:
 
     ASTNode* _parseStatement();
 
+    ASTNode* _parseOrg();
     ASTNode* _parseDirective();
 
     ASTNode* _parseVariableAssignment();

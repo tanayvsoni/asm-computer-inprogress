@@ -66,8 +66,10 @@ void Lexer::tokenize() {
             }
             i--;
 
-            if(_buf == "org" || _buf == "db" || _buf == "tx") {
+            if(_buf == "db" || _buf == "tx") {
                 _tokenList.push_back({_buf, TokenType::DIRECTIVE});
+            } else if (_buf == "org") {
+                _tokenList.push_back({_buf, TokenType::ORG});
             }
 
         }
@@ -191,7 +193,7 @@ void Lexer::tokenize() {
             //_tokenList.push_back({"Whitespace", TokenType::WHITESPACE, _lineNumber});
         }
         else if (_sourceCode[i] == '\n') {                                                                       // Newline
-            //_tokenList.push_back({"Newline", TokenType::NEWLINE});
+            _tokenList.push_back({"Newline", TokenType::NEWLINE});
         }
     
     }

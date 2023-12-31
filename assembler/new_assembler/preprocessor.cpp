@@ -26,9 +26,7 @@ void Preprocessor::processFile(const std::string& filePath, std::string& output)
         if (line.find(".include") == 0) {
             std::string includedFilePath = _extractIncludedFilePath(line);
             processFile(includedFilePath, output);
-        }
-
-        output += line + '\n';
+        } else output += line + '\n';
 
     }
 
