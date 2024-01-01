@@ -13,4 +13,3 @@ with open('hk.txt','w') as file:
             color = adc1 | adc2 | adc3
             
             file.write(f'{hex(color)[2:]}\n')
-            

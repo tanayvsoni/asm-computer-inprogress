@@ -5,9 +5,9 @@ THIS IS MY TEST
 
 */
 
-;.include <multiplication.tasml>
-
-var = 0
+;.include <multiplication.tal>
+L = 1
+var = (4+(1-1)+1)*3+L
 
 add_Loop:
 	adc #1            ;  test

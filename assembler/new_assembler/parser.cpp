@@ -162,12 +162,13 @@ std::unique_ptr<ASTNode> Parser::_parseMultiplicationDivision() {
 
 std::unique_ptr<ASTNode> Parser::_parsePrimary() {
     // Handle primary expressions (numbers, parentheses, etc.)
-    if (_currToken->type == TokenType::NUMBER || _currToken->type == TokenType::HEX || _currToken->type == TokenType::BINARY || _currToken->type == TokenType::CHAR) {
+    if (_currToken->type == TokenType::NUMBER || _currToken->type == TokenType::HEX || _currToken->type == TokenType::BINARY || _currToken->type == TokenType::CHAR || _currToken->type == TokenType::IDENTIFIER) {
         std::unique_ptr<ASTNode> node = std::make_unique<ASTNode>(std::make_unique<Token>(*_currToken));
 
         // Only advance token if there if a math expression following number
         const Token& temp = _peekNextToken();
-        if (temp.type == TokenType::MUL || temp.type == TokenType::DIV || temp.type == TokenType::PLUS || temp.type == TokenType::MINUS) 
+        if (temp.type == TokenType::MUL || temp.type == TokenType::DIV || temp.type == TokenType::PLUS || 
+            temp.type == TokenType::MINUS || temp.type == TokenType::L_PAREN || temp.type == TokenType::R_PAREN || temp.type == TokenType::IDENTIFIER) 
             _advanceToken();
 
         return node;
