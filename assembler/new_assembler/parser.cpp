@@ -1,7 +1,6 @@
 #include "parser.hpp"
-#include "lexer.hpp"
 
-Parser::Parser(const Lexer& lexer, const std::vector<Instruction>& instructionSet) : _lexer(lexer), _instructionSet(instructionSet) {
+Parser::Parser(const Lexer& lexer): _lexer(lexer) {
     // Setup Root Node
     rootNode = std::make_unique<ASTNode>(nullptr);
     rootNode->data = std::make_unique<Token>();
@@ -27,10 +26,9 @@ void Parser::_printAST(std::shared_ptr<ASTNode> node, int depth) {
     } else std::cout << "null";
 
     // Value
-    
-    if (node->value != "") {
+    if (node->value != nullptr) {
         std::cout << ",\n" << contentIndent << "\"value\": ";
-        std::cout << "\"" << node->value << "\"";
+        std::cout << "\"" << node->value->substring << "\"";
     }
 
     // Children
@@ -59,7 +57,7 @@ std::unique_ptr<ASTNode> Parser::_parseOrg() {
         std::cerr << "Error: invalid org directive format" << std::endl;
         exit(ERROR::ORG_ERROR);
     }
-    orgNode->value = _currToken->substring;
+    orgNode->value = std::make_unique<Token>(std::move(*_currToken));
 
     while (_hasToken()) {
         if (_peekNextToken().type == TokenType::ORG) break;

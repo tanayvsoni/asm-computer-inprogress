@@ -2,9 +2,10 @@
 #define ASSEMBLER_HPP
 
 #include "main.hpp"
+#include "preprocessor.hpp"
 #include "lexer.hpp"
 #include "parser.hpp"
-#include "preprocessor.hpp"
+#include "codegen.hpp"
 
 class Assembler {
 public:

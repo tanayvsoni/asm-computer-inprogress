@@ -33,7 +33,8 @@ struct Token {
 
 class Lexer {
 public:
-    Lexer(const std::string& sourceCode, const std::vector<Instruction>& instructionSet);  
+    Lexer(const std::string& sourceCode, const std::vector<Instruction>& instructionSet)
+    :   _sourceCode(sourceCode), _instructionSet(instructionSet) {}
 
     void tokenize();
     void print();

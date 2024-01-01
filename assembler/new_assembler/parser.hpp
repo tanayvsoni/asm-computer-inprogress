@@ -5,16 +5,16 @@
 #include "lexer.hpp"
 
 struct ASTNode {
-    std::unique_ptr<Token> data;
-    std::string value = "";
+    std::unique_ptr<Token> data = nullptr;
+    std::unique_ptr<Token> value = nullptr;
     std::vector<std::shared_ptr<ASTNode>> children;
 
-    ASTNode(std::unique_ptr<Token> token) : data(std::move(token)) {}
+    ASTNode(std::unique_ptr<Token> token) : data(std::move(token)) {};
 };
 
 class Parser {
 public:
-    Parser(const Lexer& lexer, const std::vector<Instruction>& instructionSet);
+    Parser(const Lexer& lexer);
 
     void parseProgram();
     void printAST() { _printAST(rootNode, 0); }
@@ -23,7 +23,6 @@ public:
     
 private:
     Lexer _lexer;
-    const std::vector<Instruction>& _instructionSet;
     void _printAST(std::shared_ptr<ASTNode> node, int depth);
 
     std::unique_ptr<ASTNode> _parseStatement();

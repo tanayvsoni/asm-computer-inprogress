@@ -9,6 +9,8 @@
 #include <memory>
 
 #define OFFSET          0x4000
+#define MAX_MEMORY      0xffff
+#define SIZE            MAX_MEMORY - OFFSET + 1
 
 enum ERROR {
     STARTADDR_ERROR, INCLUDE_ERROR, FILE_ERROR, ORG_ERROR, STRING_ERROR, ASSIGNMENT_ERROR,

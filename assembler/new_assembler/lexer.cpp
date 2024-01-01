@@ -1,9 +1,5 @@
 #include "lexer.hpp"
 
-Lexer::Lexer(const std::string& sourceCode, const std::vector<Instruction>& instructionSet)
-    : _sourceCode(sourceCode), _instructionSet(instructionSet) {
-}
-
 void Lexer::print() {
     for (size_t i = 0; i < _tokenList.size(); i++) {
         std::cout << 

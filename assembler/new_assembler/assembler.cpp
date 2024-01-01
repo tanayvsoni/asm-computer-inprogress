@@ -18,8 +18,10 @@ void Assembler::assemble() {
     lexer.tokenize();
     lexer.print();
 
-    Parser parser(lexer, _instructionSet);
+    Parser parser(lexer);
     parser.parseProgram();
     parser.printAST();
 
+    CodeGen code_generator(parser, _instructionSet);
+    code_generator.generateCode();
 }
