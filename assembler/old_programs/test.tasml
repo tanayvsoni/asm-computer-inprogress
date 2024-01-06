@@ -8,7 +8,7 @@ THIS IS MY TEST
 ; .include <multiplication.tal>
 
 
-var = 0
+var = (5-1)*4 - 5
 
 add_Loop:
 	adc #1            ;  test

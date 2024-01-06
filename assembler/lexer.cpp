@@ -160,9 +160,17 @@ void Lexer::tokenize() {
 
             while (i < _sourceCode.length() && (_sourceCode[i] != '"' || _sourceCode[i-1] == '\\')) {
                 // Handle the escape sequence for double quote
-                if (_sourceCode[i] == '\\' && i + 1 < _sourceCode.length() && _sourceCode[i+1] == '"') {
-                    _buf.push_back('"');
+                if (_sourceCode[i] == '\\') {
                     i++;
+                    if (i < _sourceCode.length()) {
+                        switch (_sourceCode[i]) {
+                            case '"': _buf.push_back('"'); break;
+                            case 'n': _buf.push_back('\n'); break;
+                            case 't': _buf.push_back('\t'); break;
+                            case '\\': _buf.push_back('\\'); break;
+                            default: _buf.push_back(_sourceCode[i]);
+                        }
+                    }
                 } else _buf.push_back(_sourceCode[i]);
                 i++;
             }
