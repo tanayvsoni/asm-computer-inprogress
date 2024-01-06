@@ -3,15 +3,19 @@
 
 # Variables
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -O2 -Wno-unused-function
-TARGET = tal
-SRCS = parser.cpp functions.cpp lexer.cpp instructions.cpp  main.cpp 
+CXXFLAGS = -std=c++20 -fno-exceptions -Wall -Wno-unused-function -Os
+TARGET = tasml
+SRCS = codegen.cpp preprocessor.cpp parser.cpp lexer.cpp assembler.cpp main.cpp 
 OBJS = $(SRCS:.cpp=.o)
-HEADERS = parser.hpp functions.hpp lexer.hpp instructions.hpp 
+HEADERS = codegen.hpp preprocessor.hpp parser.hpp lexer.hpp assembler.hpp main.hpp 
+PYTHON_SCRIPT = instruction_setup.py
 
 # Targets
-all: $(TARGET)
+all: run_python_script $(TARGET)
 	rm -f $(OBJS)
+
+run_python_script:
+	python3 $(PYTHON_SCRIPT)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)

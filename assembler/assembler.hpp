@@ -12,6 +12,7 @@ public:
     Assembler(const std::string& sourcePath, const std::string& outputPath);
 
     void assemble();
+    
 
 private:
     static const std::vector<Instruction> _instructionSet;

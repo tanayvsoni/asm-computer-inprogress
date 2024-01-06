@@ -1,37 +1,60 @@
-#ifndef ASSEMBLER_HPP
-#define ASSEMBLER_HPP
+#ifndef LEXER_HPP
+#define LEXER_HPP
 
-#include <iostream>
-#include <string>
-#include <vector>
-
-#include "instructions.hpp"
+#include "main.hpp"
 
 enum TokenType {
     // Whitespace
     WHITESPACE, NEWLINE,
 
     // Preproccess
-    PREPROCESS, INCLUDE, ARGUEMENT,
-
-    // Single-Character Tokens
-    PAREN, COMMA,
-
-    // Literals
-    IDENTIFIER_DECLARE, IDENTIFIER, LABEL_DECLARE, LABEL_USED, STRING, CHAR, NUMBER, REG, IMMEDIATE, BINARY, HEX, EQUAL, NEGATIVE,
+    ORG, DIRECTIVE, INCLUDE, ARGUEMENT,
 
     // Keywords
-    INSTRUCTION,
+    INSTRUCTION, REG,
+
+    // Comment
+    COMMENT,
+
+    // Single-Character Tokens
+    L_PAREN, R_PAREN, COMMA, IMMEDIATE, MINUS, EQUAL, PLUS, DIV, MUL,
+
+    // Literals
+    IDENTIFIER, LABEL_DECLARE, STRING, CHAR, NUMBER, BINARY, HEX, LABEL,
+
+    // Statements
+    BRACKET,
 };    
 
 struct Token {
-    TokenType        type;
     std::string      substring;
+    TokenType        type;
 };
 
-std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instruction_list);
+class Lexer {
+public:
+    Lexer(const std::string& sourceCode, const std::vector<Instruction>& instructionSet)
+    :   _sourceCode(sourceCode), _instructionSet(instructionSet) {}
 
-//void printTokens(const std::vector<Token>& token_list);
+    void tokenize();
+    void print();
+    
+    std::shared_ptr<Token> getToken();
+    Token peekNextToken();
+    bool hasToken();
+
+private:
+    const std::string& _sourceCode;
+    const std::vector<Instruction>& _instructionSet;
+    std::vector<Token> _tokenList; 
+     
+    std::string _buf;
+    long unsigned int _tokenIndex = 0;
+
+    bool _isInInstructionSet();
+    void _resetTokenList();
+    void _sortLabels();
+    bool _isInList(const std::vector<Token>& list, const Token& token);
+};
 
 #endif
-

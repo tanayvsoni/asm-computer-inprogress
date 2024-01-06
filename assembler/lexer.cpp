@@ -1,292 +1,222 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <regex>
-
 #include "lexer.hpp"
-#include "functions.hpp"
-#include "instructions.hpp"
 
-static std::string removeComments(std::string text) {
-    std::string result;
-    bool inCommentBlock = false;
-    bool inLineComment = false;
-
-    for (size_t i = 0; i < text.length(); i++) {
-        if (!inCommentBlock) {
-            if (text[i] == '/' && i + 1 < text.length() && text[i + 1] == '*') {
-                inCommentBlock = true;
-                i++;
-            }
-            else if (text[i] == ';' && !inLineComment) {
-                inLineComment = true;
-            }
-            else if (text[i] == '\n' && inLineComment) {
-                result += text[i];
-                inLineComment = false;
-            }
-            else if (inLineComment) {
-                continue;
-            }
-            else {
-                result += text[i];
-            }
-        }
-        else if (inCommentBlock && text[i] == '*' && i + 1 < text.length() && text[i + 1] == '/') {
-            inCommentBlock = false;
-            ++i;
-        }
-    }
-
-    return result;
-}
-
-static void replaceAll(std::string& str, const std::string& from, const std::string& to) {
-    size_t start_pos = 0;
-    while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
-        str.replace(start_pos, from.length(), to);
-        start_pos += to.length(); // Avoid infinite loop by moving past the replaced substring
+void Lexer::print() {
+    for (size_t i = 0; i < _tokenList.size(); i++) {
+        std::cout << 
+        " TOKEN TYPE: " << _tokenList[i].type << 
+        " TOKEN STRING: " << _tokenList[i].substring << 
+        std::endl;
     }
 }
 
-static void printTokens(const std::vector<Token>& token_list) {
-    for (const Token& token : token_list) {
-        std::string typeStr;
-        switch (token.type) {
-            case TokenType::STRING:
-                typeStr = "String";
-                break;
-
-            case TokenType::CHAR:
-                typeStr = "Char";
-                break;
-            
-            case TokenType::INCLUDE:
-                typeStr = "Include ";
-                break;
-            
-            case TokenType::ARGUEMENT:
-                typeStr = "Arguement ";
-                break;
-
-            case TokenType::PREPROCESS:
-                typeStr = "Preprocessor";
-                break;
-
-            case TokenType::NEWLINE:
-                typeStr = "Newline";
-                break;
-                
-            case TokenType::WHITESPACE:
-                typeStr = "Whitespace";
-                break;
-            
-            case TokenType::LABEL_DECLARE:
-                typeStr = "Label Declare";
-                break;
-
-            case TokenType::LABEL_USED:
-                typeStr = "Label Used";
-                break;
-            
-            case TokenType::COMMA:
-                typeStr = "Comma";
-                break;
-
-            case TokenType::REG:
-                typeStr = "Register";
-                break;
-            
-            case TokenType::PAREN:
-                typeStr = "Parentheses";
-                break;
-            
-            case TokenType::IMMEDIATE:
-                typeStr = "Immediate";
-                break;
-            
-            case TokenType::BINARY:
-                typeStr = "Binary";
-                break;
-            
-            case TokenType::HEX:
-                typeStr = "Hex";
-                break;
-            
-            case TokenType::NEGATIVE:
-                typeStr = "Negative";
-                break;
-
-            case TokenType::NUMBER:
-                typeStr = "Number";
-                break;
-
-
-            case TokenType::INSTRUCTION:
-                typeStr = "Instruction";
-                break;
-
-            case TokenType::IDENTIFIER:
-                typeStr = "Identifier";
-                break;
-            
-            case TokenType::IDENTIFIER_DECLARE:
-                typeStr = "Identifier Declare";
-                break;
-            
-            case TokenType::EQUAL:
-                typeStr = "Equal";
-                break;
-        }
-        if (typeStr == "Whitespace" || typeStr == "Newline") continue;
-        else std::cout << "Type: " << typeStr << ", Value: " << token.substring << std::endl;
-    }
+void Lexer::_resetTokenList() {
+    _tokenIndex = 0;
 }
 
-static std::string getInstr_String(const std::vector<Instruction>& instruction_list) {
-    std::string temp =  "";
-    std::string output;
-
-    for (size_t i = 0; i < instruction_list.size(); i++) {
-        if (temp != instruction_list[i].name) {
-            temp = instruction_list[i].name;
-            output += temp + "|" + toLowerCase(temp) + "|";
-        }
-    }
-
-    output.pop_back();
-    return output;
+bool Lexer::hasToken() {
+    if (_tokenIndex >= _tokenList.size()) return false;
+    return true;
 }
 
-static bool isLabel(const std::vector<Token>& token_list, const Token curr_token) {
-    for (size_t i = 0; i < token_list.size(); i++) {
-        if (token_list[i].type == TokenType::LABEL_DECLARE && curr_token.substring == token_list[i].substring) return true;
-    }
+Token Lexer::peekNextToken() {
+    if (!hasToken()) _resetTokenList();
+    return _tokenList[_tokenIndex];
+}
+
+std::shared_ptr<Token> Lexer::getToken() {
+    if (!hasToken()) _resetTokenList();
+    return std::make_shared<Token>(_tokenList[_tokenIndex++]);
+}
+
+bool Lexer::_isInInstructionSet() {
+    for (size_t i = 0; i < _instructionSet.size(); i++) 
+        if (_buf == _instructionSet[i].name) return true;
     return false;
 }
 
-std::vector<Token> lexer(std::string text, const std::vector<Instruction>& instruction_list) {
-    text = removeComments(text);
-    std::string instruction_string = getInstr_String(instruction_list);
-
-    //std::cout << instruction_string << std::endl;
-
-    std::vector<Token> token_list;
-
-    // Define a regular expression
-    std::string string_regex = "(\"((?:\\\\.|[^\"\\\\])*)\")";
-    std::string char_regex = "(\'((?:\\\\.|[^\'\\\\])*)\')";
-    std::string preprocessor_regex = "(\\.(?!\\s)(\\w+))";
-    std::string include_regex = "(#[a-zA-Z]+)";    
-    std::string arguement_regex = "(<([^>]+)>)";
-    std::string newline_regex = "([\\n]+)";
-    std::string whitespace_regex = "([ \t]+)";
-    std::string label_regex = "(^([a-zA-Z_]\\w*):)";
-    std::string comma_regex = "(,)";
-    std::string reg_regex = "(r[XY])";
-    std::string paren_regex = "(\\(|\\))";
-    std::string immediate_regex = "(#)";
-    std::string binary_regex = "(%(\\d+))";
-    std::string hex_regex = "(\\$(?!\\s)([a-zA-Z0-9]+))";
-    std::string negative_regex = "(-(\\d+))";
-    std::string number_regex = "(\\d+)";
-    std::string instruction_regex =  "(\\b(" + instruction_string + ")\\b)";
-    std::string identifier_regex = "(\\w+)";
-    std::string equal_regex = "(=)";
-
-    std::regex token_regex(string_regex + "|" + char_regex + "|" + include_regex + "|" + arguement_regex + "|" + preprocessor_regex + "|" + newline_regex + "|" + whitespace_regex + "|" + 
-                           label_regex + "|" + comma_regex + "|" + reg_regex + "|" + paren_regex + "|" + immediate_regex + "|" + binary_regex + "|" + hex_regex + "|" + 
-                           negative_regex + "|" + number_regex + "|" + instruction_regex + "|" + identifier_regex + "|" + equal_regex,
-                           std::regex::multiline);
-
-    // Tokenize the input text
-    std::sregex_iterator it(text.begin(), text.end(), token_regex);
-    std::sregex_iterator end;
-
-    while (it != end) {
-        std::smatch match = *it;
-        Token token;
-        token.substring = match.str();
-
-        if (std::regex_match(match.str(), std::regex(string_regex))) {
-            token.type = TokenType::STRING;
-            token.substring.erase(0, 1);
-            token.substring.pop_back();
-            replaceAll(token.substring, "\\\"", "\"");
-
-        } else if (std::regex_match(match.str(), std::regex(char_regex))) {
-            token.type = TokenType::CHAR;
-            token.substring.erase(0, 1);
-            token.substring.pop_back();
-            replaceAll(token.substring, "\\\'", "\'");
-        
-        } else if (std::regex_match(match.str(), std::regex(include_regex))) { token.type = TokenType::INCLUDE;
-        
-        } else if (std::regex_match(match.str(), std::regex(arguement_regex))) { 
-            token.type = TokenType::ARGUEMENT;
-            token.substring.erase(0, 1);
-            token.substring.pop_back();
-
-        } else if (std::regex_match(match.str(), std::regex(preprocessor_regex))) {
-            token.type = TokenType::PREPROCESS;
-            token.substring.erase(0, 1);
-            token.substring = toLowerCase(token.substring);
-        
-        } else if (std::regex_match(match.str(), std::regex(newline_regex))) { token.type = TokenType::NEWLINE;
-
-        } else if (std::regex_match(match.str(), std::regex(whitespace_regex))) { token.type = TokenType::WHITESPACE;
-
-        } else if (std::regex_match(match.str(), std::regex(label_regex))) {
-            token.type = TokenType::LABEL_DECLARE;
-            token.substring.pop_back();
-
-        } else if (std::regex_match(match.str(), std::regex(comma_regex))) { token.type = TokenType::COMMA;
-
-        } else if (std::regex_match(match.str(), std::regex(reg_regex))) { 
-            token.type = TokenType::REG;
-            token.substring.erase(0, 1);
-
-        } else if (std::regex_match(match.str(), std::regex(paren_regex))) { token.type = TokenType::PAREN;
-
-        } else if (std::regex_match(match.str(), std::regex(immediate_regex))) { token.type = TokenType::IMMEDIATE;      
-
-        } else if (std::regex_match(match.str(), std::regex(binary_regex))) { 
-            token.type = TokenType::BINARY;      
-            token.substring.erase(0, 1);
-
-        } else if (std::regex_match(match.str(), std::regex(hex_regex))) { 
-            token.type = TokenType::HEX;      
-            token.substring.erase(0, 1);
-        
-        } else if (std::regex_match(match.str(), std::regex(negative_regex))) {  token.type = TokenType::NEGATIVE; 
-
-        } else if (std::regex_match(match.str(), std::regex(number_regex))) {  token.type = TokenType::NUMBER;  
-
-        } else if (std::regex_match(match.str(), std::regex(instruction_regex))) {  
-            token.type = TokenType::INSTRUCTION; 
-            token.substring = toUpperCase(token.substring);
-        
-        } else if (std::regex_match(match.str(), std::regex(identifier_regex))) {  token.type = TokenType::IDENTIFIER; 
-        
-        } else if (std::regex_match(match.str(), std::regex(equal_regex))) {  token.type = TokenType::EQUAL;  
-        }
-
-        if (token.type != TokenType::WHITESPACE) token_list.push_back(token);
-        ++it;
-        
+bool Lexer::_isInList(const std::vector<Token>& list, const Token& token) {
+    for (size_t i = 0; i < list.size(); i++) {
+        if (token.substring == list[i].substring) return true;
     }
 
-    for (size_t i = 0; i < token_list.size(); i++) {
-        if (token_list[i].type == TokenType::IDENTIFIER && isLabel(token_list, token_list[i]))
-            token_list[i].type = TokenType::LABEL_USED;
-    }
-
-    for (size_t i = 0; i < token_list.size(); i++) {
-        if (token_list[i].type == TokenType::IDENTIFIER && token_list[i + 1].type == TokenType::EQUAL)
-            token_list[i].type = TokenType::IDENTIFIER_DECLARE;
-    }
-
-    //printTokens(token_list);
-
-    return token_list ;
+    return false;
 }
+
+void Lexer::_sortLabels() {
+    std::vector<Token> labelDeclare; 
+
+    // Get Labels which have been declared
+    for (size_t i = 0; i < _tokenList.size(); i++) {
+        if (_tokenList[i].type == TokenType::LABEL_DECLARE) labelDeclare.push_back(_tokenList[i]);
+    }
+
+    // Change all label used tokens from IDENTIFIER to LABEL
+    for (size_t i = 0; i < _tokenList.size(); i++) {
+        if (_tokenList[i].type == TokenType::IDENTIFIER && _isInList(labelDeclare, _tokenList[i])) {
+            _tokenList[i].type = TokenType::LABEL;
+        }
+    }
+}
+
+void Lexer::tokenize() {
+
+    for (size_t i = 0; i < _sourceCode.length(); i++) {
+
+        if (i+1 < _sourceCode.length() && _sourceCode[i] == '/' && _sourceCode[i+1] == '*') {                    // Comment Block
+            i += 2;
+            while (i < _sourceCode.length() && !(_sourceCode[i] == '*' && _sourceCode[i+1] == '/')) {
+                //if (_sourceCode[i] == '\n') _lineNumber++;
+                i++;
+            }
+            i++;   
+            //_tokenList.push_back({"Comment Block", TokenType::COMMENT, _lineNumber});
+        }
+        else if (_sourceCode[i] == ';') {                                                                        // Comment
+            while (_sourceCode[i] != '\n') i++;
+            i--;
+            //_tokenList.push_back({"Inline Comment", TokenType::COMMENT, _lineNumber});
+        }
+        else if (_sourceCode[i] == '.' && std::isalpha(_sourceCode[i+1])) {                                      // Preprocessor
+            _buf.clear();
+
+            i++;
+            while (i < _sourceCode.length() && std::isalnum(_sourceCode[i])) {
+                _buf.push_back(_sourceCode[i]);
+                i++;
+            }
+            i--;
+
+            if(_buf == "db" || _buf == "tx") {
+                _tokenList.push_back({_buf, TokenType::DIRECTIVE});
+            } else if (_buf == "org") {
+                _tokenList.push_back({_buf, TokenType::ORG});
+            }
+
+        }
+        else if (std::isalpha(_sourceCode[i])) {                                                                 // Alpha Character
+            _buf.clear();
+
+            while (i < _sourceCode.length() && (std::isalnum(_sourceCode[i]) || _sourceCode[i] == '_')) {
+                _buf.push_back(_sourceCode[i]);
+                i++;
+            }
+            i--;
+
+            if (_isInInstructionSet()) {                                                                        // Instruction
+                _tokenList.push_back({_buf, TokenType::INSTRUCTION});
+            } else if (_sourceCode[i+1] == ':') {                                                                // Label Declaration
+                _tokenList.push_back({_buf, TokenType::LABEL_DECLARE});
+            } else if (_buf == "rX" || _buf == "rY") {                                                          // Registers
+                _tokenList.push_back({_buf.erase(0,1), TokenType::REG});
+            } else {
+                _tokenList.push_back({_buf, TokenType::IDENTIFIER});
+            }
+        }
+        else if (_sourceCode[i] == '=') {                                                                        // Equals
+            _tokenList.push_back({"=", TokenType::EQUAL});
+        }
+        else if (_sourceCode[i] == '#') {                                                                        // Immediate
+            _tokenList.push_back({"#", TokenType::IMMEDIATE});                              
+        }
+        else if (_sourceCode[i] == '(') {                                                                        // Left Paren
+            _tokenList.push_back({"(", TokenType::L_PAREN});                              
+        }
+        else if (_sourceCode[i] == ')') {                                                                        // Right Paren
+            _tokenList.push_back({")", TokenType::R_PAREN});                              
+        }
+        else if (_sourceCode[i] == '-') {                                                                        // Minus
+            _tokenList.push_back({"-", TokenType::MINUS});                                
+        }
+        else if (_sourceCode[i] == '+') {                                                                        // Plus
+            _tokenList.push_back({"+", TokenType::PLUS});                                
+        }
+        else if (_sourceCode[i] == '/') {                                                                        // Divide
+            _tokenList.push_back({"/", TokenType::DIV});                                
+        }
+        else if (_sourceCode[i] == '*') {                                                                        // Multiply
+            _tokenList.push_back({"*", TokenType::MUL});                                
+        }
+        else if (_sourceCode[i] == ',') {                                                                        // Comma
+            _tokenList.push_back({",", TokenType::COMMA});                                      
+        }
+        else if (_sourceCode[i] == '\'') {                                                                       // Char
+            _buf.clear();
+            i++;
+
+            while (i < _sourceCode.length() && (_sourceCode[i] != '\'' || _sourceCode[i-1] == '\\')) {
+                // Handle the escape sequence for single quote
+                if (_sourceCode[i] == '\\' && i + 1 < _sourceCode.length() && _sourceCode[i+1] == '\'') {
+                    _buf.push_back('\'');
+                    i++;
+                } else _buf.push_back(_sourceCode[i]);
+                i++;
+            }
+
+            _tokenList.push_back({_buf, TokenType::CHAR});
+        }
+        else if (_sourceCode[i] == '"') {                                                                        // String  
+            _buf.clear();
+            i++;
+
+            while (i < _sourceCode.length() && (_sourceCode[i] != '"' || _sourceCode[i-1] == '\\')) {
+                // Handle the escape sequence for double quote
+                if (_sourceCode[i] == '\\' && i + 1 < _sourceCode.length() && _sourceCode[i+1] == '"') {
+                    _buf.push_back('"');
+                    i++;
+                } else _buf.push_back(_sourceCode[i]);
+                i++;
+            }
+
+            _tokenList.push_back({_buf, TokenType::STRING});
+        }
+        else if (_sourceCode[i] == '$') {                                                                        // Hex
+            _buf.clear();
+            i++;
+
+            while (i < _sourceCode.length() && std::isalnum(_sourceCode[i])) {
+                _buf.push_back(_sourceCode[i]);
+                i++;
+            }
+            i--;
+            _tokenList.push_back({_buf, TokenType::HEX});
+        }
+        else if (_sourceCode[i] == '%') {                                                                        // Binary
+            _buf.clear();
+            i++;
+
+            while (i < _sourceCode.length() && std::isalnum(_sourceCode[i])) {
+                _buf.push_back(_sourceCode[i]);
+                i++;
+            }
+            i--;
+            _tokenList.push_back({_buf, TokenType::BINARY});
+        }
+        else if (std::isdigit(_sourceCode[i])) {                                                                 // Number
+            _buf.clear();
+            while (i < _sourceCode.length() && (std::isdigit(_sourceCode[i]) || _sourceCode[i] == '.')) {
+                if (_sourceCode[i] == '.') {
+                    // Error handling for decimal point
+                    std::cerr << "Error: Unexpected decimal point in number." << std::endl;
+                    exit(ERROR::FLOAT_ERROR);
+                }
+
+                _buf.push_back(_sourceCode[i]);
+                i++;
+            }
+            i--;
+
+            _tokenList.push_back({_buf, TokenType::NUMBER});
+        }
+        else if (std::isspace(_sourceCode[i]) && _sourceCode[i] != '\n') {                                       // Whitespace
+            while (i < _sourceCode.length() && std::isspace(_sourceCode[i]) && _sourceCode[i] != '\n') i++;
+            i--;
+            //_tokenList.push_back({"Whitespace", TokenType::WHITESPACE, _lineNumber});
+        }
+        else if (_sourceCode[i] == '\n') {                                                                       // Newline
+            _tokenList.push_back({"Newline", TokenType::NEWLINE});
+        }
+    
+    }
+
+    _sortLabels();
+};
