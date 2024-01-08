@@ -26,6 +26,7 @@ private:
     void _printAST(std::shared_ptr<ASTNode> node, int depth);
 
     std::unique_ptr<ASTNode> _parseStatement();
+    std::shared_ptr<ASTNode> _findAndRemoveMainLabelNode(std::shared_ptr<ASTNode>& node);
 
     std::unique_ptr<ASTNode> _parseOrg();
     std::unique_ptr<ASTNode> _parseDirective();

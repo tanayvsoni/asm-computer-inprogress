@@ -5,10 +5,11 @@ THIS IS MY TEST
 
 */
 
-; .include <multiplication.tal>
+.include <programs/multiplication.tasml>
 
+L = 1
 
-var = (5-1)*4 - 5
+var = (4+1)*3+L
 
 add_Loop:
 	adc #1            ;  test
@@ -41,6 +42,9 @@ msg:
 	.tx    "Hello World"
 	.db    'c' $F 3 %0110
 	.db 	$F
+
+main:
+	jmp add_Loop
 
 .org $fffd
 irq:

@@ -4,8 +4,6 @@
 ; Multiplies "num1" by "num2" and returns result in .A
 ; Instead of using a bit counter, this routine early-exits when num2 reaches zero, thus saving iterations.
 
-.org $4000
-
 ; Input variables:
 ;   num1 (multiplicand)
 ;   num2 (multiplier), should be small for speed
@@ -15,7 +13,7 @@
 ; num1 and num2 get clobbered
 
 
-.include <helloword.tasml>
+;.include <helloword.tasml>
 
 num1 = 0
 num2 = 1

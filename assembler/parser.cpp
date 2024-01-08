@@ -246,6 +246,7 @@ std::unique_ptr<ASTNode> Parser::_parseLabel() {
     while (_hasToken()) {
         if (_peekNextToken().type == TokenType::ORG) break;
         if (_peekNextToken().type == TokenType::LABEL_DECLARE) break;
+        if (_peekNextToken().type == TokenType::IDENTIFIER) break;
         _advanceToken();
         if (_currToken->type == TokenType::NEWLINE) continue;
 
@@ -272,11 +273,38 @@ std::unique_ptr<ASTNode> Parser::_parseStatement() {
     }
 }
 
+std::shared_ptr<ASTNode> Parser::_findAndRemoveMainLabelNode(std::shared_ptr<ASTNode>& node) {
+    if (!node) return nullptr;
+
+    for (size_t i = 0; i < node->children.size(); ++i) {
+        if (node->children[i]->data->substring == "main") {
+            std::shared_ptr<ASTNode> mainNode = node->children[i];
+            node->children.erase(node->children.begin() + i);
+            return mainNode;
+        }
+        auto childResult = _findAndRemoveMainLabelNode(node->children[i]);
+        if (childResult) return childResult;
+    }
+
+    return nullptr;
+}
+
 void Parser::parseProgram() {
 
     while (_hasToken()) {
         _advanceToken();
         if (_currToken->type == TokenType::NEWLINE) continue;
         rootNode->children.push_back(std::move(_parseStatement()));
+    }
+
+    std::shared_ptr<ASTNode> mainNode = _findAndRemoveMainLabelNode(rootNode);
+
+    if (mainNode) {
+        for (auto& child : rootNode->children) {
+            if (child->data->type == TokenType::ORG && child->value->substring == "4000") {
+                child->children.insert(child->children.begin(), mainNode);
+                break;
+            } 
+        }
     }
 }
