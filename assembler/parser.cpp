@@ -301,7 +301,7 @@ void Parser::parseProgram() {
 
     if (mainNode) {
         for (auto& child : rootNode->children) {
-            if (child->data->type == TokenType::ORG && child->value->substring == "4000") {
+            if (child->data->type == TokenType::ORG) {
                 child->children.insert(child->children.begin(), mainNode);
                 break;
             } 
