@@ -306,5 +306,8 @@ void Parser::parseProgram() {
                 break;
             } 
         }
+    } else {
+        std::cerr << "Error: no main function" << std::endl;
+        exit(ERROR::MAIN_ERROR);
     }
 }
