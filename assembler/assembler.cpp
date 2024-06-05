@@ -16,11 +16,11 @@ void Assembler::assemble() {
     Lexer lexer(sourceCode, _instructionSet);
 
     lexer.tokenize();
-    //lexer.print();
+    lexer.print();
 
     Parser parser(lexer);
     parser.parseProgram();
-    //parser.printAST();
+    parser.printAST();
 
     CodeGen code_generator(parser, _instructionSet);
     code_generator.generateCode();
